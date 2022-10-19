@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class PetToy : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public delegate void
+    private void OnEnable()
+    {
+        
+    }
     void Start()
     {
         

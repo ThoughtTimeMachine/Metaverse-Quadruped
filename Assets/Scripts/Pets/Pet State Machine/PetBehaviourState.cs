@@ -5,13 +5,14 @@ using UnityEngine;
 public abstract class PetBehaviourState
 {
     protected PetBehaviourSystem PetBehaviourSystem;
-
+    protected Animator animator;
     protected WaitForSeconds _wait = new WaitForSeconds(1f);
+
     public PetBehaviourState(PetBehaviourSystem petBehaviourSystem)
     {
         PetBehaviourSystem = petBehaviourSystem;
     }
-
+   
     public virtual IEnumerator Start()
     {
         yield break;
@@ -47,6 +48,11 @@ public abstract class PetBehaviourState
         yield break;
     }
     public virtual IEnumerator Bored()
+    {
+        yield break;
+    }
+
+    public virtual IEnumerator BlendAnimationState()
     {
         yield break;
     }

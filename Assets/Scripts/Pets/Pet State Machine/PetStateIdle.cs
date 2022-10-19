@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PetStateIdle : PetBehaviourState
 {
+
     public PetStateIdle(PetBehaviourSystem petBehaviourSystem) : base(petBehaviourSystem)
     {
     }
@@ -11,7 +12,9 @@ public class PetStateIdle : PetBehaviourState
     public override IEnumerator Start()
     {
         //you can set the state of the petBehaviourSystem to another state here
-       yield return _wait;
+        //start idleand casually walk around the environment checking things out untill PetCarBars deplete or increase changing the state
+        yield return _wait;
 
     }
+   
 }
