@@ -2,16 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PetStateHungry : PetBehaviourState
+public class PetStateHungry : PetBehaviorState
 {
-    public PetStateHungry(PetBehaviourSystem petBehaviourSystem) : base(petBehaviourSystem)
+    public PetStateHungry(PetBehaviorSystem petBehaviourSystem) : base(petBehaviourSystem)
     {
     }
 
-    public override IEnumerator Start()
+    public override void Start()
     {
-        //you can set the state of the petBehaviourSystem to another state here
-        yield return _wait;
 
     }
 }
