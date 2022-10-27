@@ -4,7 +4,7 @@ using System.Globalization;
 using System;
 using UnityEngine;
 
-public class DateTimeManager : Singleton<DateTimeManager>
+public class DateTimeManager : Singleton<DateTimeManager>, IDataPersistence
 {
     // Fetch the local DateTime. Save last DateTime before Game Ended. If the New Login Time is less than or more than the last saved DateTime then 
     //the distance is still calculated in either direction as a subtraction from the last saved time. That way there is no gain in attribute calculations
@@ -38,5 +38,15 @@ public class DateTimeManager : Singleton<DateTimeManager>
             Console.WriteLine("   UTC date and time: {0}, {1:G}\n",
                               utcDate.ToString(culture), utcDate.Kind);
         }
+    }
+
+    public void LoadData(GameData data)
+    {
+        //save Time in a format we can serialize
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        //load Time in a format we can deserialize
     }
 }

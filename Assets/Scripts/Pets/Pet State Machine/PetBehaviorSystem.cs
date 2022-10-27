@@ -38,10 +38,9 @@ public class PetBehaviorSystem : PetBehaviorStateMachine
 
     private void Update()
     {
-        if (PetsCurrentState != CurrentState.sleep)
-        {
-
-        }
+        //if (PetsCurrentState != CurrentState.sleep)
+        //{
+        //}
 
 
 
