@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PetToy : MonoBehaviour, IDataPersistence
 {
-    private int rarity;
-    private int duribility;
-    private string flavor;
+    private int _rarity;
+    private int _duribility;
+    private string _flavor;
     //public delegate void
     private void OnEnable()
     {
@@ -23,16 +23,16 @@ public class PetToy : MonoBehaviour, IDataPersistence
 
     }
 
-    public void LoadData(GameData data)
+    public void SaveData(GameData data)
     {
-        data.rarity = this.rarity;
-        data.duribility = this.duribility;
-        data.flavor = this.flavor;
+        data.Rarity = _rarity;
+        data.Duribility = _duribility;
+        data.Flavor = _flavor;
     }
-    public void SaveData(ref GameData data)
+    public void LoadData(ref GameData data)
     {
-        this.rarity = data.rarity;
-        this.duribility = data.duribility;
-        this.flavor = data.flavor;
+        _rarity = data.Rarity;
+        _duribility = data.Duribility;
+        _flavor = data.Flavor;
     }
 }

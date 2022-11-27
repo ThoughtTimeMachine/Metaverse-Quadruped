@@ -9,8 +9,9 @@ public interface IPetActions
     void PlayWithToy();
     void Catch();
     void DoTrick();
-    void GoToBAthroom();
+    void GoToBathroom();
     void Puke();
     void DestroyItem();
+
 
 }

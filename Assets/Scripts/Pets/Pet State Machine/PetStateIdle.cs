@@ -14,6 +14,7 @@ public class PetStateIdle : PetBehaviorState
     }
     public override void Start()
     {
+        
         //you can set the state of the petBehaviourSystem to another state here
         //start idle and casually walk around the environment checking things out untill PetCarBars deplete or increase changing the state
        

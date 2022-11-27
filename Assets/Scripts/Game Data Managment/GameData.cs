@@ -5,16 +5,26 @@ using UnityEngine;
 [System.Serializable]
 public class GameData 
 {
-    public int rarity;
-    public int duribility;
-    public string flavor;
+    public int Rarity;
+    public int Duribility;
+    public string Flavor;
     public SerializableDictionary<string, bool> FoodsInEnvironment;
+
+    //PetStatusBars
+    public float Happiness;
+    public float Hunger;
+    public float Thirst;
+    public float Boredom; //the longer in boredom, happiness slowly goes down
+    public float Bathroom;
+    public float Energy;
+    public float Cleanliness;
+    public float LastSavedTime;
 
     public GameData()
     {
-        this.rarity = 0;
-        this.duribility = 0;
-        this.flavor = "Chicken";
+        Rarity = 0;
+        Duribility = 0;
+        Flavor = "Chicken";
         FoodsInEnvironment = new SerializableDictionary<string, bool>();
     }
 }

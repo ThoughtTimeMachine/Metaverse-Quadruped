@@ -6,10 +6,13 @@ public class PetStateHungry : PetBehaviorState
 {
     public PetStateHungry(PetBehaviorSystem petBehaviourSystem) : base(petBehaviourSystem)
     {
+
     }
 
     public override void Start()
     {
-
+     
     }
+
+ 
 }

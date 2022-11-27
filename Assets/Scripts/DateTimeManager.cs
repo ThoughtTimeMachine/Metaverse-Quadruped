@@ -40,12 +40,12 @@ public class DateTimeManager : Singleton<DateTimeManager>, IDataPersistence
         }
     }
 
-    public void LoadData(GameData data)
+    public void SaveData(GameData data)
     {
         //save Time in a format we can serialize
     }
 
-    public void SaveData(ref GameData data)
+    public void LoadData(ref GameData data)
     {
         //load Time in a format we can deserialize
     }

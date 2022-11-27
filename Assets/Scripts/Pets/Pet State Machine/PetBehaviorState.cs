@@ -4,55 +4,25 @@ using UnityEngine;
 
 public abstract class PetBehaviorState : MonoBehaviour
 {
-    protected PetBehaviorSystem PetBehaviorSystem;//where is this implemented?
-    protected WaitForSeconds _wait = new WaitForSeconds(1f);
+    protected PetBehaviorSystem PetBehaviorSystem;
 
     public PetBehaviorState(PetBehaviorSystem petBehaviourSystem)
     {
         PetBehaviorSystem = petBehaviourSystem;
     }
-   
+
     public virtual void Start()
     {
- 
-    }
-
-    public virtual void Hungry()
-    {
 
     }
-    public virtual void Thirsty()
+
+    protected void LookForObject()//interface parameter that can supply position of object or palce to be at
     {
- 
+        //Implemented in the current state
     }
-    public virtual void Playfull()
-    {
-      
-    }
-    public virtual void Tired()
+    protected void GoToDestination()//interface parameter that can supply position of object or palce to be at
     {
         
     }
-    public virtual void Curious()
-    {
-    
-    }
-    public virtual void Sick()
-    {
-  
-    }
-    public virtual void Social()
-    {
-        //With other pets and or people
-   
-    }
-    public virtual void Bored()
-    {
-    
-    }
 
-    public virtual void BlendAnimationState()
-    {
-   
-    }
 }

@@ -10,31 +10,32 @@ public class DataPersistenceManager : Singleton<DataPersistenceManager>
     private List<IDataPersistence> datapersistenceObjects;
     //class that handles the dataSaving process to a folder location
     private FileDataHandler dataHandler;
-    public static DataPersistenceManager instance { get; private set; }
-    
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Debug.LogError("more than one data persistance manager");
-        }
-        instance = this;
-    }
+    //DataPersistenceManager Allready inheriting singleton interface so no need to make one in awake
+    //public static DataPersistenceManager instance { get; private set; }
+
+    //private void Awake()
+    //{
+    //    if (instance != null)
+    //    {
+    //        Debug.LogError("more than one data persistance manager");
+    //    }
+    //    instance = this;
+    //}
     private void Start()
     {
-        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
-        this.datapersistenceObjects = FindAllDataPersistenceObjects();
+        dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        datapersistenceObjects = FindAllDataPersistenceObjects();
         LoadGame();
     }
     public void NewGame()
     {
-        this.gameData = new GameData();
+       gameData = new GameData();
     }
     public void LoadGame()
     {
         //load our savec files data to the gameData object
-        this.gameData = dataHandler.Load();
-        if (this.gameData == null)
+        gameData = dataHandler.Load();
+        if (gameData == null)
         {
             Debug.LogError("No Data Found. Initializiing data to defaults");
             NewGame();
@@ -42,16 +43,16 @@ public class DataPersistenceManager : Singleton<DataPersistenceManager>
         //set the data in each class that has saved data and implements IDataPersistence
         foreach (IDataPersistence dataPersistenceObj in datapersistenceObjects)
         {
-            dataPersistenceObj.LoadData(gameData);
+            dataPersistenceObj.LoadData(ref gameData);
         }
-        Debug.Log("flavor test: "+ gameData.flavor);
+   
     }
     public void SaveGame()
     {
 
         foreach (IDataPersistence dataPersistenceObj in datapersistenceObjects)
         {
-            dataPersistenceObj.SaveData(ref gameData);
+            dataPersistenceObj.SaveData( gameData);
         }
         dataHandler.Save(gameData);
     }
