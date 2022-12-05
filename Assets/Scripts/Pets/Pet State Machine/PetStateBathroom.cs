@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PetStateBathroom : MonoBehaviour
+public class PetStateBathroom : PetBehaviorState
 {
-    // Start is called before the first frame update
-    void Start()
+    public PetStateBathroom(PetBehaviorSystem petBehaviourSystem) : base(petBehaviourSystem)
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Start()
     {
-        
+        //you can set the state of the petBehaviourSystem to another state here
+
+
     }
 }

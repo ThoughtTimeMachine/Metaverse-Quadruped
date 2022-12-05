@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PetBehaviorState : MonoBehaviour
+
+public abstract class PetBehaviorState : MonoBehaviour //every state has access to PetBehaviorSystem through this inheritance
 {
     protected PetBehaviorSystem PetBehaviorSystem;
 
@@ -16,13 +17,6 @@ public abstract class PetBehaviorState : MonoBehaviour
 
     }
 
-    protected void LookForObject()//interface parameter that can supply position of object or palce to be at
-    {
-        //Implemented in the current state
-    }
-    protected void GoToDestination()//interface parameter that can supply position of object or palce to be at
-    {
-        
-    }
+ 
 
 }

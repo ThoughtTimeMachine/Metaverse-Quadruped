@@ -41,9 +41,10 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
 
     public enum CurrentState { idle, curious, tired, sleep, hungry, thirst, sick, playfull } // Binary tree to help determine state?
     public CurrentState _currentState { get; private set; }
-
-    protected enum SpeedAnimation { idle, walk, run, sprint }
-    protected SpeedAnimation speedAnim;
+    private bool IsInterruptibleState = true;
+    private WaitForSeconds InterruptibleStateWait = new WaitForSeconds(2f);
+    public enum SpeedAnimation { idle, walk, run, sprint }
+    public SpeedAnimation speedAnim;
 
     //Maybe the core personality trait is influenced by how ofter your pet enters/ and or is in a CurrentState? Turn into Interfaces?
     public enum CorePersonalityTrait { Happy, Disobedient, Aggressive, Scared, Protective, HighAlert, Lazy, Bored }
@@ -68,6 +69,7 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
 
     }
     private void Start()
+
     {
         //we are going to choose to start the beginning state to An Idle state for the pet
         SetState(new PetStateIdle(this));
@@ -75,7 +77,13 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
 
     private void Update()
     {
-        DecreaseStatusBars();
+        DecreaseStatusBars();//possible use coroutine instead if its more performant.
+
+        if (IsInterruptibleState) 
+        { 
+            DeterminState();  
+        }
+       
     }
     private void BuildStatusBarDictionary()
     {
@@ -99,7 +107,6 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     private void DecreaseStatusBars()
     {
         //loop the petStatusBarValue dictionary and access each PetStatusBar inside the tuple and decrease its fill by Time.deltaTime / 172800 (seconds in 48 hours) * depletionRate the Tuples Item2 which is the RateOverTime
-
         for (int i = 0; i <= PetStatusBarsValue.Count - 1; i++)
         {
             if (PetStatusBarsValue[i] > 0.01f)
@@ -108,13 +115,10 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
                 PetStatusBarsFill[i].fillAmount = PetStatusBarsValue[i];
             }
         }
-
     }
-
-    //Is your pet happy, bored. hungry ect
+    //SetStatusBarValue can be called to increase a status bars value. Examples woul be treats, toys, bowl of food, water, sleep ect.
     protected void SetStatusBarValue(float value, StatusBars statusBar)
     {
-
         switch (statusBar)
         {
             case StatusBars.happiness:
@@ -235,6 +239,57 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
                 break;
         }
     }
+
+    private void DeterminState()
+    {
+        // need IsInterruptibleState logic figured out. 
+        if (_thirst < .25f) 
+        { 
+            SetState(new PetStateThirsty(this)); 
+        }
+
+        else if (_hunger < .25f) 
+        { 
+            SetState(new PetStateHungry(this)); 
+        }
+
+        if (_energy < .15f) 
+        { 
+            SetState(new PetStateTired(this));
+            IsInterruptibleState = false;
+            StartCoroutine(InteruptableStateActivation());
+        }
+
+        else if (_bathroom < .15f) 
+        { 
+            SetState(new PetStateBathroom(this)); 
+        }
+
+        //for (int i = 0; i <= PetStatusBarsValue.Count - 1; i++)
+        //{
+        //    DeterminStateAlternativeVersion(PetStatusBarsValue[i]);
+        //}
+    }
+    private IEnumerator InteruptableStateActivation()
+    {
+        while(_energy < .25f)
+        {
+            yield return InterruptibleStateWait;
+        }
+        IsInterruptibleState = true;
+    }
+    //Relational Pattern implementation  of method DeterminState()
+    //private PetBehaviorState DeterminStateAlternativeVersion(float statusBarValue) =>
+    //statusBarValue switch
+    //{
+    //    (> .32f) and (< 212) => new PetStateTired(this),
+    //    < 32 => new PetStateThirsty(this),
+    //    > 212 => new PetStateHungry(this),
+    //    .32   => new PetStateBathroom(this),
+    //    212 => new PetStateBathroom(this),
+    //    _ => new PetStateIdle(this),
+    //};
+
     public void SaveData(GameData data)
     {
         data.Happiness = _happiness;
