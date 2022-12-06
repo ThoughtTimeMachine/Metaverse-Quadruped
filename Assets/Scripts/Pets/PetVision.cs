@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class PetVision : MonoBehaviour
 {
     private Transform _pet;
     private Vector3 _halfBoxSize = new Vector3(.5f,.5f,.5f);
     private float _maxDistance = 20f;
     private RaycastHit[] _hits;
+    public Transform ObjectToFollow; 
+
+    
     void Start()
     {
 
@@ -20,7 +23,7 @@ public class PetVision : MonoBehaviour
         //rotate neck bone and move through a coroutine while foundBool == false
     }
 
-    public void LookForObject(int objIDToFind, int ObjLayer)//interface parameter that can supply position of object or palce to be at
+    public void LookForObject(int objIDToFind, int ObjLayer)
     {
         _hits = Physics.BoxCastAll(transform.position, _halfBoxSize, Vector3.forward, transform.rotation, _maxDistance, 6);
 
@@ -30,18 +33,18 @@ public class PetVision : MonoBehaviour
             {
                 if(hit.collider.GetComponent<ObjectID>().ID == objIDToFind)
                 {
-                    //we found the fawking object bro, lets interact with it
+                    ObjectToFollow = hit.transform;
                 }
             }
         }
-
-        //var ray = Physics.Raycast(tr)
-        //begin raycasting from pet
-        //if the raycast hits a objLayer and it is the objID th pets looking for, w have found the object
     }
 
+    public void UnfollowObject()
+    {
+        ObjectToFollow = null;
+    }
     private void RotateNeckBone()
     {
-        //
+        // Speed and rotation degree based on enum
     }
 }

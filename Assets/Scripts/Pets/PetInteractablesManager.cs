@@ -8,13 +8,17 @@ public class PetInteractablesManager : Singleton<PetInteractablesManager>
     public static readonly Dictionary<int, Transform> OtherInteractables = new Dictionary<int, Transform>();
     public static readonly Dictionary<int, Transform> Foods = new Dictionary<int, Transform>();
     public static readonly Dictionary<int, Transform> Toys = new Dictionary<int, Transform>();
+
+    public List<Transform> StaticObjectsOfCuriosity = new List<Transform>();
+
+
     public Transform Pet { get; private set; }
     public Transform Waterdish { get; private set; }
     public Transform FoodDish { get; private set; }
 
     public int? ActiveToy;//unassign after exiting interaction with object
     public int? ActiveFood;//unassign after exiting interaction with object
-    public Transform ActiveObjectOfInterest;
+    public Transform ActiveObjectOfInterest { get; private set; }
     public void CreateToy()
     {
         //create object/ instantiate prefab, add components needed if any, object pool system if many can be used or created.

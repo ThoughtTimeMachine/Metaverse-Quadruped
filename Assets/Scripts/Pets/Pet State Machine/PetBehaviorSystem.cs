@@ -39,13 +39,13 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     public enum StatusBars { happiness, hunger, thirsty, boredom, bathroom, energy, cleanliness }
     public StatusBars _statusBars;
 
-    public enum CurrentState { idle, curious, tired, sleep, hungry, thirst, sick, playfull } // Binary tree to help determine state?
+    public enum CurrentState { idle, tired, sleep, hungry, thirst, sick, playfull } // Binary tree to help determine state?
     public CurrentState _currentState { get; private set; }
     private bool IsInterruptibleState = true;
     private WaitForSeconds InterruptibleStateWait = new WaitForSeconds(2f);
-    public enum SpeedAnimation { idle, walk, run, sprint }
-    public SpeedAnimation speedAnim;
 
+
+    public PetController _petController;
     //Maybe the core personality trait is influenced by how ofter your pet enters/ and or is in a CurrentState? Turn into Interfaces?
     public enum CorePersonalityTrait { Happy, Disobedient, Aggressive, Scared, Protective, HighAlert, Lazy, Bored }
     private CorePersonalityTrait _corePersonality;
