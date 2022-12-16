@@ -41,16 +41,17 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
 
     public enum CurrentState { idle, tired, sleep, hungry, thirst, sick, playfull } // Binary tree to help determine state?
     public CurrentState _currentState { get; private set; }
+
     private bool IsInterruptibleState = true;
     private WaitForSeconds InterruptibleStateWait = new WaitForSeconds(2f);
 
 
-    public PetController _petController;
-    //Maybe the core personality trait is influenced by how ofter your pet enters/ and or is in a CurrentState? Turn into Interfaces?
-    public enum CorePersonalityTrait { Happy, Disobedient, Aggressive, Scared, Protective, HighAlert, Lazy, Bored }
-    private CorePersonalityTrait _corePersonality;
+    //Maybe the core personality trait is influenced by how often your pet enters/ and or is in a CurrentState? Turn into Interfaces?
+    //public enum CorePersonalityTrait { Happy, Disobedient, Aggressive, Scared, Protective, HighAlert, Lazy, Bored }
+    //private CorePersonalityTrait _corePersonality;
     public bool IsSearchingForInteractable { get; private set; }
-
+    public PetController _petController { get; private set; }
+    public PetInteractablesManager _petInteractionManager { get; private set; }
 
     //public CurrentState PetsCurrentState
     //{
@@ -59,6 +60,8 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     //}
     private void Awake()
     {
+        _petController = GameObject.FindObjectOfType<PetController>();
+        _petInteractionManager = GameObject.FindObjectOfType<PetInteractablesManager>();
         //build the dictionary of status bars and rate depletion values to itterate over in the update loop. We will set the petStatusBars fill from this dicitonarys values int he Tuple
         BuildStatusBarDictionary();
     }
@@ -69,7 +72,6 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
 
     }
     private void Start()
-
     {
         //we are going to choose to start the beginning state to An Idle state for the pet
         SetState(new PetStateIdle(this));
@@ -79,11 +81,11 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     {
         DecreaseStatusBars();//possible use coroutine instead if its more performant.
 
-        if (IsInterruptibleState) 
-        { 
-            DeterminState();  
+        if (IsInterruptibleState)
+        {
+            DeterminState();
         }
-       
+
     }
     private void BuildStatusBarDictionary()
     {
@@ -243,26 +245,26 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     private void DeterminState()
     {
         // need IsInterruptibleState logic figured out. 
-        if (_thirst < .25f) 
-        { 
-            SetState(new PetStateThirsty(this)); 
+        if (_thirst < .25f)
+        {
+            SetState(new PetStateThirsty(this));
         }
 
-        else if (_hunger < .25f) 
-        { 
-            SetState(new PetStateHungry(this)); 
+        else if (_hunger < .25f)
+        {
+            SetState(new PetStateHungry(this));
         }
 
-        if (_energy < .15f) 
-        { 
+        if (_energy < .15f)
+        {
             SetState(new PetStateTired(this));
             IsInterruptibleState = false;
             StartCoroutine(InteruptableStateActivation());
         }
 
-        else if (_bathroom < .15f) 
-        { 
-            SetState(new PetStateBathroom(this)); 
+        else if (_bathroom < .15f)
+        {
+            SetState(new PetStateBathroom(this));
         }
 
         //for (int i = 0; i <= PetStatusBarsValue.Count - 1; i++)
@@ -272,7 +274,7 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     }
     private IEnumerator InteruptableStateActivation()
     {
-        while(_energy < .25f)
+        while (_energy < .25f)
         {
             yield return InterruptibleStateWait;
         }
