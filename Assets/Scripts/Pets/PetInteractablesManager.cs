@@ -19,6 +19,12 @@ public class PetInteractablesManager : Singleton<PetInteractablesManager>
     public int? ActiveToy;//unassign after exiting interaction with object
     public int? ActiveFood;//unassign after exiting interaction with object
     public Transform ActiveObjectOfInterest { get; private set; }
+    private void Awake()
+    {
+        Waterdish = GameObject.FindGameObjectWithTag("WaterBowl").transform;
+        FoodDish = GameObject.FindGameObjectWithTag("FoodBowl").transform;
+        Pet = GameObject.FindGameObjectWithTag("Pet").transform;
+    }
     public void CreateToy()
     {
         //create object/ instantiate prefab, add components needed if any, object pool system if many can be used or created.

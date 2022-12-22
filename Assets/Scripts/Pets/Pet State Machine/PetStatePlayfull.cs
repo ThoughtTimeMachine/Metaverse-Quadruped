@@ -17,32 +17,47 @@ public class PetStatePlayfull : PetBehaviorState
 
     public override void Start()
     {
-        //you can set the state of the petBehaviourSystem to another state here
-
+        //find your owner
+        //get into a playfull state animation
+        //listen to the words no from wit.ai
+        //atempt once more trying to play
+        //start playing with a toy on your own
+        Debug.Log("Entered Playfull State");
     }
-    //public override IEnumerator BlendAnimationState()
-    //{
-    //    float timeElapsed = 0;
-    //    while
 
-    //    switch (speedAnim)
-    //        {
-    //            case 0:
-    //                animator.SetFloat("speedState",)
-    //                break;
-    //            case 1
-    //        }
-    //}
-    //IEnumerator LerpSpeed(float endValue, float duration)
-    //{
-    //    float time = 0;
-    //    float startValue = valueToChange;
-    //    while (time < duration)
-    //    {
-    //        valueToChange = Mathf.Lerp(startValue, endValue, time / duration);
-    //        time += Time.deltaTime;
-    //        yield return null;
-    //    }
-    //    valueToChange = endValue;
-    //}
-}
+    public void OnTriggerEnter(Collider objectCollidedWith)
+    {
+        if (objectCollidedWith.tag == "Toy")
+        {
+            if (_petBehaviorSystem._currentState == PetBehaviorSystem.CurrentState.playfull)
+            {
+
+            }
+        }
+    }
+        //public override IEnumerator BlendAnimationState()
+        //{
+        //    float timeElapsed = 0;
+        //    while
+
+        //    switch (speedAnim)
+        //        {
+        //            case 0:
+        //                animator.SetFloat("speedState",)
+        //                break;
+        //            case 1
+        //        }
+        //}
+        //IEnumerator LerpSpeed(float endValue, float duration)
+        //{
+        //    float time = 0;
+        //    float startValue = valueToChange;
+        //    while (time < duration)
+        //    {
+        //        valueToChange = Mathf.Lerp(startValue, endValue, time / duration);
+        //        time += Time.deltaTime;
+        //        yield return null;
+        //    }
+        //    valueToChange = endValue;
+        //}
+    }

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class NavMeshAgentMoveTest : MonoBehaviour
 {
-   public NavMeshAgent agentTest;
+    public NavMeshAgent agentTest;
     public Transform ObjectToFollow;
     // Start is called before the first frame update
     void Start()

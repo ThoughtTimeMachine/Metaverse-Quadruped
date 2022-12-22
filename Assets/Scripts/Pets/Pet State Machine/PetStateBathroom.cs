@@ -6,12 +6,15 @@ public class PetStateBathroom : PetBehaviorState
 {
     public PetStateBathroom(PetBehaviorSystem petBehaviourSystem) : base(petBehaviourSystem)
     {
+
     }
 
     public override void Start()
     {
-        //you can set the state of the petBehaviourSystem to another state here
-
-
+        //untill trained just go on floor
+        //depending on traning level, check if outdoor spot we can walk and wait at
+        //whine
+        //expect treat before maxing bathroom training;
+        Debug.Log("Entered Bathroom State");
     }
 }

@@ -36,10 +36,11 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     private byte _energyMultiplier = 1;
     private byte _cleanlinessMultiplier = 1;
 
+    private byte BathroomTrainedLevel = 0;
     public enum StatusBars { happiness, hunger, thirsty, boredom, bathroom, energy, cleanliness }
     public StatusBars _statusBars;
 
-    public enum CurrentState { idle, tired, sleep, hungry, thirst, sick, playfull } // Binary tree to help determine state?
+    public enum CurrentState { idle, tired, sleep, hungry, thirst, sick, playfull, bathroom } // we can add more states to here
     public CurrentState _currentState { get; private set; }
 
     private bool IsInterruptibleState = true;
@@ -52,6 +53,8 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     public bool IsSearchingForInteractable { get; private set; }
     public PetController _petController { get; private set; }
     public PetInteractablesManager _petInteractionManager { get; private set; }
+
+    public static Action StateChange;
 
     //public CurrentState PetsCurrentState
     //{
@@ -75,17 +78,17 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     {
         //we are going to choose to start the beginning state to An Idle state for the pet
         SetState(new PetStateIdle(this));
+        _currentState = CurrentState.idle;
     }
 
     private void Update()
     {
-        DecreaseStatusBars();//possible use coroutine instead if its more performant.
-
+        DecreaseStatusBarsUI();//possible use coroutine instead if its more performant.
+        updateStatusBarValuesFromList();
         if (IsInterruptibleState)
         {
             DeterminState();
         }
-
     }
     private void BuildStatusBarDictionary()
     {
@@ -106,7 +109,11 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
         PetStatusBarsValueMultiplier.Add(_cleanlinessMultiplier);
     }
 
-    private void DecreaseStatusBars()
+    public void BathroomTrainingLevelIncrease()
+    {
+        BathroomTrainedLevel++;
+    }
+    private void DecreaseStatusBarsUI()
     {
         //loop the petStatusBarValue dictionary and access each PetStatusBar inside the tuple and decrease its fill by Time.deltaTime / 172800 (seconds in 48 hours) * depletionRate the Tuples Item2 which is the RateOverTime
         for (int i = 0; i <= PetStatusBarsValue.Count - 1; i++)
@@ -116,6 +123,21 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
                 PetStatusBarsValue[i] -= Time.deltaTime / LengthOfTime * PetStatusBarsValueMultiplier[i];
                 PetStatusBarsFill[i].fillAmount = PetStatusBarsValue[i];
             }
+        }
+    }
+    
+    private void updateStatusBarValuesFromList()
+    {
+        for (int i = 0; i <= PetStatusBarsValue.Count - 1; i++)
+        {
+
+            _happiness = PetStatusBarsValue[i];
+            _hunger = PetStatusBarsValue[i];
+            _thirst = PetStatusBarsValue[i];
+            _boredom = PetStatusBarsValue[i];
+            _bathroom = PetStatusBarsValue[i];
+            _energy = PetStatusBarsValue[i];
+            _cleanliness = PetStatusBarsValue[i];
         }
     }
     //SetStatusBarValue can be called to increase a status bars value. Examples woul be treats, toys, bowl of food, water, sleep ect.
@@ -244,40 +266,57 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
 
     private void DeterminState()
     {
-        // need IsInterruptibleState logic figured out. 
-        if (_thirst < .25f)
+        if (IsInterruptibleState)
         {
-            SetState(new PetStateThirsty(this));
-        }
+            if (_thirst < .25f)
+            {
+                Debug.Log("_thirst = "+ _thirst);
+                _currentState = CurrentState.thirst;
+                IsInterruptibleState = false;
+                StateChange.Invoke();
+                SetState(new PetStateThirsty(this));
+                InteruptableStateActivation(_bathroom, .25f);
+            }
 
-        else if (_hunger < .25f)
-        {
-            SetState(new PetStateHungry(this));
-        }
+            else if (_hunger < .25f)
+            {
+                Debug.Log("_hunger < .25f");
+                _currentState = CurrentState.hungry;
+                IsInterruptibleState = false;
+                StateChange.Invoke();
+                SetState(new PetStateHungry(this));
+                InteruptableStateActivation(_hunger, .25f);
+            }
 
-        if (_energy < .15f)
-        {
-            SetState(new PetStateTired(this));
-            IsInterruptibleState = false;
-            StartCoroutine(InteruptableStateActivation());
-        }
+            if (_energy < .15f)
+            {
+                Debug.Log("_energy < .15f");
+                _currentState = CurrentState.tired;
+                IsInterruptibleState = false;
+                StateChange.Invoke();
+                SetState(new PetStateTired(this));
+                StartCoroutine(InteruptableStateActivation(_energy, .25f));
+            }
 
-        else if (_bathroom < .15f)
-        {
-            SetState(new PetStateBathroom(this));
-        }
-
-        //for (int i = 0; i <= PetStatusBarsValue.Count - 1; i++)
-        //{
-        //    DeterminStateAlternativeVersion(PetStatusBarsValue[i]);
-        //}
+            else if (_bathroom < .15f)
+            {
+                Debug.Log("_bathroom < .15f");
+                _currentState = CurrentState.bathroom;
+                IsInterruptibleState = false;
+                StateChange.Invoke();
+                SetState(new PetStateBathroom(this));
+                InteruptableStateActivation(_bathroom, 1f);
+            }
+        }     
     }
-    private IEnumerator InteruptableStateActivation()
+
+    private IEnumerator InteruptableStateActivation(float statusBar, float ammount)
     {
-        while (_energy < .25f)
+        while (statusBar < ammount)
         {
             yield return InterruptibleStateWait;
         }
+        Debug.Log("InteruptableStateActivation: True");
         IsInterruptibleState = true;
     }
     //Relational Pattern implementation  of method DeterminState()
@@ -305,14 +344,14 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     }
     public void LoadData(ref GameData data)
     {
-        _happiness = data.Happiness;
-        _hunger = data.Hunger;
-        _thirst = data.Thirst;
-        _boredom = data.Boredom;
-        _bathroom = data.Bathroom;
-        _energy = data.Energy;
-        _cleanliness = data.Cleanliness;
-        _lastSavedTimed = data.LastSavedTime;
+        //_happiness = data.Happiness;
+        //_hunger = data.Hunger;
+        //_thirst = data.Thirst;
+        //_boredom = data.Boredom;
+        //_bathroom = data.Bathroom;
+        //_energy = data.Energy;
+        //_cleanliness = data.Cleanliness;
+        //_lastSavedTimed = data.LastSavedTime;
 
         //load fill rates to correct values and save and load PetStatusBarsValueMultiplier
     }

@@ -23,43 +23,62 @@ public class PetController : MonoBehaviour
     public Vector3 _petDestination = new Vector3();
     private WaitForSeconds _waitTime = new WaitForSeconds(2f);
 
+    //subscripe StopRandomDestination to PetBehaviourSystem state changes with an observer pattern
     [SerializeField]
     private PetInteractablesManager _petInteractionManager;
+
     private void Awake()
     {
         _pet = gameObject.GetComponent<NavMeshAgent>();
         _petTransform = gameObject.GetComponent<Transform>();
     }
-    private const string _walk = "walk", _walkLeft = "walk_left", _walkRight = "walk_right", _run = "run", _runLeft = "run_left", _runRight = "run_right", _sprint = "sprint", _sprintLeft = "sprint_left", 
-        _sprintRight = "sprint_right",_tailWag = "tail_wag", _tailWagBroad = "tail_wag_broad", _tailWagFast = "tail_wag_fast", _tailSleep = "tail_sleep", _tailScared = "tail_scared", _chew = "chew",
-        _chewOnObject = "chew_on_object", _closeMouth = "close_mouth",_yawn = "yawn", _headSniff = "head_sniff", _headShame = "head_shame";
+    //might be able to use scriptable object instead
+    private const string _walk = "walk", _walkLeft = "walk_left", _walkRight = "walk_right", _run = "run", _runLeft = "run_left", _runRight = "run_right", _sprint = "sprint", _sprintLeft = "sprint_left",
+        _sprintRight = "sprint_right", _tailWag = "tail_wag", _tailWagBroad = "tail_wag_broad", _tailWagFast = "tail_wag_fast", _tailSleep = "tail_sleep", _tailScared = "tail_scared", _chew = "chew",
+        _chewOnObject = "chew_on_object", _closeMouth = "close_mouth", _yawn = "yawn", _headSniff = "head_sniff", _headShame = "head_shame";
     private void Start()
     {
         _speed = (float)_destinationAnim;
     }
-
-    //subscribe or get call from the petBehviorSystem delegate call on a state change in that class. We either disable our state or enable it
-    public void SetDestination(Transform destinations)
+    private void OnEnable()
     {
+        PetBehaviorSystem.StateChange += StopRandomDestination;
+    }
+    private void OnDisable()
+    {
+        PetBehaviorSystem.StateChange -= StopRandomDestination;
+    }
+  
+    public void SetDestinationPosition(Transform destinations)
+    { 
         _petDestination = destinations.position;
+        SetDestinationPathCalculation(destinations);
     }
-    IEnumerator GoToDestination()
+    public void SetDestinationPathCalculation(Transform destinations)
     {
-        while (Mathf.Approximately(_pet.remainingDistance, 0f))
-        {
-            _pet.destination = _petDestination;
-            yield return null;
-        }
+        _pet.SetDestination(destinations.position);
     }
+    //IEnumerator GoToDestination()
+    //{
+    //    while (Mathf.Approximately(_pet.remainingDistance, 0f))
+    //    {
+    //        _pet.destination = _petDestination;
+    //        yield return null;
+    //    }
+    //}
 
-    public void NextDestinationTest()
+    public void StartRandomDestinations()
     {
-        InvokeRepeating("StartRandomDestination", 0f,24f);
+        InvokeRepeating("RandomDestination", 0f, 24f);
     }
-    public void StartRandomDestination()
+    public void RandomDestination()
     {
         _petDestination = RandomDestinationPosition();
         _pet.destination = _petDestination;
+    }
+    public void StopRandomDestination()
+    {
+        CancelInvoke("RandomDestination");
     }
     private Vector3 RandomDestinationPosition()
     {
@@ -73,15 +92,32 @@ public class PetController : MonoBehaviour
         else return transform.position;
         Debug.Log("_petInteractionManager.StaticObjectsOfCuriosity.Count is null, retuning new vector3(0,0,0)");
     }
-    public void ChangeAnimationState(string animation,int layer)
+ 
+    public void ChangeAnimationState(string animation, int layer)
     {
         if (CurrentAnimationState != animation)
         {
-            animator.CrossFade(animation,.25f,layer);
+            animator.CrossFade(animation, .25f, layer);
         }
     }
     private void HeadMovement()
     {
 
+    }
+    private void MovementAlternativeTest()//run in update loop
+    {
+        // Vector3 direction = transform.di
+        // float distance = Vector3.Distance(destination, transform.position);
+
+        // if(distance >0.1)
+        //{
+
+        //LookToward(destination,distance);
+        //float distanceBAsedSpeedModifier = GetSpeedModifier(distance);
+
+        // Vector3 movement = transform.forward * Time.deltaTime * distanceBAsedSpeedModifier;
+
+        //_pet.Move(movement);
+        // }
     }
 }

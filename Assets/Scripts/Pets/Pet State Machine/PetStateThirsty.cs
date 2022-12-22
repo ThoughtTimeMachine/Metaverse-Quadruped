@@ -10,9 +10,19 @@ public class PetStateThirsty : PetBehaviorState
 
     public override void Start()
     {
-        //you can set the state of the petBehaviourSystem to another state here
-
+        _petBehaviorSystem._petController.SetDestinationPosition(_petBehaviorSystem._petInteractionManager.Waterdish);
+        Debug.Log("Entered Thirsty State");
     }
 
+    public void OnTriggerEnter(Collider objectCollidedWith)
+    {
+        if (objectCollidedWith.tag == "WaterBowl")
+        {
+            if (_petBehaviorSystem._currentState == PetBehaviorSystem.CurrentState.thirst)
+            {
+                //Petcontroller.ChangeAnimationState()
+            }
+        }
+    }
 
 }
