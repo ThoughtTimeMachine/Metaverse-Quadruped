@@ -1,0 +1,132 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: German Shepherd All
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: German Shepherd Mesh
+    m_Weight: 1
+  - m_Path: GermanShepherd
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd L Thigh
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd L Thigh/GermanShepherd
+      L Calf
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd L Thigh/GermanShepherd
+      L Calf/GermanShepherd L Foot
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd L Thigh/GermanShepherd
+      L Calf/GermanShepherd L Foot/GermanShepherd L Toe0
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd R Thigh
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd R Thigh/GermanShepherd
+      R Calf
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd R Thigh/GermanShepherd
+      R Calf/GermanShepherd R Foot
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd R Thigh/GermanShepherd
+      R Calf/GermanShepherd R Foot/GermanShepherd R Toe0
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd L Clavicle
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd L Clavicle/GermanShepherd L UpperArm
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd L Clavicle/GermanShepherd L UpperArm/GermanShepherd
+      L Forearm
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd L Clavicle/GermanShepherd L UpperArm/GermanShepherd
+      L Forearm/GermanShepherd L Hand
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd Neck
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd Neck/GermanShepherd Head
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd Neck/GermanShepherd Head/GermanShepherd
+      Jaw
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd Neck/GermanShepherd Head/GermanShepherd
+      L Cheek
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd Neck/GermanShepherd Head/GermanShepherd
+      L Ear
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd Neck/GermanShepherd Head/GermanShepherd
+      L Eye
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd Neck/GermanShepherd Head/GermanShepherd
+      Nose
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd Neck/GermanShepherd Head/GermanShepherd
+      R Cheek
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd Neck/GermanShepherd Head/GermanShepherd
+      R Ear
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd Neck/GermanShepherd Head/GermanShepherd
+      R Eye
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd Neck/GermanShepherd Neck Fur
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd Neck/GermanShepherd Tag
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd R Clavicle
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd R Clavicle/GermanShepherd R UpperArm
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd R Clavicle/GermanShepherd R UpperArm/GermanShepherd
+      R Forearm
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Spine/GermanShepherd
+      Spine1/GermanShepherd Spine2/GermanShepherd R Clavicle/GermanShepherd R UpperArm/GermanShepherd
+      R Forearm/GermanShepherd R Hand
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Tail
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Tail/GermanShepherd
+      Tail02
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Tail/GermanShepherd
+      Tail02/GermanShepherd Tail03
+    m_Weight: 1
+  - m_Path: GermanShepherd/GermanShepherd Pelvis/GermanShepherd Tail/GermanShepherd
+      Tail02/GermanShepherd Tail03/GermanShepherd Tail04
+    m_Weight: 1

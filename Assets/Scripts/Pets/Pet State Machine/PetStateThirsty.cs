@@ -20,6 +20,7 @@ public class PetStateThirsty : PetBehaviorState
         {
             if (_petBehaviorSystem._currentState == PetBehaviorSystem.CurrentState.thirst)
             {
+                Debug.Log("Collided With Water Bowl");
                 //Petcontroller.ChangeAnimationState()
             }
         }

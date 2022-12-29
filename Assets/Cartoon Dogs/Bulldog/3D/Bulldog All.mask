@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Bulldog All
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Bulldog
+    m_Weight: 1
+  - m_Path: Bulldog 1
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog L Thigh
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog L Thigh/Bulldog L Calf
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog L Thigh/Bulldog L Calf/Bulldog L Foot
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog L Thigh/Bulldog L Calf/Bulldog L Foot/Bulldog
+      L Toe0
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog R Thigh
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog R Thigh/Bulldog R Calf
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog R Thigh/Bulldog R Calf/Bulldog R Foot
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog R Thigh/Bulldog R Calf/Bulldog R Foot/Bulldog
+      R Toe0
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      L Clavicle
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      L Clavicle/Bulldog L UpperArm
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      L Clavicle/Bulldog L UpperArm/Bulldog L Forearm
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      L Clavicle/Bulldog L UpperArm/Bulldog L Forearm/Bulldog L Hand
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      Neck
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      Neck/Bulldog Head
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      Neck/Bulldog Head/Bulldog Jaw
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      Neck/Bulldog Head/Bulldog L Ear
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      Neck/Bulldog Head/Bulldog L Ear/Bulldog L Ear02
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      Neck/Bulldog Head/Bulldog L Eye
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      Neck/Bulldog Head/Bulldog L Mouth
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      Neck/Bulldog Head/Bulldog Nose
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      Neck/Bulldog Head/Bulldog R Ear
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      Neck/Bulldog Head/Bulldog R Ear/Bulldog R Ear02
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      Neck/Bulldog Head/Bulldog R Eye
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      Neck/Bulldog Head/Bulldog R Mouth
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      R Clavicle
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      R Clavicle/Bulldog R UpperArm
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      R Clavicle/Bulldog R UpperArm/Bulldog R Forearm
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      R Clavicle/Bulldog R UpperArm/Bulldog R Forearm/Bulldog R Hand
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Spine/Bulldog Spine1/Bulldog Spine2/Bulldog
+      Tag
+    m_Weight: 1
+  - m_Path: Bulldog 1/Bulldog Pelvis/Bulldog Tail
+    m_Weight: 1

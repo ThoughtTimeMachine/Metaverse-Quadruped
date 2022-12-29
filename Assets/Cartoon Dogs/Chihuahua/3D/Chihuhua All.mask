@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Chihuhua All
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Chihuahua
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua L Thigh
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua L Thigh/Chihuahua L Calf
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua L Thigh/Chihuahua L Calf/Chihuahua
+      L Foot
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua L Thigh/Chihuahua L Calf/Chihuahua
+      L Foot/Chihuahua L Toe0
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua R Thigh
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua R Thigh/Chihuahua R Calf
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua R Thigh/Chihuahua R Calf/Chihuahua
+      R Foot
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua R Thigh/Chihuahua R Calf/Chihuahua
+      R Foot/Chihuahua R Toe0
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua L Clavicle
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua L Clavicle/Chihuahua L UpperArm
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua L Clavicle/Chihuahua L UpperArm/Chihuahua L Forearm
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua L Clavicle/Chihuahua L UpperArm/Chihuahua L Forearm/Chihuahua
+      L Hand
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua Neck
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua Neck/Chihuahua Head
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua Neck/Chihuahua Head/Chihuahua Hair
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua Neck/Chihuahua Head/Chihuahua Jaw
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua Neck/Chihuahua Head/Chihuahua L Ear
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua Neck/Chihuahua Head/Chihuahua L Ear/Chihuahua L Ear02
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua Neck/Chihuahua Head/Chihuahua L Eye
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua Neck/Chihuahua Head/Chihuahua Nose
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua Neck/Chihuahua Head/Chihuahua R Ear
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua Neck/Chihuahua Head/Chihuahua R Ear/Chihuahua R Ear02
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua Neck/Chihuahua Head/Chihuahua R Eye
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua R Clavicle
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua R Clavicle/Chihuahua R UpperArm
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua R Clavicle/Chihuahua R UpperArm/Chihuahua R Forearm
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua R Clavicle/Chihuahua R UpperArm/Chihuahua R Forearm/Chihuahua
+      R Hand
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Spine/Chihuahua Spine1/Chihuahua
+      Spine2/Chihuahua Tag
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Tail
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Tail/Chihuahua Tail02
+    m_Weight: 1
+  - m_Path: Chihuahua/Chihuahua Pelvis/Chihuahua Tail/Chihuahua Tail02/Chihuahua
+      Tail03
+    m_Weight: 1
+  - m_Path: Chihuahua Mesh
+    m_Weight: 1

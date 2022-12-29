@@ -1,0 +1,123 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Dachshund All
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Dachshund
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund L Thigh
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund L Thigh/Dachshund L Calf
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund L Thigh/Dachshund L Calf/Dachshund
+      L Foot
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund L Thigh/Dachshund L Calf/Dachshund
+      L Foot/Dachshund L Toe0
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund R Thigh
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund R Thigh/Dachshund R Calf
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund R Thigh/Dachshund R Calf/Dachshund
+      R Foot
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund R Thigh/Dachshund R Calf/Dachshund
+      R Foot/Dachshund R Toe0
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund L Clavicle
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund L Clavicle/Dachshund L UpperArm
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund L Clavicle/Dachshund L UpperArm/Dachshund L Forearm
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund L Clavicle/Dachshund L UpperArm/Dachshund L Forearm/Dachshund
+      L Hand
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund Neck
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund Neck/Dachshund Head
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund Neck/Dachshund Head/Dachshund Jaw
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund Neck/Dachshund Head/Dachshund L Ear
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund Neck/Dachshund Head/Dachshund L Ear/Dachshund L Ear02
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund Neck/Dachshund Head/Dachshund L Ear/Dachshund L Ear02/Dachshund
+      L Ear03
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund Neck/Dachshund Head/Dachshund L Eye
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund Neck/Dachshund Head/Dachshund Nose
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund Neck/Dachshund Head/Dachshund R Ear
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund Neck/Dachshund Head/Dachshund R Ear/Dachshund R Ear02
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund Neck/Dachshund Head/Dachshund R Ear/Dachshund R Ear02/Dachshund
+      R Ear03
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund Neck/Dachshund Head/Dachshund R Eye
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund Neck/Dachshund Tag
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund R Clavicle
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund R Clavicle/Dachshund R UpperArm
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund R Clavicle/Dachshund R UpperArm/Dachshund R Forearm
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Spine/Dachshund Spine1/Dachshund
+      Spine2/Dachshund R Clavicle/Dachshund R UpperArm/Dachshund R Forearm/Dachshund
+      R Hand
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Tail
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Tail/Dachshund Tail02
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Tail/Dachshund Tail02/Dachshund
+      Tail03
+    m_Weight: 1
+  - m_Path: Dachshund/Dachshund Pelvis/Dachshund Tail/Dachshund Tail02/Dachshund
+      Tail03/Dachshund Tail04
+    m_Weight: 1
+  - m_Path: Dachshund Mesh
+    m_Weight: 1

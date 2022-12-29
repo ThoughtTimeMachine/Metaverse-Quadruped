@@ -1,0 +1,912 @@
+fileFormatVersion: 2
+guid: f67adc1ad9fa2ba4ca24cd6fe37c7a2c
+ModelImporter:
+  serializedVersion: 20101
+  internalIDToNameTable:
+  - first:
+      74: 1827226128182048838
+    second: Corgi Jump Up
+  - first:
+      74: -6505773188329418368
+    second: Corgi Air Flip
+  - first:
+      74: 1404248589523081164
+    second: Corgi Fall
+  - first:
+      74: 2301217937730130154
+    second: Corgi Land
+  externalObjects: {}
+  materials:
+    materialImportMode: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Corgi Jump Up
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Corgi
+        weight: 1
+      - path: Corgi/Corgi Pelvis
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi L Thigh
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi L Thigh/Corgi L Calf
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi L Thigh/Corgi L Calf/Corgi L Foot
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi L Thigh/Corgi L Calf/Corgi L Foot/Corgi L
+          Toe0
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi R Thigh
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi R Thigh/Corgi R Calf
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi R Thigh/Corgi R Calf/Corgi R Foot
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi R Thigh/Corgi R Calf/Corgi R Foot/Corgi R
+          Toe0
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi L Clavicle
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi L Clavicle/Corgi
+          L UpperArm
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi L Clavicle/Corgi
+          L UpperArm/Corgi L Forearm
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi L Clavicle/Corgi
+          L UpperArm/Corgi L Forearm/Corgi L Hand
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi Jaw
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi L Ear
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi L Ear/Corgi L Ear02
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi L Eye
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi Nose
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi R Ear
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi R Ear/Corgi R Ear02
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi R Eye
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi R Clavicle
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi R Clavicle/Corgi
+          R UpperArm
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi R Clavicle/Corgi
+          R UpperArm/Corgi R Forearm
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi R Clavicle/Corgi
+          R UpperArm/Corgi R Forearm/Corgi R Hand
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Tag
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Tail
+        weight: 1
+      - path: Corgi Mesh
+        weight: 1
+      maskType: 1
+      maskSource: {fileID: 31900000, guid: 91adce51c5a68bc4cac36394beecb623, type: 2}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Corgi Air Flip
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 35
+      lastFrame: 55
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Corgi
+        weight: 1
+      - path: Corgi/Corgi Pelvis
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi L Thigh
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi L Thigh/Corgi L Calf
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi L Thigh/Corgi L Calf/Corgi L Foot
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi L Thigh/Corgi L Calf/Corgi L Foot/Corgi L
+          Toe0
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi R Thigh
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi R Thigh/Corgi R Calf
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi R Thigh/Corgi R Calf/Corgi R Foot
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi R Thigh/Corgi R Calf/Corgi R Foot/Corgi R
+          Toe0
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi L Clavicle
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi L Clavicle/Corgi
+          L UpperArm
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi L Clavicle/Corgi
+          L UpperArm/Corgi L Forearm
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi L Clavicle/Corgi
+          L UpperArm/Corgi L Forearm/Corgi L Hand
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi Jaw
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi L Ear
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi L Ear/Corgi L Ear02
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi L Eye
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi Nose
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi R Ear
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi R Ear/Corgi R Ear02
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi R Eye
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi R Clavicle
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi R Clavicle/Corgi
+          R UpperArm
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi R Clavicle/Corgi
+          R UpperArm/Corgi R Forearm
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi R Clavicle/Corgi
+          R UpperArm/Corgi R Forearm/Corgi R Hand
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Tag
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Tail
+        weight: 1
+      - path: Corgi Mesh
+        weight: 1
+      maskType: 1
+      maskSource: {fileID: 31900000, guid: 91adce51c5a68bc4cac36394beecb623, type: 2}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Corgi Fall
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 60
+      lastFrame: 90
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Corgi
+        weight: 1
+      - path: Corgi/Corgi Pelvis
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi L Thigh
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi L Thigh/Corgi L Calf
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi L Thigh/Corgi L Calf/Corgi L Foot
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi L Thigh/Corgi L Calf/Corgi L Foot/Corgi L
+          Toe0
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi R Thigh
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi R Thigh/Corgi R Calf
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi R Thigh/Corgi R Calf/Corgi R Foot
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi R Thigh/Corgi R Calf/Corgi R Foot/Corgi R
+          Toe0
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi L Clavicle
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi L Clavicle/Corgi
+          L UpperArm
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi L Clavicle/Corgi
+          L UpperArm/Corgi L Forearm
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi L Clavicle/Corgi
+          L UpperArm/Corgi L Forearm/Corgi L Hand
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi Jaw
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi L Ear
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi L Ear/Corgi L Ear02
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi L Eye
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi Nose
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi R Ear
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi R Ear/Corgi R Ear02
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi R Eye
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi R Clavicle
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi R Clavicle/Corgi
+          R UpperArm
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi R Clavicle/Corgi
+          R UpperArm/Corgi R Forearm
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi R Clavicle/Corgi
+          R UpperArm/Corgi R Forearm/Corgi R Hand
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Tag
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Tail
+        weight: 1
+      - path: Corgi Mesh
+        weight: 1
+      maskType: 1
+      maskSource: {fileID: 31900000, guid: 91adce51c5a68bc4cac36394beecb623, type: 2}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Corgi Land
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 95
+      lastFrame: 120
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Corgi
+        weight: 1
+      - path: Corgi/Corgi Pelvis
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi L Thigh
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi L Thigh/Corgi L Calf
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi L Thigh/Corgi L Calf/Corgi L Foot
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi L Thigh/Corgi L Calf/Corgi L Foot/Corgi L
+          Toe0
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi R Thigh
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi R Thigh/Corgi R Calf
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi R Thigh/Corgi R Calf/Corgi R Foot
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi R Thigh/Corgi R Calf/Corgi R Foot/Corgi R
+          Toe0
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi L Clavicle
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi L Clavicle/Corgi
+          L UpperArm
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi L Clavicle/Corgi
+          L UpperArm/Corgi L Forearm
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi L Clavicle/Corgi
+          L UpperArm/Corgi L Forearm/Corgi L Hand
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi Jaw
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi L Ear
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi L Ear/Corgi L Ear02
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi L Eye
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi Nose
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi R Ear
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi R Ear/Corgi R Ear02
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Neck/Corgi
+          Head/Corgi R Eye
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi R Clavicle
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi R Clavicle/Corgi
+          R UpperArm
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi R Clavicle/Corgi
+          R UpperArm/Corgi R Forearm
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi R Clavicle/Corgi
+          R UpperArm/Corgi R Forearm/Corgi R Hand
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Spine/Corgi Spine1/Corgi Spine2/Corgi Tag
+        weight: 1
+      - path: Corgi/Corgi Pelvis/Corgi Tail
+        weight: 1
+      - path: Corgi Mesh
+        weight: 1
+      maskType: 1
+      maskSource: {fileID: 31900000, guid: 91adce51c5a68bc4cac36394beecb623, type: 2}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human:
+    - boneName: Corgi Pelvis
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi L Thigh
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi R Thigh
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi L Calf
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi R Calf
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi L Foot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi R Foot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi Spine
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi Spine1
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi Neck
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi Head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi L Clavicle
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi R Clavicle
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi L UpperArm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi R UpperArm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi L Forearm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi R Forearm
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi L Hand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi R Hand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Corgi Spine2
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: Corgi(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0.00000043981888, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Corgi
+      parentName: Corgi(Clone)
+      position: {x: -0.000000007680018, y: 0.2833943, z: -0.17569834}
+      rotation: {x: -0.50000036, y: 0.49999964, z: 0.49999964, w: 0.50000036}
+      scale: {x: 0.99999994, y: 0.99999994, z: 1}
+    - name: Corgi Pelvis
+      parentName: Corgi
+      position: {x: -0.17569834, y: -0.0000000967876, z: 0}
+      rotation: {x: 0.5, y: -0.5, z: -0.5, w: -0.5}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Corgi L Thigh
+      parentName: Corgi Pelvis
+      position: {x: 0.000000114440915, y: 0.0000001335144, z: 0.08020578}
+      rotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+      scale: {x: 1, y: 1.0000005, z: 1}
+    - name: Corgi L Calf
+      parentName: Corgi L Thigh
+      position: {x: -0.14455898, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000002, y: 1.0000001, z: 1.0000001}
+    - name: Corgi L Foot
+      parentName: Corgi L Calf
+      position: {x: -0.08785073, y: 0, z: -0.000000009536743}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000004, y: 1.0000005, z: 1.0000004}
+    - name: Corgi L Toe0
+      parentName: Corgi L Foot
+      position: {x: -0.04783178, y: 0.061557386, z: 0.000000019073486}
+      rotation: {x: 0, y: 0, z: 0.7071068, w: -0.7071068}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: Corgi R Thigh
+      parentName: Corgi Pelvis
+      position: {x: -0.000000114440915, y: -0.000000095367426, z: -0.08020578}
+      rotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+      scale: {x: 1, y: 0.99999994, z: 0.9999998}
+    - name: Corgi R Calf
+      parentName: Corgi R Thigh
+      position: {x: -0.14455897, y: -0.000000019073486, z: -0.000000009536743}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000004, y: 1.0000008, z: 1.0000005}
+    - name: Corgi R Foot
+      parentName: Corgi R Calf
+      position: {x: -0.08785072, y: 0.000000019073486, z: 0.000000009536743}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.9999999, y: 0.9999997, z: 0.99999976}
+    - name: Corgi R Toe0
+      parentName: Corgi R Foot
+      position: {x: -0.04783178, y: 0.061557386, z: 0}
+      rotation: {x: 0, y: 0, z: 0.7071068, w: -0.7071068}
+      scale: {x: 1.0000004, y: 0.9999999, z: 0.99999976}
+    - name: Corgi Spine
+      parentName: Corgi Pelvis
+      position: {x: 0.00004919052, y: 0.038713027, z: -0.00000017002952}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.99999994, y: 0.9999999, z: 0.99999994}
+    - name: Corgi Spine1
+      parentName: Corgi Spine
+      position: {x: -0.12223324, y: -0.00009666443, z: -2.343586e-10}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000002, y: 1.0000004, z: 1.0000001}
+    - name: Corgi Spine2
+      parentName: Corgi Spine1
+      position: {x: -0.12223424, y: -0.000096778866, z: -2.3428584e-10}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.99999976, y: 0.9999996, z: 0.9999999}
+    - name: Corgi L Clavicle
+      parentName: Corgi Spine2
+      position: {x: -0.07072902, y: -0.04699209, z: 0.02258465}
+      rotation: {x: 0.7071068, y: -0.000000030908623, z: -0.7071068, w: 0.000000030908623}
+      scale: {x: 1, y: 1.0000001, z: 0.9999999}
+    - name: Corgi L UpperArm
+      parentName: Corgi L Clavicle
+      position: {x: -0.1383476, y: 0.000000019545313, z: 0}
+      rotation: {x: -0.31470478, y: 0.000000013756183, z: -0.00000004470348, w: 0.9491896}
+      scale: {x: 0.9999999, y: 1.0000001, z: 1.0000004}
+    - name: Corgi L Forearm
+      parentName: Corgi L UpperArm
+      position: {x: -0.12835829, y: 0.0000012502104, z: -0.000002078527}
+      rotation: {x: -0.12387535, y: 0.000000004956298, z: -0.000000016213564, w: 0.99229777}
+      scale: {x: 0.99999976, y: 0.9999999, z: 0.9999998}
+    - name: Corgi L Hand
+      parentName: Corgi L Forearm
+      position: {x: -0.06320694, y: 0.000005157569, z: -0.000002156934}
+      rotation: {x: 0.3116716, y: -0.000000037845926, z: 0.000000024763654, w: -0.95018995}
+      scale: {x: 1.0000005, y: 1.0000011, z: 1.0000006}
+    - name: Corgi Neck
+      parentName: Corgi Spine2
+      position: {x: -0.14047591, y: 0.00004802704, z: -0.000000046065832}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 0.99999994}
+    - name: Corgi Head
+      parentName: Corgi Neck
+      position: {x: -0.097805634, y: -0.04049739, z: -0.00000023794746}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000002, y: 0.9999999, z: 1}
+    - name: Corgi Jaw
+      parentName: Corgi Head
+      position: {x: -0.019394493, y: 0.058695886, z: 0.00000007993338}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1.0000002, z: 1.0000001}
+    - name: Corgi L Ear
+      parentName: Corgi Head
+      position: {x: -0.13189857, y: -0.017511977, z: 0.10593274}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: Corgi L Ear02
+      parentName: Corgi L Ear
+      position: {x: -0.09438862, y: -0.00007518768, z: -0.000000038146972}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 0.9999998, z: 0.9999999}
+    - name: Corgi L Eye
+      parentName: Corgi Head
+      position: {x: -0.08145763, y: 0.14626084, z: 0.050995693}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1.0000002, z: 0.9999998}
+    - name: Corgi Nose
+      parentName: Corgi Head
+      position: {x: -0.019518012, y: 0.2928628, z: 0.0000003979537}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: Corgi R Ear
+      parentName: Corgi Head
+      position: {x: -0.13189857, y: -0.017511368, z: -0.105932854}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.9999999, y: 1.0000002, z: 0.9999999}
+    - name: Corgi R Ear02
+      parentName: Corgi R Ear
+      position: {x: -0.09438862, y: -0.00007514953, z: 0.000000038146972}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000005, y: 1, z: 1.0000001}
+    - name: Corgi R Eye
+      parentName: Corgi Head
+      position: {x: -0.08145763, y: 0.14626116, z: -0.050994888}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.9999998, y: 0.99999964, z: 1}
+    - name: Corgi R Clavicle
+      parentName: Corgi Spine2
+      position: {x: -0.07072903, y: -0.046991978, z: -0.022584908}
+      rotation: {x: 0.7071068, y: -0.000000030908623, z: 0.7071068, w: -0.000000030908623}
+      scale: {x: 1.0000007, y: 1.0000002, z: 1.0000006}
+    - name: Corgi R UpperArm
+      parentName: Corgi R Clavicle
+      position: {x: -0.13834731, y: -0.00000001770761, z: 0.000000014901153}
+      rotation: {x: 0.24122089, y: -0.000000040346414, z: -0.000000096857526, w: 0.9704702}
+      scale: {x: 1, y: 0.99999994, z: 0.9999999}
+    - name: Corgi R Forearm
+      parentName: Corgi R UpperArm
+      position: {x: -0.12835757, y: 0.00000072397694, z: 0.0000015265772}
+      rotation: {x: 0.14886229, y: 0.000000029363493, z: -0.000000037631327, w: 0.9888579}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: Corgi R Hand
+      parentName: Corgi R Forearm
+      position: {x: -0.06320729, y: 0.000000011853446, z: -0.000000017271102}
+      rotation: {x: 0.41099167, y: 0.00000006220296, z: -0.00000001237936, w: 0.9116391}
+      scale: {x: 1, y: 1.0000005, z: 1.0000001}
+    - name: Corgi Tag
+      parentName: Corgi Spine2
+      position: {x: -0.19783287, y: 0.19867843, z: 0.0000007264701}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000008, y: 1.0000004, z: 1}
+    - name: Corgi Tail
+      parentName: Corgi Pelvis
+      position: {x: -0.049686622, y: -0.07359506, z: 0.0000002752595}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 0.9999999, y: 1, z: 0.99999994}
+    - name: Corgi Mesh
+      parentName: Corgi(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 1
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 414c9025169798b4e8ca462779b8986f, type: 3}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 3
+  humanoidOversampling: 1
+  avatarSetup: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
