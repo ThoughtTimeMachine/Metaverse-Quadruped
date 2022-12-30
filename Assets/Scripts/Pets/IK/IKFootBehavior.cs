@@ -23,7 +23,7 @@ public class IKFootBehavior : MonoBehaviour
     public float _maxHitDistance = 5f; //can adjust this value of not working properly
     public float _addedHeight = 2.25f;
     private bool[] _allGroundSpherecastHits;
-    private LayerMask _hitLayer;
+    //private LayerMask _hitLayer;
     private Vector3[] _allHitNormals;
     private float angleAboutX;
     private float angleAboutZ;
@@ -31,8 +31,11 @@ public class IKFootBehavior : MonoBehaviour
     public float spherecastRadius = .2f;
     [SerializeField] private Animator _animator;
     private float[] _allFootWeights;
-    private Vector3 averageHitNormal;
-
+    private Vector3 _averageHitNormal;
+    [SerializeField, Range(-0.5f, 2)] private float _upperFootYLimit = 0.3f;
+    [SerializeField, Range(-2, 0.5f)] private float _lowerFootYLimit = -0.1f;
+    private int[] checkLocalTargetY;
+    private CapsuleCollider _capsulCollider;
 
     void Start()
     {
@@ -58,6 +61,10 @@ public class IKFootBehavior : MonoBehaviour
 
         _allHitNormals = new Vector3[4];
         _allFootWeights = new float[4];
+
+        checkLocalTargetY = new int[4];
+
+        _capsulCollider = GetComponent<CapsuleCollider>();
     }
 
 
@@ -66,10 +73,11 @@ public class IKFootBehavior : MonoBehaviour
     {
         RotateCharacterFeet();
         RotateCharactertBody();
+        CharacterHeightAdjustment();
     }
 
     //We could also create a method that we can switch too if the pet is playing with a toy with his paws to project the corret angle the paw should be at
-    private void CheckGroundBelow(out Vector3 hitPoint, out bool gotGroundSphearcastHit, out Vector3 hitNormal, out LayerMask _hitLayer, out float currentHitDistance, Transform objectTransform, int checkForLayerMask, float maxHitDistance, float addedHeight)
+    private void CheckGroundBelow(out Vector3 hitPoint, out bool gotGroundSphearcastHit, out Vector3 hitNormal, out LayerMask hitLayer, out float currentHitDistance, Transform objectTransform, int checkForLayerMask, float maxHitDistance, float addedHeight)
     {
         RaycastHit hit;
         Vector3 startSpherecast = objectTransform.position + new Vector3(0f, addedHeight, 0f);
@@ -78,7 +86,7 @@ public class IKFootBehavior : MonoBehaviour
             Debug.LogError("Layer Does Not Exist for walking on hit Layer");
             gotGroundSphearcastHit = false;
             currentHitDistance = 0f;
-            _hitLayer = LayerMask.NameToLayer("Pet");
+            hitLayer = LayerMask.NameToLayer("Pet");
             hitNormal = Vector3.up;
             hitPoint = objectTransform.position;
         }
@@ -87,7 +95,7 @@ public class IKFootBehavior : MonoBehaviour
             int layerMask = (1 << checkForLayerMask);
             if (Physics.SphereCast(startSpherecast, spherecastRadius, Vector3.down, out hit, maxHitDistance, layerMask, QueryTriggerInteraction.UseGlobal))//might be able to use raycast instead since the foot point is tiny and not a wide foot
             {
-                _hitLayer = hit.transform.gameObject.layer;
+                hitLayer = hit.transform.gameObject.layer;
                 currentHitDistance = hit.distance - addedHeight;
                 hitNormal = hit.normal;
                 gotGroundSphearcastHit = true;
@@ -97,7 +105,7 @@ public class IKFootBehavior : MonoBehaviour
             {
                 gotGroundSphearcastHit = false;
                 currentHitDistance = 0f;
-                _hitLayer = LayerMask.NameToLayer("Pet");
+                hitLayer = LayerMask.NameToLayer("Pet");
                 hitNormal = Vector3.up;
                 hitPoint = objectTransform.position;
             }
@@ -129,7 +137,7 @@ public class IKFootBehavior : MonoBehaviour
         {
             _allFootIkConstraints[i].weight = _allFootWeights[i];
 
-            CheckGroundBelow(out Vector3 hitPoint, out _allGroundSpherecastHits[i], out Vector3 hitNormal, out _hitLayer, out _, _allFootTransforms[i], _groundLayerMask, _maxHitDistance, _addedHeight);
+            CheckGroundBelow(out Vector3 hitPoint, out _allGroundSpherecastHits[i], out Vector3 hitNormal, out LayerMask hitLayer, out _, _allFootTransforms[i], _groundLayerMask, _maxHitDistance, _addedHeight);
             _allHitNormals[i] = hitNormal;
 
             if (_allGroundSpherecastHits[i] == true)
@@ -167,9 +175,9 @@ public class IKFootBehavior : MonoBehaviour
             averageHitNormalY = _allHitNormals[i].y;
             averageHitNormalZ = _allHitNormals[i].z;
         }
-        averageHitNormal = new Vector3(averageHitNormalX / 4, averageHitNormalY / 4, averageHitNormalZ / 4).normalized;
+        _averageHitNormal = new Vector3(averageHitNormalX / 4, averageHitNormalY / 4, averageHitNormalZ / 4).normalized;
 
-        ProjectedAxisAngles(out angleAboutX, out angleAboutZ, transform, averageHitNormal);
+        ProjectedAxisAngles(out angleAboutX, out angleAboutZ, transform, _averageHitNormal);
 
         float maxRotationX = 50f;
         float maxRotationZ = 20f;
@@ -207,5 +215,45 @@ public class IKFootBehavior : MonoBehaviour
         float bodyEulerZ = Mathf.MoveTowardsAngle(0, angleAboutZ, _maxRotationStep);
 
         transform.eulerAngles = new Vector3(transform.eulerAngles.x + bodyEulerX, transform.eulerAngles.y, transform.eulerAngles.z + angleAboutZ);
+    }
+
+    private void CharacterHeightAdjustment()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (_allTargetTransforms[i].localPosition.y < _upperFootYLimit && _allTargetTransforms[i].localPosition.y > _lowerFootYLimit)
+            {
+                checkLocalTargetY[i] = 0;
+            }
+            else if (_allTargetTransforms[i].localPosition.y > _upperFootYLimit)
+            {
+                //squishy leg
+                checkLocalTargetY[i] = 1;
+            }
+            else
+            {
+                //stretchy leg
+                checkLocalTargetY[i] = -1;
+            }
+        }
+        if (checkLocalTargetY[0] == 1 && checkLocalTargetY[2] == 1 || checkLocalTargetY[1] == 1 && checkLocalTargetY[3] == 1)
+        {
+            if (_capsulCollider.center.y > -0.12f)
+            {
+                _capsulCollider.center -= new Vector3(0f, 0.5f, 0f);
+            }
+            else
+            {
+                _capsulCollider.center = new Vector3(0f, 3.4f, 0f);
+            }
+
+        }
+        else if (checkLocalTargetY[0] == -1 && checkLocalTargetY[2] == -1 || checkLocalTargetY[1] == -1 && checkLocalTargetY[3] == -1)
+        {
+            if (_capsulCollider.center.y < 0.48f)
+            {
+                _capsulCollider.center += new Vector3(0f, 0.5f, 0f);
+            }
+        }
     }
 }
