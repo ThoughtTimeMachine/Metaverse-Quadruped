@@ -85,6 +85,7 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     {
         DecreaseStatusBarsUI();//possible use coroutine instead if its more performant.
         updateStatusBarValuesFromList();
+
         if (IsInterruptibleState)
         {
             DeterminState();

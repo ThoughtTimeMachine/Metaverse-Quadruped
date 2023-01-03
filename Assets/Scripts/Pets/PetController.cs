@@ -69,14 +69,14 @@ public class PetController : MonoBehaviour
 
     public void StartRandomDestinations()
     {
-        InvokeRepeating("RandomDestination", 0f, 24f);
+        InvokeRepeating("RandomDestination", 0f, 15f);
     }
     public void RandomDestination()
     {
         _petDestination = RandomDestinationPosition();
         _pet.destination = _petDestination;
     }
-    public void StopRandomDestination()
+    public void StopRandomDestination()//if you whistle/ call the dogs name or other interuptable process
     {
         CancelInvoke("RandomDestination");
     }
@@ -100,9 +100,12 @@ public class PetController : MonoBehaviour
             animator.CrossFade(animation, .25f, layer);
         }
     }
-    private void HeadMovement()
+    public void CatchObject(Transform obj)
     {
-
+        //if standing/sitting in place rotate head to target and chomp when at correct distance
+        //if sitting and objects at distance above our jump path:
+        //changeAnimationState to jump(have min and max range for jump height)
+        //rotate body and 
     }
     private void MovementAlternativeTest()//run in update loop
     {
