@@ -100,13 +100,7 @@ public class PetController : MonoBehaviour
             animator.CrossFade(animation, .25f, layer);
         }
     }
-    public void CatchObject(Transform obj)
-    {
-        //if standing/sitting in place rotate head to target and chomp when at correct distance
-        //if sitting and objects at distance above our jump path:
-        //changeAnimationState to jump(have min and max range for jump height)
-        //rotate body and 
-    }
+ 
     private void MovementAlternativeTest()//run in update loop
     {
         // Vector3 direction = transform.di
@@ -123,4 +117,5 @@ public class PetController : MonoBehaviour
         //_pet.Move(movement);
         // }
     }
+
 }
