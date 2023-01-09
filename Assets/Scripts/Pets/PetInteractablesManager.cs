@@ -13,15 +13,16 @@ public class PetInteractablesManager : Singleton<PetInteractablesManager>
     public List<Transform> StaticObjectsOfCuriosity = new List<Transform>();
 
 
-    public Transform Pet { get; private set; }
+    public Transform Pet; // { get; private set; }
     public Transform Waterdish { get; private set; }
     public Transform FoodDish { get; private set; }
 
     public int? ActiveToy;//unassign after exiting interaction with object
     public int? ActiveFood;//unassign after exiting interaction with object
-    public Transform ActiveObjectOfInterest { get; private set; }
+    public static Transform ActiveObjectOfInterest { get; private set; }
 
     [SerializeField] private Transform _toyInstantiationPosition;
+    [SerializeField] private Transform _toyInstantiationParent;
     private void Awake()
     {
         Waterdish = GameObject.FindGameObjectWithTag("WaterBowl").transform;
@@ -31,10 +32,16 @@ public class PetInteractablesManager : Singleton<PetInteractablesManager>
     public void CreateToy(GameObject myPrefab)
     {
         GameObject petToy;
-        petToy = Instantiate(myPrefab, _toyInstantiationPosition.position, Quaternion.identity);
-        Toys.Add(myPrefab.name, petToy.transform);          
+        //petToy = Instantiate(myPrefab, _toyInstantiationPosition.position, Quaternion.identity);
+        petToy = Instantiate(myPrefab, _toyInstantiationParent);
+        petToy.transform.localPosition = Vector3.zero;
+        Toys.Add(myPrefab.name, petToy.transform);
+        //petToy.transform.SetParent(_toyInstantiationParent);
+
+        //set the ActiveObjectOfInterest to the new toy we initialized
+        ActiveObjectOfInterest = petToy.transform;
     }
-  
+
     public void CreateFood()
     {
         //create object/ instantiate prefab, add components needed if any then add to list 
@@ -83,17 +90,26 @@ public class PetInteractablesManager : Singleton<PetInteractablesManager>
     }
     public void SetTargetToNearestToy()
     {
-        var shortestDistance = Mathf.Infinity;
-        for (var i = 0; i < Toys.Count; i++)
+        if (Toys.Count > 0)
         {
-          
-            var distance = Vector3.Distance(Pet.position, Toys.ElementAt(i).Value.position);
-            if (distance < shortestDistance)
+            var shortestDistance = Mathf.Infinity;
+            for (var i = 0; i < Toys.Count; i++)
             {
-                shortestDistance = distance;
-                ActiveFood = i;
-                ActiveObjectOfInterest = Toys.ElementAt(i).Value;
+
+                var distance = Vector3.Distance(Pet.position, Toys.ElementAt(i).Value.position);
+                if (distance < shortestDistance)
+                {
+                    shortestDistance = distance;
+                    ActiveToy = i;
+                    ActiveObjectOfInterest = Toys.ElementAt(i).Value;
+                    print("Nearest Toy: " + Toys.ElementAt(i).Key);
+                }
+                else
+                {
+                    print("Nearest Toy distance > shortestDistance");
+                }
             }
         }
+
     }
 }

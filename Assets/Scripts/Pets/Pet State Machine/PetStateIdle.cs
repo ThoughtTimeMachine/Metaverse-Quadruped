@@ -18,7 +18,7 @@ public class PetStateIdle : PetBehaviorState
 
     private void RandomIdleDestination()
     {
-        _petBehaviorSystem._petController.StartRandomDestinations();
+        //_petBehaviorSystem._petController.StartRandomDestinations();
  
         Debug.Log("Entered Idle State");
     }

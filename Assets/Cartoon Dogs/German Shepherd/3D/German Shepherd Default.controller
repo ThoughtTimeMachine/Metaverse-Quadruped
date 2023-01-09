@@ -238,6 +238,48 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!206 &-6865150149954001863
+BlendTree:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Idle
+  m_Childs:
+  - serializedVersion: 2
+    m_Motion: {fileID: -2991511791413239630, guid: 2daa2769f8ce6ad4d8b6ba6a98c28eae,
+      type: 3}
+    m_Threshold: -1
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: RF foot weight
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -3100369314251171874, guid: 634d3a3fc88a6964b8a832e28321040f,
+      type: 3}
+    m_Threshold: 0
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: RF foot weight
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -369346244821475667, guid: 2daa2769f8ce6ad4d8b6ba6a98c28eae,
+      type: 3}
+    m_Threshold: 1
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: RF foot weight
+    m_Mirror: 0
+  m_BlendParameter: Turn Body
+  m_BlendParameterY: RF foot weight
+  m_MinThreshold: -1
+  m_MaxThreshold: 1
+  m_UseAutomaticThresholds: 0
+  m_NormalizedBlendValues: 0
+  m_BlendType: 0
 --- !u!1102 &-5576259005224320129
 AnimatorState:
   serializedVersion: 6
@@ -370,36 +412,33 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: -2991511791413239630, guid: 2daa2769f8ce6ad4d8b6ba6a98c28eae,
-      type: 3}
-    m_Threshold: -1
-    m_Position: {x: 0, y: 0}
-    m_TimeScale: 1
-    m_CycleOffset: 0
-    m_DirectBlendParameter: Turn body
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: -3100369314251171874, guid: 634d3a3fc88a6964b8a832e28321040f,
-      type: 3}
+    m_Motion: {fileID: -6865150149954001863}
     m_Threshold: 0
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
-    m_DirectBlendParameter: Turn body
+    m_DirectBlendParameter: RF foot weight
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -369346244821475667, guid: 2daa2769f8ce6ad4d8b6ba6a98c28eae,
-      type: 3}
+    m_Motion: {fileID: 5424746345444017802}
     m_Threshold: 1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
-    m_DirectBlendParameter: Turn body
+    m_DirectBlendParameter: RF foot weight
     m_Mirror: 0
-  m_BlendParameter: Turn Body
+  - serializedVersion: 2
+    m_Motion: {fileID: 4571075235797809914}
+    m_Threshold: 2
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: RF foot weight
+    m_Mirror: 0
+  m_BlendParameter: Movement Weight
   m_BlendParameterY: RF foot weight
-  m_MinThreshold: -1
-  m_MaxThreshold: 1
+  m_MinThreshold: 0
+  m_MaxThreshold: 2
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
@@ -894,37 +933,43 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: RB foot weight
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: LB foot weight
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: LF foot weight
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Extend head weight
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Turn Body
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
+  - m_Name: Movement Weight
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -1273,6 +1318,48 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!206 &4571075235797809914
+BlendTree:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Run
+  m_Childs:
+  - serializedVersion: 2
+    m_Motion: {fileID: -4609677011882761549, guid: 2daa2769f8ce6ad4d8b6ba6a98c28eae,
+      type: 3}
+    m_Threshold: -1
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: RF foot weight
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 3921311550026639144, guid: 2daa2769f8ce6ad4d8b6ba6a98c28eae,
+      type: 3}
+    m_Threshold: 0
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: RF foot weight
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 5542169792608768669, guid: 2daa2769f8ce6ad4d8b6ba6a98c28eae,
+      type: 3}
+    m_Threshold: 1
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: RF foot weight
+    m_Mirror: 0
+  m_BlendParameter: Turn Body
+  m_BlendParameterY: RF foot weight
+  m_MinThreshold: -1
+  m_MaxThreshold: 1
+  m_UseAutomaticThresholds: 0
+  m_NormalizedBlendValues: 0
+  m_BlendType: 0
 --- !u!1102 &4640976214339205775
 AnimatorState:
   serializedVersion: 6
@@ -1326,6 +1413,48 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!206 &5424746345444017802
+BlendTree:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Walk
+  m_Childs:
+  - serializedVersion: 2
+    m_Motion: {fileID: -3127582201321107154, guid: 2daa2769f8ce6ad4d8b6ba6a98c28eae,
+      type: 3}
+    m_Threshold: -1
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: RF foot weight
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 2667949614841947897, guid: 2daa2769f8ce6ad4d8b6ba6a98c28eae,
+      type: 3}
+    m_Threshold: 0
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: RF foot weight
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: 9038035266122920381, guid: 2daa2769f8ce6ad4d8b6ba6a98c28eae,
+      type: 3}
+    m_Threshold: 1
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: RF foot weight
+    m_Mirror: 0
+  m_BlendParameter: Turn Body
+  m_BlendParameterY: RF foot weight
+  m_MinThreshold: -1
+  m_MaxThreshold: 1
+  m_UseAutomaticThresholds: 0
+  m_NormalizedBlendValues: 0
+  m_BlendType: 0
 --- !u!1102 &5548302642106390127
 AnimatorState:
   serializedVersion: 6
@@ -1601,7 +1730,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 3577415577968987777}
-    m_Position: {x: -80, y: 410, z: 0}
+    m_Position: {x: -90, y: 390, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8925064490035694106}
     m_Position: {x: -80, y: 460, z: 0}
@@ -1694,7 +1823,7 @@ AnimatorStateMachine:
     m_Position: {x: 50, y: 200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3512963487142953843}
-    m_Position: {x: 300, y: 200, z: 0}
+    m_Position: {x: 340, y: 160, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -1704,7 +1833,7 @@ AnimatorStateMachine:
   m_EntryPosition: {x: -80, y: 310, z: 0}
   m_ExitPosition: {x: -260, y: 360, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: -43616213722383072}
+  m_DefaultState: {fileID: 5308726046632639063}
 --- !u!1102 &7901997101245761530
 AnimatorState:
   serializedVersion: 6

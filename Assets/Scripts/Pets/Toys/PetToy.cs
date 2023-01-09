@@ -34,9 +34,7 @@ public class PetToy : MonoBehaviour, IDataPersistence, IToy
     {
         transform.parent = null;//detatch the child object from the parent so that the dogs head is still pointed at the ball and we can lerp the head and neck back to the player interacting and throwing the balls direction. re use in an small object pool type set up.
         _parentConstraint.weight = 1;//Maybe lerp value quickly?
-        //var sources = _constraint.data.sourceObjects;
-        //sources.SetWeight(0, 0.0f);
-        //_constraint.data.sourceObjects = sources;
+      
     }
     public void Drop()
     {

@@ -33,6 +33,14 @@ public class PetController : MonoBehaviour
 
     [SerializeField] private bool _updateRotation;
     private float previousYRotation = 0f;
+
+    [SerializeField] private bool _followObject;
+    [SerializeField] private float _interpoolationMultiplier = 0.75f;
+
+    private float _petsCurrentSpeed;
+    private float _movementWeight;
+
+    private Vector3 lastPosition;
     private void Awake()
     {
         _pet = gameObject.GetComponentInParent<NavMeshAgent>();
@@ -62,6 +70,20 @@ public class PetController : MonoBehaviour
 
         //Set the blend tree for 
         YaxisAnimationInfluence("Turn Body");
+        VelocityInfluenceOnMovementBlendtree("Movement Weight");
+
+        if (_followObject)
+        {
+            //change navmesh agents destination to folow the object
+
+            FollowObject(PetInteractablesManager.ActiveObjectOfInterest);
+        }
+        if (_pet.isStopped)
+        {
+            print("Pet Is Stopped");
+        }
+
+
     }
     private void OnEnable()
     {
@@ -71,15 +93,30 @@ public class PetController : MonoBehaviour
     {
         PetBehaviorSystem.StateChange -= StopRandomDestination;
     }
-
-    public void SetDestinationPosition(Transform destinations)
+    private void FollowObject(Transform obj)
     {
-        _petDestination = destinations.position;
-        SetDestinationPathCalculation(destinations);
+        _pet.destination = obj.position;
+        //float distance = Vector3.Distance(obj.position, transform.position);
+        //if (distance > stopDistance)
+        //{
+        //    agent.destination = transform.position;
+        //}
+        //else
+        //{
+        //    agent.destination = player.position;
+        //}
     }
-    public void SetDestinationPathCalculation(Transform destinations)
+    public void SetDestinationPosition(Transform destination)
     {
-        _pet.SetDestination(destinations.position);
+        //recalculates the navmesh pet/agent path to a updated destination position but does not move the agent
+        SetDestinationPathCalculation(destination);
+        //Does not move pet/agent, just sets the _petDestination variable we need our pet/agent to go to, before we call _pet.destination
+        _petDestination = destination.position;
+
+    }
+    public void SetDestinationPathCalculation(Transform destination)
+    {
+        _pet.SetDestination(destination.position);
     }
     //IEnumerator GoToDestination()
     //{
@@ -96,6 +133,7 @@ public class PetController : MonoBehaviour
     }
     public void RandomDestination()
     {
+        //sets _petDestination to a random position and moves the pet to a random destination
         _petDestination = RandomDestinationPosition();
         _pet.destination = _petDestination;
     }
@@ -123,6 +161,34 @@ public class PetController : MonoBehaviour
             _animator.CrossFade(animation, .25f, layer);
         }
     }
+    private void VelocityInfluenceOnMovementBlendtree(string animatorParameter)
+    {
+        //get the current speed of our pet
+        _petsCurrentSpeed = Mathf.Lerp(_petsCurrentSpeed, (transform.position - lastPosition).magnitude, Time.deltaTime / _interpoolationMultiplier);
+        lastPosition = transform.position;
+
+        if (_petsCurrentSpeed < 0.01f)//0.03 was a good number from the _petsCurrentSpeed values that resulted in movement printed.
+        {
+            //Lerp _movementWeight to 0 for the idle animation when not moving
+            if (_animator.GetFloat(animatorParameter) > 0f)
+            {
+                _movementWeight = Mathf.Lerp(_animator.GetFloat(animatorParameter), 0, Time.deltaTime / _interpoolationMultiplier);
+                _animator.SetFloat(animatorParameter, _movementWeight);
+            }
+        }
+        //Lerp _movementWeight to 1 for the walking animation when moving
+        if (_petsCurrentSpeed > 0.01f)
+        {
+            //if (_animator.GetFloat(animatorParameter) < 1f)
+            //{
+            //    _movementWeight = Mathf.Lerp(_animator.GetFloat(animatorParameter), 1, Time.deltaTime / _interpoolationMultiplier);
+            //    _animator.SetFloat(animatorParameter, _movementWeight);
+            //}
+            _animator.SetFloat(animatorParameter, 1);
+        }
+
+        print("_petsCurrentSpeed: " + _petsCurrentSpeed);
+    }
     //no matter if the animation is a Idle,walk or run turn, this will adjust the same animator parameter float the animation uses in the blend tree.
     private void YaxisAnimationInfluence(string animatorParameter)
     {
@@ -133,25 +199,25 @@ public class PetController : MonoBehaviour
         // Check if the y-axis rotation is increasing or decreasing
         if (currentYRotation > previousYRotation + 0.1f)
         {
-            print("Turning Right, currentParamterValue: " + currentParamterValue);
+            //print("Turning Right, currentParamterValue: " + currentParamterValue);
             _animator.SetFloat(animatorParameter, currentParamterValue + 0.01f);
             if (currentParamterValue > 1f) { _animator.SetFloat(animatorParameter, 1f); }
         }
         else if (currentYRotation < previousYRotation - 0.1f)
         {
-            print("Turning Left, currentParamterValue: " + currentParamterValue);
+            //print("Turning Left, currentParamterValue: " + currentParamterValue);
             _animator.SetFloat(animatorParameter, currentParamterValue - 0.01f);
-            if (currentParamterValue < -1f) { _animator.SetFloat(animatorParameter, -1f); }          
+            if (currentParamterValue < -1f) { _animator.SetFloat(animatorParameter, -1f); }
         }
         else if (currentYRotation < -0.05f)
         {
-            print("Not Turning At All, currentParamterValue: " + currentParamterValue);
+            // print("Not Turning At All, currentParamterValue: " + currentParamterValue);
             _animator.SetFloat(animatorParameter, currentParamterValue + 0.01f);
             if (currentParamterValue > 0f) { _animator.SetFloat(animatorParameter, 0f); }
         }
         else if (currentYRotation > 0.1f)
         {
-            print("Not Turning At All, currentParamterValue: " + currentParamterValue);
+            //print("Not Turning At All, currentParamterValue: " + currentParamterValue);
             _animator.SetFloat(animatorParameter, currentParamterValue - 0.01f);
             if (currentParamterValue < 0f) { _animator.SetFloat(animatorParameter, 0f); }
         }

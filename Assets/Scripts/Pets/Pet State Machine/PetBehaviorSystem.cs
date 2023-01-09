@@ -39,7 +39,7 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     public enum StatusBars { happiness, hunger, thirsty, boredom, bathroom, energy, cleanliness }
     public StatusBars _statusBars;
 
-    public enum CurrentState { idle, tired, sleep, hungry, thirst, sick, playfull, bathroom } // we can add more states to here
+    public enum CurrentState { idle, tired, hungry, thirst, sick, playfull, bathroom } // we can add more states to here
     public CurrentState _currentState { get; private set; }
 
     private bool IsInterruptibleState = true;
@@ -76,10 +76,39 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     private void Start()
     {
         //we are going to choose to start the beginning state to An Idle state for the pet
-        SetState(new PetStateIdle(this));
         _currentState = CurrentState.idle;
+        SetState(PetsCurrentState());
+        
     }
-
+    private PetBehaviorState PetsCurrentState()
+    {
+        switch (_currentState)
+        {
+            case CurrentState.idle:
+                return new PetStateIdle(this);
+                break;
+            case CurrentState.tired:
+                return new PetStateTired(this);
+                break;
+            case CurrentState.hungry:
+                return new PetStateHungry(this);
+                break;
+            case CurrentState.thirst:
+                return new PetStateThirsty(this);
+                break;
+            case CurrentState.sick:
+                return new PetStateSick(this);
+                break;
+            case CurrentState.playfull:
+                return new PetStatePlayfull(this);
+                break;
+            case CurrentState.bathroom:
+                return new PetStateBathroom(this);
+                break;
+            default:
+                return new PetStateIdle(this);
+        }
+    }
     private void Update()
     {
         DecreaseStatusBarsUI();//possible use coroutine instead if its more performant.
