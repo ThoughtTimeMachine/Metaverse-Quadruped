@@ -14,7 +14,6 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     private float _lastSavedTimed;
 
     //Pet Status Bars influence the CurrentState and SpeedAnimaton Enums
-    //[Header("StatusBars")]
     private List<float> PetStatusBarsValue = new List<float>();
     private List<float> PetStatusBarsValueMultiplier = new List<float>();
     [SerializeField]
@@ -63,7 +62,7 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     //}
     private void Awake()
     {
-        _petController = GameObject.FindObjectOfType<PetController>();
+        _petController = gameObject.GetComponent<PetController>();
         _petInteractionManager = GameObject.FindObjectOfType<PetInteractablesManager>();
         //build the dictionary of status bars and rate depletion values to itterate over in the update loop. We will set the petStatusBars fill from this dicitonarys values int he Tuple
         BuildStatusBarDictionary();

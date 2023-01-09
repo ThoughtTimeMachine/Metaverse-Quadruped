@@ -67,15 +67,6 @@ public class IKFootBehavior : MonoBehaviour
         _capsulCollider = GetComponent<CapsuleCollider>();
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        RotateCharacterFeet();
-        RotateCharactertBody();
-        CharacterHeightAdjustment();
-    }
-
     //We could also create a method that we can switch too if the pet is playing with a toy with his paws to project the corret angle the paw should be at
     private void CheckGroundBelow(out Vector3 hitPoint, out bool gotGroundSphearcastHit, out Vector3 hitNormal, out LayerMask hitLayer, out float currentHitDistance, Transform objectTransform, int checkForLayerMask, float maxHitDistance, float addedHeight)
     {
@@ -118,7 +109,7 @@ public class IKFootBehavior : MonoBehaviour
     }
 
     // takes the x and z targets of the feet and project them on the ground
-    private void ProjectedAxisAngles(out float angleAboutX, out float angleAboutZ, Transform footTargetTransform, Vector3 hitNormal)
+    public void ProjectedAxisAngles(out float angleAboutX, out float angleAboutZ, Transform footTargetTransform, Vector3 hitNormal)
     {
         Vector3 xAxisProjected = ProjectOnContactPlane(footTargetTransform.forward, hitNormal).normalized;
         Vector3 ZAxisProjected = ProjectOnContactPlane(footTargetTransform.right, hitNormal).normalized;
@@ -126,7 +117,7 @@ public class IKFootBehavior : MonoBehaviour
         angleAboutX = Vector3.SignedAngle(footTargetTransform.forward, xAxisProjected, footTargetTransform.right);
         angleAboutZ = Vector3.SignedAngle(footTargetTransform.right, ZAxisProjected, footTargetTransform.forward);
     }
-    private void RotateCharacterFeet()
+    public void RotateCharacterFeet()
     {
         _allFootWeights[0] = _animator.GetFloat("RF foot weight");
         _allFootWeights[1] = _animator.GetFloat("RB foot weight");
@@ -163,7 +154,7 @@ public class IKFootBehavior : MonoBehaviour
         }
     }
 
-    private void RotateCharactertBody()
+    public void RotateCharactertBody()
     {
         float _maxRotationStep = 1f;
         float averageHitNormalX = 0f;
@@ -214,10 +205,10 @@ public class IKFootBehavior : MonoBehaviour
         float bodyEulerX = Mathf.MoveTowardsAngle(0, angleAboutX, _maxRotationStep);
         float bodyEulerZ = Mathf.MoveTowardsAngle(0, angleAboutZ, _maxRotationStep);
 
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x + bodyEulerX, transform.eulerAngles.y, transform.eulerAngles.z + angleAboutZ);
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x + bodyEulerX, transform.eulerAngles.y, transform.eulerAngles.z + bodyEulerZ);
     }
 
-    private void CharacterHeightAdjustment()
+    public void CharacterHeightAdjustment()
     {
         for (int i = 0; i < 4; i++)
         {
