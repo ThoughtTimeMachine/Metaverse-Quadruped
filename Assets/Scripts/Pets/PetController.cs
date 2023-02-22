@@ -1,7 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Jobs;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations;
+using UnityEngine.Animations.Rigging;
+using UnityEngine.InputSystem.iOS;
 
 [RequireComponent(typeof(IKFootBehavior))]
 [RequireComponent(typeof(Animator))]
@@ -26,6 +30,7 @@ public class PetController : MonoBehaviour
     private string CurrentAnimationState;
     public Vector3 _petDestination = new Vector3();
     private WaitForSeconds _waitTime = new WaitForSeconds(2f);
+
     private IKFootBehavior _ikFootBehavior;
     //subscripe StopRandomDestination to PetBehaviourSystem state changes with an observer pattern
     [SerializeField]
@@ -34,13 +39,35 @@ public class PetController : MonoBehaviour
     [SerializeField] private bool _updateRotation;
     private float previousYRotation = 0f;
 
-    [SerializeField] private bool _followObject;
+    public bool isOKToFollowObject;
     [SerializeField] private float _interpoolationMultiplier = 0.75f;
 
     private float _petsCurrentSpeed;
-    private float _movementWeight;
+    private float _movementWeight = .5f;
 
     private Vector3 lastPosition;
+
+    private float previousRotation;
+    private float rotationSpeed;
+
+    AnimatorHelperFunctions animatorHelper;
+    [SerializeField] string[] _aniamtorParameters;
+    [SerializeField] private int _TurnBodyAnimParameterIndex = 0;
+    float currentValueTurnBodyParameter;
+    float StartValue;
+
+    public float lerpSpeed;
+
+    //PickUpSequence Constraints
+    public MultiAimConstraint multiAimConstraintNeck;
+    private float _extendHeadForBall;
+    public bool isOKToPickUpObject;
+    [SerializeField] private float _pickupSequenceSpeed;
+
+    //private MultiAimConstraintJob jobNeck;
+
+    public Transform followObjectTest;
+
     private void Awake()
     {
         _pet = gameObject.GetComponentInParent<NavMeshAgent>();
@@ -48,7 +75,6 @@ public class PetController : MonoBehaviour
         _ikFootBehavior = gameObject.GetComponent<IKFootBehavior>();
         _parentTransform = GetComponentInParent<Transform>();
         _animator = gameObject.GetComponent<Animator>();
-
     }
     //might be able to use scriptable object instead
     private const string _walk = "walk", _walkLeft = "walk_left", _walkRight = "walk_right", _run = "run", _runLeft = "run_left", _runRight = "run_right", _sprint = "sprint", _sprintLeft = "sprint_left",
@@ -64,26 +90,45 @@ public class PetController : MonoBehaviour
     }
     private void Update()
     {
+        //setting the characters feet and body rotation correctly to slopes and terrain
         _ikFootBehavior.RotateCharacterFeet();
         _ikFootBehavior.RotateCharactertBody();
         _ikFootBehavior.CharacterHeightAdjustment();
 
-        //Set the blend tree for 
-        YaxisAnimationInfluence("Turn Body");
-        VelocityInfluenceOnMovementBlendtree("Movement Weight");
+        //get the rotation speed of our quadrapeds turns so we can interpoolate the animations for turning
+        //rotationSpeed = Mathf.Abs(_pet.transform.eulerAngles.y - previousRotation) / Time.deltaTime;
+        //Mathf.Clamp(rotationSpeed, 0, 1);
+        //print("rotationSpeed: " + rotationSpeed);
 
-        if (_followObject)
+
+        //get the current speed of our pet     
+        _petsCurrentSpeed = (transform.position - lastPosition).magnitude / Time.deltaTime;
+        lastPosition = transform.position;
+
+        //Set the blend tree for turn rotations
+        // YaxisAnimationInfluence("Turn Body");
+        //previousRotation = _pet.transform.eulerAngles.y;
+
+        //controlls the animation states for movement blend tree
+        //VelocityInfluenceOnMovementBlendtree("Movement Weight");
+
+        if (isOKToFollowObject)
         {
             //change navmesh agents destination to folow the object
-
             FollowObject(PetInteractablesManager.ActiveObjectOfInterest);
+            PickupSequence(PetInteractablesManager.ActiveObjectOfInterest);
         }
-        if (_pet.isStopped)
-        {
-            print("Pet Is Stopped");
-        }
+        //if (_pet.isStopped)
+        //{
+        //    print("Pet Is Stopped");
+        //}
+        //if the characters distance is less than specified ammount then begin ReadyForObjectMouthPickup
+        //ADD IF STATEMENT CHECK IF OBJECT IS ALLREADY IN MOUTH AND FIGURE OUT WHEN TO REACTIVATE THAT BOOL OTHERWISE DISTANCE BASED METHOD WILL KEEP CALLING
 
 
+        //float angle = transform.localEulerAngles.y;
+        //angle = (angle > 180) ? angle - 360 : angle;
+        //print("Less Than, angle: " + angle);
     }
     private void OnEnable()
     {
@@ -110,7 +155,8 @@ public class PetController : MonoBehaviour
     {
         //recalculates the navmesh pet/agent path to a updated destination position but does not move the agent
         SetDestinationPathCalculation(destination);
-        //Does not move pet/agent, just sets the _petDestination variable we need our pet/agent to go to, before we call _pet.destination
+
+        //does not move pet/agent, just sets the _petDestination variable we need our pet/agent to go to, before we call _pet.destination
         _petDestination = destination.position;
 
     }
@@ -137,8 +183,9 @@ public class PetController : MonoBehaviour
         _petDestination = RandomDestinationPosition();
         _pet.destination = _petDestination;
     }
-    public void StopRandomDestination()//if you whistle/ call the dogs name or other interuptable process
+    public void StopRandomDestination()
     {
+        //if you whistle/ call the dogs name or other interuptable process
         CancelInvoke("RandomDestination");
     }
     private Vector3 RandomDestinationPosition()
@@ -161,11 +208,54 @@ public class PetController : MonoBehaviour
             _animator.CrossFade(animation, .25f, layer);
         }
     }
+    private void PickupSequence(Transform target)
+    {
+        float dist = Vector3.Distance(target.position, transform.position);
+        //print("Distance To Toy: "+ dist);
+
+        //instead of coroutine, have it be distance based value changing as aproaching
+        if (dist < 1.5f && isOKToPickUpObject)
+        {
+            StartCoroutine(PickupSequenceLerp());
+        }
+    }
+
+    IEnumerator PickupSequenceLerp()
+    {
+
+        isOKToPickUpObject = false;
+        float neckValue = 0f;
+        float crouchValueStart = _animator.GetFloat("Movement Weight");
+        float crouchValue = 0f;
+        float time = 0f;
+        while (time < 1)
+        {
+            neckValue = Mathf.Lerp(0, 1, time);
+            crouchValue = Mathf.Lerp(crouchValueStart, -1, time);
+            multiAimConstraintNeck.weight = neckValue;
+            _animator.SetLayerWeight(1, neckValue);
+
+            _animator.SetFloat("Movement Weight", crouchValue);
+            time += Time.deltaTime * _pickupSequenceSpeed;
+            yield return null;
+        }
+        time = 0f;
+        while (time < 1)
+        {
+            neckValue = Mathf.Lerp(1, 0, time);
+            crouchValue = Mathf.Lerp(-1, 0, time);
+            multiAimConstraintNeck.weight = neckValue;
+            _animator.SetLayerWeight(1, neckValue);
+
+            _animator.SetFloat("Movement Weight", crouchValue);
+            time += Time.deltaTime * _pickupSequenceSpeed;
+            yield return null;
+        }
+    }
+
     private void VelocityInfluenceOnMovementBlendtree(string animatorParameter)
     {
-        //get the current speed of our pet
-        _petsCurrentSpeed = Mathf.Lerp(_petsCurrentSpeed, (transform.position - lastPosition).magnitude, Time.deltaTime / _interpoolationMultiplier);
-        lastPosition = transform.position;
+
 
         if (_petsCurrentSpeed < 0.01f)//0.03 was a good number from the _petsCurrentSpeed values that resulted in movement printed.
         {
@@ -177,69 +267,75 @@ public class PetController : MonoBehaviour
             }
         }
         //Lerp _movementWeight to 1 for the walking animation when moving
+
         if (_petsCurrentSpeed > 0.01f)
         {
-            //if (_animator.GetFloat(animatorParameter) < 1f)
-            //{
-            //    _movementWeight = Mathf.Lerp(_animator.GetFloat(animatorParameter), 1, Time.deltaTime / _interpoolationMultiplier);
-            //    _animator.SetFloat(animatorParameter, _movementWeight);
-            //}
-            _animator.SetFloat(animatorParameter, 1);
+            if (_animator.GetFloat(animatorParameter) < 1f)
+            {
+                _movementWeight = Mathf.Lerp(_animator.GetFloat(animatorParameter), 1, Time.deltaTime / _interpoolationMultiplier);
+                _animator.SetFloat(animatorParameter, _movementWeight);
+            }
         }
-
-        print("_petsCurrentSpeed: " + _petsCurrentSpeed);
     }
-    //no matter if the animation is a Idle,walk or run turn, this will adjust the same animator parameter float the animation uses in the blend tree.
     private void YaxisAnimationInfluence(string animatorParameter)
     {
-        // Get the current y-axis rotation
+        if (_petsCurrentSpeed < 1f && _petsCurrentSpeed > 0)
+        {
 
-        float currentYRotation = _parentTransform.eulerAngles.y;
-        float currentParamterValue = _animator.GetFloat(animatorParameter);
-        // Check if the y-axis rotation is increasing or decreasing
-        if (currentYRotation > previousYRotation + 0.1f)
-        {
-            //print("Turning Right, currentParamterValue: " + currentParamterValue);
-            _animator.SetFloat(animatorParameter, currentParamterValue + 0.01f);
-            if (currentParamterValue > 1f) { _animator.SetFloat(animatorParameter, 1f); }
+
+            if (rotationSpeed > 3.0f)
+            {
+
+                print("Current Rotation: " + _pet.transform.eulerAngles.y + "previousRotation: " + previousRotation);
+                if (_pet.transform.eulerAngles.y < previousRotation + .5f)
+                {
+                    StartValue = _animator.GetFloat("Turn Body");
+                    currentValueTurnBodyParameter = Mathf.Lerp(StartValue, -1, rotationSpeed * lerpSpeed);
+                    print("Turn Left");
+
+                    _animator.SetFloat("Turn Body", currentValueTurnBodyParameter);
+                }
+
+                else if (_pet.transform.eulerAngles.y > previousRotation)
+                {
+                    StartValue = _animator.GetFloat("Turn Body");
+                    currentValueTurnBodyParameter = Mathf.Lerp(StartValue, 1, rotationSpeed * lerpSpeed);
+                    _animator.SetFloat("Turn Body", currentValueTurnBodyParameter);
+                    print("Turn Right");
+                }
+
+                else if (_pet.transform.eulerAngles.y == previousRotation)
+                {
+                    StartValue = _animator.GetFloat("Turn Body");
+                    currentValueTurnBodyParameter = Mathf.Lerp(StartValue, 0, rotationSpeed * lerpSpeed);
+                    _animator.SetFloat("Turn Body", currentValueTurnBodyParameter);
+                }
+            }
+
+            else if (rotationSpeed < 3.0f)
+            {
+                StartValue = _animator.GetFloat("Turn Body");
+                currentValueTurnBodyParameter = Mathf.Lerp(StartValue, 0, rotationSpeed * lerpSpeed);
+                _animator.SetFloat("Turn Body", currentValueTurnBodyParameter);
+            }
         }
-        else if (currentYRotation < previousYRotation - 0.1f)
-        {
-            //print("Turning Left, currentParamterValue: " + currentParamterValue);
-            _animator.SetFloat(animatorParameter, currentParamterValue - 0.01f);
-            if (currentParamterValue < -1f) { _animator.SetFloat(animatorParameter, -1f); }
-        }
-        else if (currentYRotation < -0.05f)
-        {
-            // print("Not Turning At All, currentParamterValue: " + currentParamterValue);
-            _animator.SetFloat(animatorParameter, currentParamterValue + 0.01f);
-            if (currentParamterValue > 0f) { _animator.SetFloat(animatorParameter, 0f); }
-        }
-        else if (currentYRotation > 0.1f)
-        {
-            //print("Not Turning At All, currentParamterValue: " + currentParamterValue);
-            _animator.SetFloat(animatorParameter, currentParamterValue - 0.01f);
-            if (currentParamterValue < 0f) { _animator.SetFloat(animatorParameter, 0f); }
-        }
-        // Update the previous y-axis rotation
-        previousYRotation = currentYRotation;
     }
 
-    private void MovementAlternativeTest()//run in update loop
-    {
-        // Vector3 direction = transform.di
-        // float distance = Vector3.Distance(destination, transform.position);
+    //    private void MovementAlternativeTest()//run in update loop
+    //{
+    //    Vector3 direction = transform.di
+    //     float distance = Vector3.Distance(destination, transform.position);
 
-        // if(distance >0.1)
-        //{
+    //    if (distance > 0.1)
+    //    {
 
-        //LookToward(destination,distance);
-        //float distanceBAsedSpeedModifier = GetSpeedModifier(distance);
+    //        LookToward(destination, distance);
+    //        float distanceBAsedSpeedModifier = GetSpeedModifier(distance);
 
-        // Vector3 movement = transform.forward * Time.deltaTime * distanceBAsedSpeedModifier;
+    //        Vector3 movement = transform.forward * Time.deltaTime * distanceBAsedSpeedModifier;
 
-        //_pet.Move(movement);
-        // }
-    }
+    //        _pet.Move(movement);
+    //    }
+    //}
 
 }

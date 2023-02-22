@@ -6,10 +6,11 @@ using UnityEngine.Animations;
 
 public class PetInteractablesManager : Singleton<PetInteractablesManager>
 {
-    //The int key is 0 = toy, 1 = food, 2 water, 3 other interactable non destructive, 4 other interactable destructive
+    //store the in scene interactable objects in a dictionary for reference
     public static readonly Dictionary<int, Transform> OtherInteractables = new Dictionary<int, Transform>();
     public static readonly Dictionary<int, Transform> Foods = new Dictionary<int, Transform>();
     public static readonly Dictionary<string, Transform> Toys = new Dictionary<string, Transform>();
+
     public List<Transform> StaticObjectsOfCuriosity = new List<Transform>();
 
 
@@ -19,6 +20,8 @@ public class PetInteractablesManager : Singleton<PetInteractablesManager>
 
     public int? ActiveToy;//unassign after exiting interaction with object
     public int? ActiveFood;//unassign after exiting interaction with object
+
+    //this is the current object of interest. Anytime the quadraped is going to interact with an interactable object in the scene, it should be set as the ActiveObjectOfInterest here
     public static Transform ActiveObjectOfInterest { get; private set; }
 
     [SerializeField] private Transform _toyInstantiationPosition;
@@ -31,12 +34,11 @@ public class PetInteractablesManager : Singleton<PetInteractablesManager>
     }
     public void CreateToy(GameObject myPrefab)
     {
+        //instatiate a Toy object from our inventory and parent it to the InteractableObjectContainer in the scene, then add to Toys dictionary of currently active toys in scene
         GameObject petToy;
-        //petToy = Instantiate(myPrefab, _toyInstantiationPosition.position, Quaternion.identity);
         petToy = Instantiate(myPrefab, _toyInstantiationParent);
         petToy.transform.localPosition = Vector3.zero;
         Toys.Add(myPrefab.name, petToy.transform);
-        //petToy.transform.SetParent(_toyInstantiationParent);
 
         //set the ActiveObjectOfInterest to the new toy we initialized
         ActiveObjectOfInterest = petToy.transform;

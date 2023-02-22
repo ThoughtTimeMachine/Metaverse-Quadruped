@@ -9,8 +9,8 @@ TagManager:
   - Pet
   - Toy
   - FoodTreat
-  - ToyTargetJaw
   - Neck
+  - JawTarget
   layers:
   - Default
   - TransparentFX

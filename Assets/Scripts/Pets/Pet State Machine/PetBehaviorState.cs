@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public abstract class PetBehaviorState //: MonoBehaviour //every state has access to PetBehaviorSystem through this inheritance
+public abstract class PetBehaviorState 
 {
     protected PetBehaviorSystem _petBehaviorSystem;
 
