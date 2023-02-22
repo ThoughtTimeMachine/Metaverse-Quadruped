@@ -45,6 +45,7 @@ public class PetToy : MonoBehaviour, IDataPersistence, IToy
         transform.parent.localPosition = Vector3.zero;
         transform.localPosition = Vector3.zero;
         transform.GetComponentInParent<PetController>().isOKToFollowObject = false;
+        transform.GetComponentInParent<PetController>().isOKToPickUpObject = false;
         //could stop coroutine for pick up animations as soon as toy is in mouth, as to stop the continued downward or upward movement of the neck constraint
     }
 

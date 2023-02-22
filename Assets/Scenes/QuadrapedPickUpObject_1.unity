@@ -4849,7 +4849,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &279796167
 Transform:
   m_ObjectHideFlags: 0
@@ -13837,16 +13837,11 @@ MonoBehaviour:
   _pet: {fileID: 640437177}
   _parentTransform: {fileID: 0}
   _animator: {fileID: 0}
-  _animatorParameterForTurning: Turn Body
   _headAnimation: 0
   _petDestination: {x: 11.5, y: 0, z: 11.6}
   _petInteractionManager: {fileID: 1511568994}
-  _updateRotation: 0
   isOKToFollowObject: 0
   _interpoolationMultiplier: 0.75
-  _aniamtorParameters: []
-  _TurnBodyAnimParameterIndex: 0
-  lerpSpeed: 0
   multiAimConstraintNeck: {fileID: 0}
   isOKToPickUpObject: 0
   _pickupSequenceSpeed: 0
@@ -33186,7 +33181,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1645678788
 Transform:
   m_ObjectHideFlags: 0
@@ -35559,7 +35554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1752458251
 Transform:
   m_ObjectHideFlags: 0
@@ -36643,7 +36638,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1776228575}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.54, y: 0.235, z: -32.57}
+  m_LocalPosition: {x: 33.81, y: 0.235, z: -27.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -36664,11 +36659,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3
+  m_Speed: 6
   m_Acceleration: 10
   avoidancePriority: 50
   m_AngularSpeed: 140
-  m_StoppingDistance: 1.2
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -45808,8 +45803,18 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8996292211439376608, guid: be2b4270cfd2fcb448c5f422713207f1,
         type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8996292211439376608, guid: be2b4270cfd2fcb448c5f422713207f1,
+        type: 3}
       propertyPath: m_UseGravity
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8996292211439376608, guid: be2b4270cfd2fcb448c5f422713207f1,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8996292211439376608, guid: be2b4270cfd2fcb448c5f422713207f1,
         type: 3}
@@ -45854,7 +45859,7 @@ PrefabInstance:
     - target: {fileID: 8996292211439376623, guid: be2b4270cfd2fcb448c5f422713207f1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.89
+      value: -16.58
       objectReference: {fileID: 0}
     - target: {fileID: 8996292211439376623, guid: be2b4270cfd2fcb448c5f422713207f1,
         type: 3}
@@ -47904,17 +47909,11 @@ MonoBehaviour:
   _pet: {fileID: 1776228578}
   _parentTransform: {fileID: 0}
   _animator: {fileID: 0}
-  _animatorParameterForTurning: Turn Body
   _headAnimation: 0
   _petDestination: {x: 11.5, y: 0, z: 11.6}
   _petInteractionManager: {fileID: 1511568994}
-  _updateRotation: 1
   isOKToFollowObject: 1
   _interpoolationMultiplier: 0.25
-  _aniamtorParameters:
-  - Turn Body
-  _TurnBodyAnimParameterIndex: 0
-  lerpSpeed: 0.02
   multiAimConstraintNeck: {fileID: 6311938834187604869}
   isOKToPickUpObject: 1
   _pickupSequenceSpeed: 2

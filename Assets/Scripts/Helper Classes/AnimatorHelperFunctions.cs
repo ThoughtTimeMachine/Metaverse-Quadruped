@@ -4,33 +4,23 @@ using UnityEngine;
 
 public class AnimatorHelperFunctions : MonoBehaviour
 {
-    Animator _animator;
-    // private float _lerpSpeed = 0.1f;
-    private string[] _parameterNames;
-    private WaitForEndOfFrame wait = new WaitForEndOfFrame();
-    public AnimatorHelperFunctions(Animator anim, string[] parameterNames)
+    private static WaitForEndOfFrame wait = new WaitForEndOfFrame();
+    public static void LerpAnimatorParameter(string AnimParameterName, float targetValue, float lerpSpeed, Animator animator)
     {
-        _parameterNames = parameterNames;
-        _animator = anim;
-        print(parameterNames[0]);
-    }
-    public void LerpAnimatorParameter(int animatorParamterIndex, float targetValue, float lerpSpeed)
-    {
-        StartCoroutine(LerpAnimatorToValue(animatorParamterIndex, targetValue, lerpSpeed));
+        Coroutine coroutine = CoroutineHelper.Instance.StartCoroutine(LerpAnimatorToValue(AnimParameterName, targetValue, lerpSpeed,animator));
     }
 
-    IEnumerator LerpAnimatorToValue(int animatorParamterIndex, float targetValue, float lerpSpeed)
+    static IEnumerator LerpAnimatorToValue(string AnimParameterName, float targetValue, float lerpSpeed,Animator animator)
     {
         //lerps the artget animator Parameter to an end value while a condition is true
-        float startValue = _animator.GetFloat("Turn Body");
-        float currentValue = _animator.GetFloat("Turn Body");
+        float startValue = animator.GetFloat(AnimParameterName);
+        float currentValue = 0f;
 
         while (currentValue != targetValue)
         {
-            //transform.position = Vector3.Lerp(Vector3.zero, _targetPosition, time);
             currentValue = Mathf.Lerp(startValue, targetValue, lerpSpeed);
 
-            _animator.SetFloat("Turn Body", currentValue);
+            animator.SetFloat(AnimParameterName, currentValue);
             yield return wait;
         }
     }

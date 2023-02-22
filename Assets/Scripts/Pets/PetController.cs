@@ -18,7 +18,6 @@ public class PetController : MonoBehaviour
     [SerializeField] private Transform _parentTransform;
 
     [SerializeField] private Animator _animator;
-    [SerializeField] private string _animatorParameterForTurning = "Turn Body";
     public enum DestinationAnimation { idle, walk, run, sprint }
     private DestinationAnimation _destinationAnim;
     public enum TailAnimation { wag, wagFast, wagBroad }
@@ -29,42 +28,28 @@ public class PetController : MonoBehaviour
 
     private string CurrentAnimationState;
     public Vector3 _petDestination = new Vector3();
-    private WaitForSeconds _waitTime = new WaitForSeconds(2f);
 
     private IKFootBehavior _ikFootBehavior;
-    //subscripe StopRandomDestination to PetBehaviourSystem state changes with an observer pattern
+    //subscribe StopRandomDestination to PetBehaviourSystem state changes with an observer pattern
     [SerializeField]
     private PetInteractablesManager _petInteractionManager;
 
-    [SerializeField] private bool _updateRotation;
-    private float previousYRotation = 0f;
+    //[SerializeField] private bool _updateRotation;
 
     public bool isOKToFollowObject;
     [SerializeField] private float _interpoolationMultiplier = 0.75f;
 
+    //movement variables
     private float _petsCurrentSpeed;
-    private float _movementWeight = .5f;
-
+    //private float _movementWeight = .5f;
     private Vector3 lastPosition;
 
-    private float previousRotation;
-    private float rotationSpeed;
-
-    AnimatorHelperFunctions animatorHelper;
-    [SerializeField] string[] _aniamtorParameters;
-    [SerializeField] private int _TurnBodyAnimParameterIndex = 0;
-    float currentValueTurnBodyParameter;
-    float StartValue;
-
-    public float lerpSpeed;
 
     //PickUpSequence Constraints
     public MultiAimConstraint multiAimConstraintNeck;
     private float _extendHeadForBall;
     public bool isOKToPickUpObject;
     [SerializeField] private float _pickupSequenceSpeed;
-
-    //private MultiAimConstraintJob jobNeck;
 
     public Transform followObjectTest;
 
@@ -83,10 +68,10 @@ public class PetController : MonoBehaviour
     private void Start()
     {
         _speed = (float)_destinationAnim;
-        if (!_updateRotation)
-        {
-            _pet.updateRotation = false;
-        }
+        //if (!_updateRotation)
+        //{
+        //    _pet.updateRotation = false;
+        //}
     }
     private void Update()
     {
@@ -95,22 +80,13 @@ public class PetController : MonoBehaviour
         _ikFootBehavior.RotateCharactertBody();
         _ikFootBehavior.CharacterHeightAdjustment();
 
-        //get the rotation speed of our quadrapeds turns so we can interpoolate the animations for turning
-        //rotationSpeed = Mathf.Abs(_pet.transform.eulerAngles.y - previousRotation) / Time.deltaTime;
-        //Mathf.Clamp(rotationSpeed, 0, 1);
-        //print("rotationSpeed: " + rotationSpeed);
-
-
         //get the current speed of our pet     
         _petsCurrentSpeed = (transform.position - lastPosition).magnitude / Time.deltaTime;
+        //print("_petsCurrentSpeed: "+ _petsCurrentSpeed);
         lastPosition = transform.position;
 
-        //Set the blend tree for turn rotations
-        // YaxisAnimationInfluence("Turn Body");
-        //previousRotation = _pet.transform.eulerAngles.y;
-
         //controlls the animation states for movement blend tree
-        //VelocityInfluenceOnMovementBlendtree("Movement Weight");
+        VelocityInfluenceOnMovementBlendtree("Movement Weight");
 
         if (isOKToFollowObject)
         {
@@ -118,17 +94,7 @@ public class PetController : MonoBehaviour
             FollowObject(PetInteractablesManager.ActiveObjectOfInterest);
             PickupSequence(PetInteractablesManager.ActiveObjectOfInterest);
         }
-        //if (_pet.isStopped)
-        //{
-        //    print("Pet Is Stopped");
-        //}
-        //if the characters distance is less than specified ammount then begin ReadyForObjectMouthPickup
-        //ADD IF STATEMENT CHECK IF OBJECT IS ALLREADY IN MOUTH AND FIGURE OUT WHEN TO REACTIVATE THAT BOOL OTHERWISE DISTANCE BASED METHOD WILL KEEP CALLING
 
-
-        //float angle = transform.localEulerAngles.y;
-        //angle = (angle > 180) ? angle - 360 : angle;
-        //print("Less Than, angle: " + angle);
     }
     private void OnEnable()
     {
@@ -138,18 +104,18 @@ public class PetController : MonoBehaviour
     {
         PetBehaviorSystem.StateChange -= StopRandomDestination;
     }
+
     private void FollowObject(Transform obj)
-    {
-        _pet.destination = obj.position;
-        //float distance = Vector3.Distance(obj.position, transform.position);
-        //if (distance > stopDistance)
-        //{
-        //    agent.destination = transform.position;
-        //}
-        //else
-        //{
-        //    agent.destination = player.position;
-        //}
+    {     
+        float distance = Vector3.Distance(obj.position, transform.position);
+        if (distance < .65f)
+        {
+            _pet.destination = transform.position;
+        }
+        else
+        {
+            _pet.destination = obj.position;
+        }
     }
     public void SetDestinationPosition(Transform destination)
     {
@@ -164,14 +130,7 @@ public class PetController : MonoBehaviour
     {
         _pet.SetDestination(destination.position);
     }
-    //IEnumerator GoToDestination()
-    //{
-    //    while (Mathf.Approximately(_pet.remainingDistance, 0f))
-    //    {
-    //        _pet.destination = _petDestination;
-    //        yield return null;
-    //    }
-    //}
+
 
     public void StartRandomDestinations()
     {
@@ -222,8 +181,6 @@ public class PetController : MonoBehaviour
 
     IEnumerator PickupSequenceLerp()
     {
-
-        isOKToPickUpObject = false;
         float neckValue = 0f;
         float crouchValueStart = _animator.GetFloat("Movement Weight");
         float crouchValue = 0f;
@@ -255,87 +212,9 @@ public class PetController : MonoBehaviour
 
     private void VelocityInfluenceOnMovementBlendtree(string animatorParameter)
     {
-
-
-        if (_petsCurrentSpeed < 0.01f)//0.03 was a good number from the _petsCurrentSpeed values that resulted in movement printed.
-        {
-            //Lerp _movementWeight to 0 for the idle animation when not moving
-            if (_animator.GetFloat(animatorParameter) > 0f)
-            {
-                _movementWeight = Mathf.Lerp(_animator.GetFloat(animatorParameter), 0, Time.deltaTime / _interpoolationMultiplier);
-                _animator.SetFloat(animatorParameter, _movementWeight);
-            }
-        }
-        //Lerp _movementWeight to 1 for the walking animation when moving
-
-        if (_petsCurrentSpeed > 0.01f)
-        {
-            if (_animator.GetFloat(animatorParameter) < 1f)
-            {
-                _movementWeight = Mathf.Lerp(_animator.GetFloat(animatorParameter), 1, Time.deltaTime / _interpoolationMultiplier);
-                _animator.SetFloat(animatorParameter, _movementWeight);
-            }
-        }
-    }
-    private void YaxisAnimationInfluence(string animatorParameter)
-    {
-        if (_petsCurrentSpeed < 1f && _petsCurrentSpeed > 0)
-        {
-
-
-            if (rotationSpeed > 3.0f)
-            {
-
-                print("Current Rotation: " + _pet.transform.eulerAngles.y + "previousRotation: " + previousRotation);
-                if (_pet.transform.eulerAngles.y < previousRotation + .5f)
-                {
-                    StartValue = _animator.GetFloat("Turn Body");
-                    currentValueTurnBodyParameter = Mathf.Lerp(StartValue, -1, rotationSpeed * lerpSpeed);
-                    print("Turn Left");
-
-                    _animator.SetFloat("Turn Body", currentValueTurnBodyParameter);
-                }
-
-                else if (_pet.transform.eulerAngles.y > previousRotation)
-                {
-                    StartValue = _animator.GetFloat("Turn Body");
-                    currentValueTurnBodyParameter = Mathf.Lerp(StartValue, 1, rotationSpeed * lerpSpeed);
-                    _animator.SetFloat("Turn Body", currentValueTurnBodyParameter);
-                    print("Turn Right");
-                }
-
-                else if (_pet.transform.eulerAngles.y == previousRotation)
-                {
-                    StartValue = _animator.GetFloat("Turn Body");
-                    currentValueTurnBodyParameter = Mathf.Lerp(StartValue, 0, rotationSpeed * lerpSpeed);
-                    _animator.SetFloat("Turn Body", currentValueTurnBodyParameter);
-                }
-            }
-
-            else if (rotationSpeed < 3.0f)
-            {
-                StartValue = _animator.GetFloat("Turn Body");
-                currentValueTurnBodyParameter = Mathf.Lerp(StartValue, 0, rotationSpeed * lerpSpeed);
-                _animator.SetFloat("Turn Body", currentValueTurnBodyParameter);
-            }
-        }
-    }
-
-    //    private void MovementAlternativeTest()//run in update loop
-    //{
-    //    Vector3 direction = transform.di
-    //     float distance = Vector3.Distance(destination, transform.position);
-
-    //    if (distance > 0.1)
-    //    {
-
-    //        LookToward(destination, distance);
-    //        float distanceBAsedSpeedModifier = GetSpeedModifier(distance);
-
-    //        Vector3 movement = transform.forward * Time.deltaTime * distanceBAsedSpeedModifier;
-
-    //        _pet.Move(movement);
-    //    }
-    //}
-
+        float MovementBlendSpeed = Mathf.InverseLerp(0, 10, _petsCurrentSpeed);
+        print("MovementBlendSpeed: " + MovementBlendSpeed);
+        _animator.SetFloat(animatorParameter, MovementBlendSpeed);
+        //if our angular speed is not near 0 then the movementblendspeed should be somewhere around .1 or so, so that when turning a corner the Quadruped is not in an idle animation rotating in place around corners
+    } 
 }
