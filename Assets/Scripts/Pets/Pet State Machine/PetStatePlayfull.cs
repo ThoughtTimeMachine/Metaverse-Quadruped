@@ -29,10 +29,7 @@ public class PetStatePlayfull : PetBehaviorState
     {
         if (objectCollidedWith.tag == "Toy")
         {
-            if (_petBehaviorSystem._currentState == PetBehaviorSystem.CurrentState.playfull)
-            {
-
-            }
+          
         }
     }
         //public override IEnumerator BlendAnimationState()

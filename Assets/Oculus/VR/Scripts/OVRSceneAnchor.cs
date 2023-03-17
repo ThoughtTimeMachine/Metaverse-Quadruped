@@ -18,6 +18,7 @@
  * limitations under the License.
  */
 
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,7 +46,13 @@ public sealed class OVRSceneAnchor : MonoBehaviour
     /// </summary>
     public Guid Uuid { get; private set; }
 
+    /// <summary>
+    /// Indicates whether this anchor is tracked by the system.
+    /// </summary>
+    public bool IsTracked { get; internal set; }
+
     private static readonly Quaternion RotateY180 = Quaternion.Euler(0, 180, 0);
+    private OVRPlugin.Posef? _pose = null;
 
     private bool IsComponentEnabled(OVRPlugin.SpaceComponentType spaceComponentType) =>
         OVRPlugin.GetSpaceComponentStatus(Space, spaceComponentType, out var componentEnabled, out _)
@@ -69,6 +76,11 @@ public sealed class OVRSceneAnchor : MonoBehaviour
         }
     }
 
+    internal void ClearPoseCache()
+    {
+        _pose = null;
+    }
+
     internal void Initialize(OVRSpace space, Guid uuid)
     {
         if (Space.Valid)
@@ -80,8 +92,13 @@ public sealed class OVRSceneAnchor : MonoBehaviour
         Space = space;
         Uuid = uuid;
 
-        SceneAnchors.TryGetValue(Space, out var referenceCount);
-        SceneAnchors[Space] = referenceCount + 1;
+        ClearPoseCache();
+
+        SceneAnchors[this.Uuid] = this;
+        SceneAnchorsList.Add(this);
+
+        AnchorReferenceCountDictionary.TryGetValue(Space, out var referenceCount);
+        AnchorReferenceCountDictionary[Space] = referenceCount + 1;
 
         if (!IsComponentEnabled(OVRPlugin.SpaceComponentType.Locatable))
         {
@@ -93,11 +110,12 @@ public sealed class OVRSceneAnchor : MonoBehaviour
         // disable this component as soon as its added to override the transform.
         if (enabled)
         {
-            var updateTransformSucceeded = TryUpdateTransform();
+            var updateTransformSucceeded = TryUpdateTransform(false);
 
             // This should work; so add some development-only logs so we know if something is wrong here.
             if (updateTransformSucceeded)
             {
+                IsTracked = true;
                 OVRSceneManager.Development.Log(nameof(OVRSceneAnchor), $"[{uuid}] Initial transform set.");
             }
             else
@@ -105,6 +123,7 @@ public sealed class OVRSceneAnchor : MonoBehaviour
                 OVRSceneManager.Development.LogWarning(nameof(OVRSceneAnchor),
                     $"[{uuid}] {nameof(OVRPlugin.TryLocateSpace)} failed. The entity may have the wrong initial transform.");
             }
+
         }
 
         SyncComponent<OVRSemanticClassification>(OVRPlugin.SpaceComponentType.SemanticLabels);
@@ -126,11 +145,32 @@ public sealed class OVRSceneAnchor : MonoBehaviour
         Initialize(other.Space, other.Uuid);
     }
 
-    private bool TryUpdateTransform()
+    /// <summary>
+    /// Get the list of all scene anchors.
+    /// </summary>
+    /// <param name="anchors">A list of <see cref="OVRSceneAnchor"/> to populate.</param>
+    /// <exception cref="ArgumentNullException">Thrown if <paramref name="anchors"/> is `null`.</exception>
+    public static void GetSceneAnchors(List<OVRSceneAnchor> anchors)
     {
-        if (!Space.Valid) return false;
+        if (anchors == null)
+            throw new ArgumentNullException(nameof(anchors));
 
-        if (!OVRPlugin.TryLocateSpace(Space, OVRPlugin.GetTrackingOriginType(), out var pose)) return false;
+        anchors.Clear();
+        anchors.AddRange(SceneAnchorsList);
+    }
+
+    internal bool TryUpdateTransform(bool useCache)
+    {
+        if (!Space.Valid || !enabled) return false;
+
+        if (!useCache || _pose == null)
+        {
+            if (!OVRPlugin.TryLocateSpace(Space, OVRPlugin.GetTrackingOriginType(), out var pose))
+            {
+                return false;
+            }
+            _pose = pose;
+        }
 
         // NOTE: This transformation performs the following steps:
         // 1. Flip Z to convert from OpenXR's right-handed to Unity's left-handed coordinate system.
@@ -154,18 +194,27 @@ public sealed class OVRSceneAnchor : MonoBehaviour
         // 3. Convert from tracking space to world space.
         var worldSpacePose = new OVRPose
         {
-            position = pose.Position.FromFlippedZVector3f(),
-            orientation = pose.Orientation.FromFlippedZQuatf() * RotateY180
+            position = _pose.Value.Position.FromFlippedZVector3f(),
+            orientation = _pose.Value.Orientation.FromFlippedZQuatf() * RotateY180
         }.ToWorldSpacePose(Camera.main);
         transform.SetPositionAndRotation(worldSpacePose.position, worldSpacePose.orientation);
         return true;
     }
 
-    private void Update() => TryUpdateTransform();
-
     private void OnDestroy()
     {
-        if (!SceneAnchors.TryGetValue(Space, out var referenceCount))
+        SceneAnchors.Remove(this.Uuid);
+        SceneAnchorsList.Remove(this);
+
+        // Anchor destroyed. Adding it to an ignore list.
+        DestroyedSceneAnchors.Add(this.Uuid);
+
+        if (!Space.Valid)
+        {
+            return;
+        }
+
+        if (!AnchorReferenceCountDictionary.TryGetValue(Space, out var referenceCount))
         {
             OVRSceneManager.Development.LogError(nameof(OVRSceneAnchor),
                 $"[Anchor {Space.Handle}] has not been found, can't find it for deletion");
@@ -181,19 +230,24 @@ public sealed class OVRSceneAnchor : MonoBehaviour
             }
 
             // remove instead of decrement to not waste memory
-            SceneAnchors.Remove(Space);
+            AnchorReferenceCountDictionary.Remove(Space);
         }
         else
         {
-            SceneAnchors[Space] = referenceCount - 1;
+            AnchorReferenceCountDictionary[Space] = referenceCount - 1;
         }
     }
 
-    private static readonly Dictionary<OVRSpace, int> SceneAnchors =
+    private static readonly Dictionary<OVRSpace, int> AnchorReferenceCountDictionary =
         new Dictionary<OVRSpace, int>();
+
+    internal static readonly Dictionary<Guid, OVRSceneAnchor> SceneAnchors = new Dictionary<Guid, OVRSceneAnchor>();
+    internal static readonly List<OVRSceneAnchor> SceneAnchorsList = new List<OVRSceneAnchor>();
+    internal static readonly HashSet<Guid> DestroyedSceneAnchors = new HashSet<Guid>();
 }
 
 internal interface IOVRSceneComponent
 {
     void Initialize();
 }
+

@@ -1,7 +1,13 @@
+using Meta.Conduit;
+using Meta.WitAi;
+using Meta.WitAi.Json;
+using Newtonsoft.Json.Linq;
+using OVRSimpleJSON;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,36 +19,37 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     public float LengthOfTime = 172800; //seconds in 48 hours
     private float _lastSavedTimed;
 
-    //Pet Status Bars influence the CurrentState and SpeedAnimaton Enums
+    //Pet Status bars influence the CurrentState and SpeedAnimaton Enums
     private List<float> PetStatusBarsValue = new List<float>();
     private List<float> PetStatusBarsValueMultiplier = new List<float>();
     private Dictionary<int,PetBehaviorState> _petBehaviorStates = new Dictionary<int,PetBehaviorState>();
+    public IReadOnlyDictionary<int, PetBehaviorState> PetBehaviorStates => _petBehaviorStates;
     [SerializeField]
     private Image[] PetStatusBarsFill = new Image[7];
+    
+    public float _happiness { get; private set; } = 1;
+    public float _hunger { get; private set; } = 1;
+    public float _thirst { get; private set; } = 1;
+    public float _boredom { get; private set; } = 1;
+    public float _bathroom { get; private set; } = 1;
+    public float _energy { get; private set; } = 1;
+    public float _cleanliness { get; private set; } = 1;
 
-    private float _happiness = 1;
-    private float _hunger = 1;
-    private float _thirst = 1;
-    private float _boredom = 1;
-    private float _bathroom = 1;
-    private float _energy = 1;
-    private float _cleanliness = 1;
+    public byte _happinessMultiplier { get; private set; } = 1;
+    public byte _hungerMultiplier { get; private set; } = 1;
+    public byte _thirstMultiplier { get; private set; } = 1;
+    public byte _boredomMultiplier { get; private set; } = 1;
+    public byte _bathroomMultiplier { get; private set; } = 1;
+    public byte _energyMultiplier { get; private set; } = 1;
+    public byte _cleanlinessMultiplier { get; private set; } = 1;
 
-    private byte _happinessMultiplier = 1;
-    private byte _hungerMultiplier = 1;
-    private byte _thirstMultiplier = 1;
-    private byte _boredomMultiplier = 1;
-    private byte _bathroomMultiplier = 1;
-    private byte _energyMultiplier = 1;
-    private byte _cleanlinessMultiplier = 1;
-
-    public enum StatusBars { happiness, hunger, thirsty, boredom, bathroom, energy, cleanliness }
-    public StatusBars _statusBars;
+    public enum StatusBar { happiness, hunger, thirsty, boredom, bathroom, energy, cleanliness }
+    public StatusBar _statusBar;
 
     public enum CurrentState { idle, tired, hungry, thirst, sick, playfull, bathroom } // we can add more states to here
     public CurrentState _currentState { get; private set; }
 
-    private bool IsInterruptibleState = true;
+    public bool IsInterruptibleState = true;
     private WaitForSeconds InterruptibleStateWait = new WaitForSeconds(2f);
 
     private int BathroomTrainedLevel;
@@ -53,13 +60,16 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     public PetController _petController { get; private set; }
     public PetInteractablesManager _petInteractionManager { get; private set; }
 
-    public static Action StateChange;
+    //voice interaction stuff
+    [SerializeField] public VoiceService Voice;
 
-    //public CurrentState PetsCurrentState
-    //{
-    //    get { return _currentState; }
-    //   set { _currentState = value; }
-    //}
+    //public static Action StateChange;
+
+    public CurrentState PetsCurrentState
+    {
+        get { return _currentState; }
+        set { _currentState = value; }
+    }
     private void Awake()
     {
         _petController = gameObject.GetComponent<PetController>();
@@ -68,42 +78,20 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
         //build the dictionary of status bars and rate depletion values to itterate over in the update loop. We will set the petStatusBars fill from this dicitonarys values int he Tuple
         InitializeBehaviorState();
     }
-
+    private void OnDisable()
+    {
+        Voice.VoiceEvents.OnResponse.RemoveListener(VoiceInteraction);
+    }
     private void Start()
     {
-        //set a starting state for the quadraped 
+        if (!Voice) Voice = FindObjectOfType<VoiceService>();
+        Voice.VoiceEvents.OnResponse.AddListener(VoiceInteraction);
+
+        //set a starting state for the quadruped 
         _currentState = CurrentState.idle;
         SetState(_petBehaviorStates[(int)_currentState]);    
     }
-    //private PetBehaviorState PetsCurrentState()
-    //{
-    //    switch (_currentState)
-    //    {
-    //        case CurrentState.idle:
-    //            return _petBehaviorStates[(int)_currentState];
-    //            break;
-    //        case CurrentState.tired:
-    //            return new PetStateTired(this);
-    //            break;
-    //        case CurrentState.hungry:
-    //            return new PetStateHungry(this);
-    //            break;
-    //        case CurrentState.thirst:
-    //            return new PetStateThirsty(this);
-    //            break;
-    //        case CurrentState.sick:
-    //            return new PetStateSick(this);
-    //            break;
-    //        case CurrentState.playfull:
-    //            return new PetStatePlayfull(this);
-    //            break;
-    //        case CurrentState.bathroom:
-    //            return new PetStateBathroom(this);
-    //            break;
-    //        default:
-    //            return new PetStateIdle(this);
-    //    }
-    //}
+
     private void Update()
     {
         //DecreaseStatusBarsUI();
@@ -111,7 +99,7 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
 
         if (IsInterruptibleState)
         {
-            DeterminIfPriorityState();
+            DeterminState();
         }
     }
     private void InitializeBehaviorState()
@@ -148,6 +136,7 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     private void DecreaseStatusBarsUI()
     {
         //loop the petStatusBarValue dictionary and access each PetStatusBar inside the tuple and decrease its fill by Time.deltaTime / 172800 (seconds in 48 hours) * depletionRate the Tuples Item2 which is the RateOverTime
+        //
         for (int i = 0; i <= PetStatusBarsValue.Count - 1; i++)
         {
             if (PetStatusBarsValue[i] > 0.01f)
@@ -172,177 +161,245 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
             _cleanliness = PetStatusBarsValue[i];
         }
     }
-    //SetStatusBarValue can be called to increase a status bars value. Examples woul be treats, toys, bowl of food, water, sleep ect.
-    protected void SetStatusBarValue(float value, StatusBars statusBar)
+   
+    public void IncreaseStatusBarValue( StatusBar statusBar)
     {
+        //SetStatusBarValue can be called to increase a status bars value, just pass in the type of StatusBar you want to update.
+        //Examples would be treats, toys, bowl of food, water, sleep ect.
         switch (statusBar)
         {
-            case StatusBars.happiness:
+            case StatusBar.happiness:
                 if (_happiness < 1f)
                 {
                     float statusBarCurrentValue = _happiness;
                     while (_happiness < _happiness + statusBarCurrentValue)
                     {
                         _happiness += Time.deltaTime / 3f;
-                        PetStatusBarsFill[(int)StatusBars.happiness].fillAmount = _happiness;
+                        PetStatusBarsFill[(int)StatusBar.happiness].fillAmount = _happiness;
                     }
                 }
                 break;
 
-            case StatusBars.hunger:
+            case StatusBar.hunger:
                 if (_hunger < 1f)
                 {
                     float statusBarCurrentValue = _hunger;
                     while (_hunger < _hunger + statusBarCurrentValue)
                     {
                         _hunger += Time.deltaTime / 3f;
-                        PetStatusBarsFill[(int)StatusBars.hunger].fillAmount = _hunger;
+                        PetStatusBarsFill[(int)StatusBar.hunger].fillAmount = _hunger;
                     }
                 }
                 break;
 
-            case StatusBars.thirsty:
+            case StatusBar.thirsty:
                 if (_thirst < 1f)
                 {
                     float statusBarCurrentValue = _thirst;
                     while (_thirst < _thirst + statusBarCurrentValue)
                     {
                         _thirst += Time.deltaTime / 3f;
-                        PetStatusBarsFill[(int)StatusBars.thirsty].fillAmount = _thirst;
+                        PetStatusBarsFill[(int)StatusBar.thirsty].fillAmount = _thirst;
                     }
                 }
                 break;
 
-            case StatusBars.boredom:
+            case StatusBar.boredom:
                 if (_boredom < 1f)
                 {
-                    float statusBarCurrentValue = _thirst;
+                    float statusBarCurrentValue = _boredom;
                     while (_boredom < _boredom + statusBarCurrentValue)
                     {
                         _boredom += Time.deltaTime / 3f;
-                        PetStatusBarsFill[(int)StatusBars.boredom].fillAmount = _boredom;
+                        PetStatusBarsFill[(int)StatusBar.boredom].fillAmount = _boredom;
                     }
                 }
                 break;
 
-            case StatusBars.bathroom:
+            case StatusBar.bathroom:
                 if (_bathroom < 1f)
                 {
-                    float statusBarCurrentValue = _thirst;
+                    float statusBarCurrentValue = _bathroom;
                     while (_bathroom < _bathroom + statusBarCurrentValue)
                     {
                         _bathroom += Time.deltaTime / 3f;
-                        PetStatusBarsFill[(int)StatusBars.bathroom].fillAmount = _bathroom;
+                        PetStatusBarsFill[(int)StatusBar.bathroom].fillAmount = _bathroom;
                     }
                 }
                 break;
 
-            case StatusBars.energy:
+            case StatusBar.energy:
                 if (_energy < 1f)
                 {
-                    float statusBarCurrentValue = _thirst;
+                    float statusBarCurrentValue = _energy;
                     while (_energy < _energy + statusBarCurrentValue)
                     {
                         _energy += Time.deltaTime / 3f;
-                        PetStatusBarsFill[(int)StatusBars.energy].fillAmount = _energy;
+                        PetStatusBarsFill[(int)StatusBar.energy].fillAmount = _energy;
                     }
                 }
                 break;
 
-            case StatusBars.cleanliness:
+            case StatusBar.cleanliness:
                 if (_cleanliness < 1f)
                 {
-                    float statusBarCurrentValue = _thirst;
+                    float statusBarCurrentValue = _cleanliness;
                     while (_cleanliness < _cleanliness + statusBarCurrentValue)
                     {
                         _cleanliness += Time.deltaTime / 3f;
-                        PetStatusBarsFill[(int)StatusBars.cleanliness].fillAmount = _cleanliness;
+                        PetStatusBarsFill[(int)StatusBar.cleanliness].fillAmount = _cleanliness;
                     }
                 }
                 break;
         }
     }
-    protected void SetStatusBarMultiplierValue(float value, StatusBars statusBar)
+    protected void SetStatusBarMultiplierValue(float value, StatusBar statusBar)
     {
         switch (statusBar)
         {
-            case StatusBars.happiness:
-                PetStatusBarsValueMultiplier[(int)StatusBars.happiness] = value;
+            case StatusBar.happiness:
+                PetStatusBarsValueMultiplier[(int)StatusBar.happiness] = value;
                 break;
 
-            case StatusBars.hunger:
-                PetStatusBarsValueMultiplier[(int)StatusBars.hunger] = value;
+            case StatusBar.hunger:
+                PetStatusBarsValueMultiplier[(int)StatusBar.hunger] = value;
                 break;
 
-            case StatusBars.thirsty:
-                PetStatusBarsValueMultiplier[(int)StatusBars.thirsty] = value;
+            case StatusBar.thirsty:
+                PetStatusBarsValueMultiplier[(int)StatusBar.thirsty] = value;
                 break;
 
-            case StatusBars.boredom:
-                PetStatusBarsValueMultiplier[(int)StatusBars.boredom] = value;
+            case StatusBar.boredom:
+                PetStatusBarsValueMultiplier[(int)StatusBar.boredom] = value;
                 break;
 
-            case StatusBars.bathroom:
-                PetStatusBarsValueMultiplier[(int)StatusBars.bathroom] = value;
+            case StatusBar.bathroom:
+                PetStatusBarsValueMultiplier[(int)StatusBar.bathroom] = value;
                 break;
 
-            case StatusBars.energy:
-                PetStatusBarsValueMultiplier[(int)StatusBars.energy] = value;
+            case StatusBar.energy:
+                PetStatusBarsValueMultiplier[(int)StatusBar.energy] = value;
                 break;
 
-            case StatusBars.cleanliness:
-                PetStatusBarsValueMultiplier[(int)StatusBars.cleanliness] = value;
+            case StatusBar.cleanliness:
+                PetStatusBarsValueMultiplier[(int)StatusBar.cleanliness] = value;
                 break;
         }
     }
+    private string FirstWitEntityName(WitResponseNode response)
+    {
+        string jsonString = response.ToString();
+        JObject responseObject = JObject.Parse(jsonString);
+        JObject entitiesObject = (JObject)responseObject["entities"];
 
-    private void DeterminIfPriorityState()
+        JProperty firstEntityProperty = entitiesObject.Properties().First();
+        JArray firstEntityArray = (JArray)firstEntityProperty.Value;
+        JObject firstEntity = (JObject)firstEntityArray[0];
+        string entityName = (string)firstEntity["name"];
+        return entityName;
+    }
+    protected void VoiceInteraction(WitResponseNode response)
+    {
+        //This subscribed event is ok if it changes the interaction a pet is doing, even if the DetermineState method is about to enter into a non interruptable state since the DetermineState will always
+        var entity = WitResultUtilities.GetFirstEntityValue(response, "animation:animation");
+
+        print("FirstWitEntityName from response: " + FirstWitEntityName(response));
+        //NEED TO EXTRACT THE VALUE OF WHATEVER THE ENTITY IS. POSSIBLY USE UNIVERSAL GET FIRST ENTITY VALUE IF ITS NOT A MULTI RESPONSE ISSUE/NEED
+        //drop_object
+        //go_to_player
+        //pick_up
+        //animation
+
+        if (IsInterruptibleState)
+        {
+            if (_currentState == CurrentState.playfull || _currentState == CurrentState.idle)
+            {     
+                    switch (entity)
+                    {
+                        case "sit":
+                            print("Pet Should Sit Now");
+                           
+                            break;
+
+                        case "paw":
+                            print("Pet Should Give paw Now");
+                           
+                            break;
+
+                        case "kevin":
+                        //_petController.SetDestinationPosition(_petController.SetDestinationPosition(player));
+                            break;
+
+                        case "drop it":
+                            break;
+
+                        case "get the ball":
+                            break;
+
+                        case "drop_object":
+                            break;
+
+                        case "go_to_player":
+                            break;
+
+                        case "pick_up":
+                            break;
+
+                        case "animation":
+                            break;
+                    }     
+            }
+        }
+    }
+    private void DeterminState()
     {
         //if we can interrupt the state then we need to check if our quadraped has a priority state they should be in based on their status bars depletion level
         if (IsInterruptibleState)
         {
+            //we will go down a list of priority states and take care of them, with sleeping being the end state to enter if needed, after all other states are staisfied
             if (_thirst < .25f)
             {
-                Debug.Log("_thirst = "+ _thirst);
-                _currentState = CurrentState.thirst;
-                IsInterruptibleState = false;
-                StateChange.Invoke();
-                SetState(_petBehaviorStates[(int)_currentState]);
-                EnterNonInteruptableState(_thirst, .25f);
+                Debug.Log("_thirst = " + _thirst);
+                SetToPriorityState(_bathroom, .25f, CurrentState.bathroom);
             }
 
             else if (_hunger < .25f)
             {
                 Debug.Log("_hunger < .25f");
-                _currentState = CurrentState.hungry;
-                IsInterruptibleState = false;
-                StateChange.Invoke();
-                SetState(_petBehaviorStates[(int)_currentState]);
-                EnterNonInteruptableState(_hunger, .25f);
+                SetToPriorityState(_bathroom, .25f, CurrentState.hungry);
             }
 
-            if (_energy < .15f)
-            {
-                Debug.Log("_energy < .15f");
-                _currentState = CurrentState.tired;
-                IsInterruptibleState = false;
-                StateChange.Invoke();
-                SetState(_petBehaviorStates[(int)_currentState]);
-                StartCoroutine(EnterNonInteruptableState(_energy, .25f));
-            }
 
             else if (_bathroom < .15f)
             {
                 Debug.Log("_bathroom < .15f");
-                _currentState = CurrentState.bathroom;
-                IsInterruptibleState = false;
-                StateChange.Invoke();
-                SetState(_petBehaviorStates[(int)_currentState]);
-                EnterNonInteruptableState(_bathroom, 1f);
+                SetToPriorityState(_bathroom, 1f, CurrentState.bathroom);
+            }
+
+            else if (_energy < .15f)
+            {
+                Debug.Log("_energy < .15f");
+                SetToPriorityState(_energy, .25f, CurrentState.tired);
+            }
+            else
+            {
+                if (_currentState != CurrentState.idle)
+                {
+                    _currentState = CurrentState.idle;
+                    SetState(_petBehaviorStates[(int)_currentState]);
+                } 
             }
         }     
     }
-
+    private void SetToPriorityState(float statValue,float time, CurrentState currentState)
+    {
+        //each priority state is able to enter back into the idle state after its reaches a maximum threshhold within that state class.
+        IsInterruptibleState = false;
+        _currentState = currentState;
+       // StateChange.Invoke();
+        SetState(_petBehaviorStates[(int)_currentState]);
+       // StartCoroutine(EnterNonInteruptableState(statValue, 1f));
+    }
     private IEnumerator EnterNonInteruptableState(float statusBar, float ammount)
     {
         while (statusBar < ammount)
@@ -352,17 +409,6 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
         Debug.Log("InteruptableStateActivation: True");
         IsInterruptibleState = true;
     }
-    //Relational Pattern implementation  of method DeterminState()
-    //private PetBehaviorState DeterminStateAlternativeVersion(float statusBarValue) =>
-    //statusBarValue switch
-    //{
-    //    (> .32f) and (< 212) => new PetStateTired(this),
-    //    < 32 => new PetStateThirsty(this),
-    //    > 212 => new PetStateHungry(this),
-    //    .32   => new PetStateBathroom(this),
-    //    212 => new PetStateBathroom(this),
-    //    _ => new PetStateIdle(this),
-    //};
 
     public void SaveData(GameData data)
     {

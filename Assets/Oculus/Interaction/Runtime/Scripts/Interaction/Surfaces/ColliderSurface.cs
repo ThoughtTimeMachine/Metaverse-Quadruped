@@ -19,23 +19,23 @@
  */
 
 using UnityEngine;
-using UnityEngine.Assertions;
-using Vector3 = UnityEngine.Vector3;
 
 namespace Oculus.Interaction.Surfaces
 {
-    public class ColliderSurface : MonoBehaviour, ISurface
+    public class ColliderSurface : MonoBehaviour, ISurface, IBounds
     {
-
+        [Tooltip("The Surface will be represented by this collider.")]
         [SerializeField]
         private Collider _collider;
 
         protected virtual void Start()
         {
-            Assert.IsNotNull(_collider);
+            this.AssertField(_collider, nameof(_collider));
         }
 
         public Transform Transform => transform;
+
+        public Bounds Bounds => _collider.bounds;
 
         public bool Raycast(in Ray ray, out SurfaceHit hit, float maxDistance)
         {

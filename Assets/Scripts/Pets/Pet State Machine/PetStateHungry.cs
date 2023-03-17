@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static PetBehaviorSystem;
 
 public class PetStateHungry : PetBehaviorState
 {
@@ -11,6 +12,8 @@ public class PetStateHungry : PetBehaviorState
 
     public override void Start()
     {
+        //call a method to drop anything thats in the pets mouth
+
         _petBehaviorSystem._petController.SetDestinationPosition(_petBehaviorSystem._petInteractionManager.FoodDish);
         Debug.Log("Entered Hungry State");
     }
@@ -19,15 +22,25 @@ public class PetStateHungry : PetBehaviorState
     {
         if (objectCollidedWith.tag == "FoodBowl")
         {
-            if (_petBehaviorSystem._currentState == PetBehaviorSystem.CurrentState.hungry)
-            {
-                //Petcontroller.ChangeAnimationState()
-            }
+            
         }
 
         else if (objectCollidedWith.tag == "FoodTreat")
         {
             //Petcontroller.ChangeAnimationState()
+        }
+    }
+    public void Updatelogic()
+    {
+        if (_petBehaviorSystem._hunger < 1f)
+        {
+            _petBehaviorSystem.IncreaseStatusBarValue(StatusBar.hunger);
+        }
+        else
+        {
+            Debug.Log("entering idle");
+            _petBehaviorSystem.SetState(_petBehaviorSystem.PetBehaviorStates[(int)CurrentState.idle]);
+            _petBehaviorSystem.IsInterruptibleState = true;
         }
     }
 }

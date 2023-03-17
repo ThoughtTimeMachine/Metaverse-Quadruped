@@ -1,0 +1,153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae5a46bda3295124c99b0e6537ac7252, type: 3}
+  m_Name: QuadrupedCommands
+  m_EditorClassIdentifier: 
+  _clientAccessToken: LKBMEMJYVQH2BGEWZJ3OUP3ZVDGELJHA
+  _appInfo:
+    name: quadruped
+    id: 600304928626927
+    lang: en
+    isPrivate: 1
+    createdAt: 2023-02-28T13:43:26-0800
+    trainingStatus: 1
+    lastTrainDuration: 18
+    lastTrainedAt: 2023-03-08T07:54:13-0800
+    nextTrainAt: 2023-03-08T07:53:55-0800
+    intents:
+    - id: 948487012808940
+      name: pet_command
+      entities:
+      - name: animation:animation
+        id: 1250944048886991
+      - name: drop_object:drop_object
+        id: 947953953232804
+      - name: go_to_player:go_to_player
+        id: 734042441609750
+      - name: pick_up:pick_up
+        id: 704682918005560
+    entities:
+    - name: animation
+      id: 1369679943830243
+      lookups:
+      - free-text
+      - keywords
+      roles:
+      - name: animation
+        id: 1250944048886991
+      keywords:
+      - keyword: lay down
+        synonyms:
+        - lay
+        - lay down
+      - keyword: paw
+        synonyms:
+        - paw
+      - keyword: sit
+        synonyms:
+        - sit
+    - name: drop_object
+      id: 798460695172099
+      lookups:
+      - free-text
+      - keywords
+      roles:
+      - name: drop_object
+        id: 947953953232804
+      keywords:
+      - keyword: drop
+        synonyms:
+        - drop
+    - name: go_to_player
+      id: 586901133316816
+      lookups:
+      - free-text
+      - keywords
+      roles:
+      - name: go_to_player
+        id: 734042441609750
+      keywords:
+      - keyword: kevin
+        synonyms:
+        - kevin
+    - name: pick_up
+      id: 900980567789501
+      lookups:
+      - free-text
+      - keywords
+      roles:
+      - name: pick_up
+        id: 704682918005560
+      keywords:
+      - keyword: get
+        synonyms:
+        - get
+      - keyword: pickup
+        synonyms:
+        - pick
+        - pickup
+    traits: []
+    voices:
+    - name: Charlie
+      locale: en_US
+      gender: male
+      styles:
+      - default
+      - soft
+      - fast
+      - projected
+    - name: Cooper
+      locale: en_US
+      gender: male
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: Prospector
+      locale: en_US
+      gender: male
+      styles:
+      - default
+    - name: Rebecca
+      locale: en_US
+      gender: female
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+    - name: Vampire
+      locale: en_US
+      gender: male
+      styles:
+      - default
+      - soft
+      - formal
+      - fast
+      - projected
+  _configurationId: 48d4f901-9fa5-42d1-b02f-b8c9200d11ea
+  timeoutMS: 10000
+  endpointConfiguration:
+    uriScheme: 
+    authority: 
+    port: 0
+    witApiVersion: 
+    speech: 
+    message: 
+    dictation: 
+  isDemoOnly: 0
+  useConduit: 1
+  _manifestLocalPath: ConduitManifest-01e7dd15-a957-45a8-bcae-a8ac6bab6a07.json
+  excludedAssemblies: []

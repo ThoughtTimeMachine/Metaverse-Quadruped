@@ -11,8 +11,14 @@ public class PetStateSick : PetBehaviorState
 
     public override void Start()
     {
+        //call a method to drop anything thats in the pets mouth
+
         //begin throwing up contents of food and trigger the vfx particle system
         Debug.Log("Entered Sick State");
+    }
+    public void Updatelogic()
+    {
+
     }
 }
 

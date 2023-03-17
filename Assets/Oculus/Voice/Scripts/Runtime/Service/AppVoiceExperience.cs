@@ -19,10 +19,12 @@
  */
 
 using System;
-using Facebook.WitAi;
-using Facebook.WitAi.Configuration;
-using Facebook.WitAi.Interfaces;
-using Facebook.WitAi.Lib;
+using Meta.WitAi;
+using Meta.WitAi.Configuration;
+using Meta.WitAi.Data;
+using Meta.WitAi.Data.Configuration;
+using Meta.WitAi.Interfaces;
+using Meta.WitAi.Json;
 using Oculus.Voice.Bindings.Android;
 using Oculus.Voice.Core.Bindings.Android.PlatformLogger;
 using Oculus.Voice.Core.Bindings.Interfaces;
@@ -52,7 +54,8 @@ namespace Oculus.Voice
         private IVoiceService voiceServiceImpl;
         private IVoiceSDKLogger voiceSDKLoggerImpl;
 #if UNITY_ANDROID && !UNITY_EDITOR
-        private readonly string PACKAGE_VERSION = "44.0.1";
+        // This version is auto-updated for a release build
+        private readonly string PACKAGE_VERSION = "49.0.0.180.358";
 #endif
 
         private bool Initialized => null != voiceServiceImpl;
@@ -87,7 +90,7 @@ namespace Oculus.Voice
             set
             {
                 // If we're trying to turn on platform services and they're not currently active we
-                // will forcably reinit and try to set the state.
+                // will forcibly reinit and try to set the state.
                 if (usePlatformServices != value || HasPlatformIntegrations != value)
                 {
                     usePlatformServices = value;
@@ -101,26 +104,56 @@ namespace Oculus.Voice
 
         #region Voice Service Methods
 
-        public override void Activate()
+        public override void Activate(string text, WitRequestOptions options)
         {
-            Activate(new WitRequestOptions());
+            if (IsNetworkPresent())
+            {
+                voiceSDKLoggerImpl.LogInteractionStart(options.requestID, "message");
+                voiceServiceImpl.Activate(text, options);
+            }
         }
 
         public override void Activate(WitRequestOptions options)
         {
-            voiceSDKLoggerImpl.LogInteractionStart(options.requestID, "speech");
-            voiceServiceImpl.Activate(options);
-        }
-
-        public override void ActivateImmediately()
-        {
-            ActivateImmediately(new WitRequestOptions());
+            if (IsMicPresent() && IsNetworkPresent())
+            {
+                voiceSDKLoggerImpl.LogInteractionStart(options.requestID, "speech");
+                voiceServiceImpl.Activate(options);
+            }
         }
 
         public override void ActivateImmediately(WitRequestOptions options)
         {
-            voiceSDKLoggerImpl.LogInteractionStart(options.requestID, "speech");
-            voiceServiceImpl.ActivateImmediately(options);
+            if (IsMicPresent() && IsNetworkPresent())
+            {
+                voiceSDKLoggerImpl.LogInteractionStart(options.requestID, "speech");
+                voiceServiceImpl.ActivateImmediately(options);
+            }
+        }
+
+        private bool IsMicPresent()
+        {
+            if (!HasPlatformIntegrations && !AudioBuffer.Instance.IsInputAvailable)
+            {
+                VoiceEvents.OnError?.Invoke("No Microphone present",
+                    "No Microphone(s)/recording devices found.  You will be unable to capture audio on this device.");
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool IsNetworkPresent()
+        {
+            if (Application.internetReachability == NetworkReachability.NotReachable)
+            {
+                VoiceEvents.OnError?.Invoke("Network unreachable", "Unable to reach the internet.  Check your connection.");
+
+                return false;
+            }
+
+            return true;
         }
 
         public override void Deactivate()
@@ -133,17 +166,6 @@ namespace Oculus.Voice
             voiceServiceImpl.DeactivateAndAbortRequest();
         }
 
-        public override void Activate(string text)
-        {
-            Activate(text, new WitRequestOptions());
-        }
-
-        public override void Activate(string text, WitRequestOptions requestOptions)
-        {
-            voiceSDKLoggerImpl.LogInteractionStart(requestOptions.requestID, "message");
-            voiceServiceImpl.Activate(text, requestOptions);
-        }
-
         #endregion
 
         private void InitVoiceSDK()
@@ -154,9 +176,14 @@ namespace Oculus.Voice
                 ((VoiceSDKImpl) voiceServiceImpl).Disconnect();
             }
 #if UNITY_ANDROID && !UNITY_EDITOR
-            var loggerImpl = new VoiceSDKPlatformLoggerImpl();
-            loggerImpl.Connect(PACKAGE_VERSION);
-            voiceSDKLoggerImpl = loggerImpl;
+            // Do not re-init logging if we've already initialized logger
+            if (voiceSDKLoggerImpl == null)
+            {
+                var loggerImpl = new VoiceSDKPlatformLoggerImpl();
+                loggerImpl.Connect(PACKAGE_VERSION);
+                voiceSDKLoggerImpl = loggerImpl;
+            }
+
             if (UsePlatformIntegrations)
             {
                 Debug.Log("Checking platform capabilities...");
@@ -174,7 +201,6 @@ namespace Oculus.Voice
                     }
 
                     voiceServiceImpl.VoiceEvents = VoiceEvents;
-                    voiceSDKLoggerImpl.LogAnnotation("isUsingPlatformSupport", "true");
                     voiceSDKLoggerImpl.IsUsingPlatformIntegration = true;
                 }
                 else
@@ -191,7 +217,7 @@ namespace Oculus.Voice
             voiceSDKLoggerImpl = new VoiceSDKConsoleLoggerImpl();
             RevertToWitUnity();
 #endif
-            voiceSDKLoggerImpl.WitApplication = RuntimeConfiguration?.witConfiguration?.application?.id;
+            voiceSDKLoggerImpl.WitApplication = RuntimeConfiguration?.witConfiguration?.GetLoggerAppId();
             voiceSDKLoggerImpl.ShouldLogToConsole = EnableConsoleLogging;
 
             OnInitialized?.Invoke();
@@ -268,7 +294,7 @@ namespace Oculus.Voice
 
         private void OnApplicationFocus(bool hasFocus)
         {
-            if (hasFocus && !Initialized)
+            if (enabled && hasFocus && !Initialized)
             {
                 if (MicPermissionsManager.HasMicPermission())
                 {
@@ -277,7 +303,7 @@ namespace Oculus.Voice
             }
         }
 
-        #region Event listerns for logging
+        #region Event listeners for logging
 
         void OnWitResponseListener(WitResponseNode witResponseNode)
         {

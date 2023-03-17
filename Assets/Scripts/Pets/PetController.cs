@@ -5,18 +5,18 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Animations;
 using UnityEngine.Animations.Rigging;
-using UnityEngine.InputSystem.iOS;
+
 
 [RequireComponent(typeof(IKFootBehavior))]
 [RequireComponent(typeof(Animator))]
-public class PetController : MonoBehaviour
+public class PetController : Singleton<PetController>
 {
     private int _random = 0;
     private float _speed;
     [SerializeField] private NavMeshAgent _pet;
     public static Transform _petTransform;
     [SerializeField] private Transform _parentTransform;
-
+    public Transform player;
     [SerializeField] private Animator _animator;
     public enum DestinationAnimation { idle, walk, run, sprint }
     private DestinationAnimation _destinationAnim;
@@ -36,7 +36,7 @@ public class PetController : MonoBehaviour
 
     //[SerializeField] private bool _updateRotation;
 
-    public bool isOKToFollowObject;
+    public static bool isOKToFollowObject;
     [SerializeField] private float _interpoolationMultiplier = 0.75f;
 
     //movement variables
@@ -53,6 +53,10 @@ public class PetController : MonoBehaviour
 
     public Transform followObjectTest;
 
+    //might be able to use scriptable object instead
+    private const string _walk = "walk", _walkLeft = "walk_left", _walkRight = "walk_right", _run = "run", _runLeft = "run_left", _runRight = "run_right", _sprint = "sprint", _sprintLeft = "sprint_left",
+        _sprintRight = "sprint_right", _tailWag = "tail_wag", _tailWagBroad = "tail_wag_broad", _tailWagFast = "tail_wag_fast", _tailSleep = "tail_sleep", _tailScared = "tail_scared", _chew = "chew",
+        _chewOnObject = "chew_on_object", _closeMouth = "close_mouth", _yawn = "yawn", _headSniff = "head_sniff", _headShame = "head_shame";
     private void Awake()
     {
         _pet = gameObject.GetComponentInParent<NavMeshAgent>();
@@ -60,11 +64,9 @@ public class PetController : MonoBehaviour
         _ikFootBehavior = gameObject.GetComponent<IKFootBehavior>();
         _parentTransform = GetComponentInParent<Transform>();
         _animator = gameObject.GetComponent<Animator>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
-    //might be able to use scriptable object instead
-    private const string _walk = "walk", _walkLeft = "walk_left", _walkRight = "walk_right", _run = "run", _runLeft = "run_left", _runRight = "run_right", _sprint = "sprint", _sprintLeft = "sprint_left",
-        _sprintRight = "sprint_right", _tailWag = "tail_wag", _tailWagBroad = "tail_wag_broad", _tailWagFast = "tail_wag_fast", _tailSleep = "tail_sleep", _tailScared = "tail_scared", _chew = "chew",
-        _chewOnObject = "chew_on_object", _closeMouth = "close_mouth", _yawn = "yawn", _headSniff = "head_sniff", _headShame = "head_shame";
+
     private void Start()
     {
         _speed = (float)_destinationAnim;
@@ -83,6 +85,7 @@ public class PetController : MonoBehaviour
         //get the current speed of our pet     
         _petsCurrentSpeed = (transform.position - lastPosition).magnitude / Time.deltaTime;
         //print("_petsCurrentSpeed: "+ _petsCurrentSpeed);
+
         lastPosition = transform.position;
 
         //controlls the animation states for movement blend tree
@@ -98,25 +101,14 @@ public class PetController : MonoBehaviour
     }
     private void OnEnable()
     {
-        PetBehaviorSystem.StateChange += StopRandomDestination;
+       // PetBehaviorSystem.StateChange += StopRandomDestination;
     }
     private void OnDisable()
     {
-        PetBehaviorSystem.StateChange -= StopRandomDestination;
+        //PetBehaviorSystem.StateChange -= StopRandomDestination;
     }
 
-    private void FollowObject(Transform obj)
-    {     
-        float distance = Vector3.Distance(obj.position, transform.position);
-        if (distance < .65f)
-        {
-            _pet.destination = transform.position;
-        }
-        else
-        {
-            _pet.destination = obj.position;
-        }
-    }
+
     public void SetDestinationPosition(Transform destination)
     {
         //recalculates the navmesh pet/agent path to a updated destination position but does not move the agent
@@ -160,14 +152,38 @@ public class PetController : MonoBehaviour
         Debug.Log("_petInteractionManager.StaticObjectsOfCuriosity.Count is null, retuning new vector3(0,0,0)");
     }
 
-    public void ChangeAnimationState(string animation, int layer)
+    public void ChangeAnimationState(string animation, int layer=0)
     {
         if (CurrentAnimationState != animation)
         {
             _animator.CrossFade(animation, .25f, layer);
         }
     }
-    private void PickupSequence(Transform target)
+    public void ChangeAnimationState(string animation)
+    {
+        //change the animation state of layer 1
+        print("changing animation state to sit from wit voice command");
+        if (CurrentAnimationState != animation)
+        {
+            _animator.CrossFade(animation, .25f,0);
+        }
+    }
+    public void FollowObject(Transform obj)
+    {
+        float distance = Vector3.Distance(obj.position, transform.position);
+        if (distance < .65f)
+        {
+            //we are close enough to the object, we can stop following it
+            _pet.destination = transform.position;
+        }
+        else
+        {
+            //follow the object till the distance is close enough
+            _pet.destination = obj.position;
+        }
+        PickupSequence(obj);
+    }
+    public void PickupSequence(Transform target)
     {
         float dist = Vector3.Distance(target.position, transform.position);
         //print("Distance To Toy: "+ dist);
@@ -212,8 +228,9 @@ public class PetController : MonoBehaviour
 
     private void VelocityInfluenceOnMovementBlendtree(string animatorParameter)
     {
-        float MovementBlendSpeed = Mathf.InverseLerp(0, 10, _petsCurrentSpeed);
-        print("MovementBlendSpeed: " + MovementBlendSpeed);
+        //the animation for idle, walk and run are blended based on a Movement Weight animation parameter thats set in update
+        float MovementBlendSpeed = Mathf.InverseLerp(0, 6, _petsCurrentSpeed);
+       // print("MovementBlendSpeed: " + MovementBlendSpeed);
         _animator.SetFloat(animatorParameter, MovementBlendSpeed);
         //if our angular speed is not near 0 then the movementblendspeed should be somewhere around .1 or so, so that when turning a corner the Quadruped is not in an idle animation rotating in place around corners
     } 

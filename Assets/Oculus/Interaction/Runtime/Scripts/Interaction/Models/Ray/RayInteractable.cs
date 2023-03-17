@@ -38,6 +38,23 @@ namespace Oculus.Interaction
         private MonoBehaviour _movementProvider;
         private IMovementProvider MovementProvider { get; set; }
 
+        [SerializeField, Optional]
+        private int _tiebreakerScore = 0;
+
+        #region Properties
+        public int TiebreakerScore
+        {
+            get
+            {
+                return _tiebreakerScore;
+            }
+            set
+            {
+                _tiebreakerScore = value;
+            }
+        }
+        #endregion
+
         protected override void Awake()
         {
             base.Awake();
@@ -49,10 +66,10 @@ namespace Oculus.Interaction
         protected override void Start()
         {
             this.BeginStart(ref _started, () => base.Start());
-            Assert.IsNotNull(Surface);
+            this.AssertField(Surface, nameof(Surface));
             if (_selectSurface != null)
             {
-                Assert.IsNotNull(SelectSurface);
+                this.AssertField(SelectSurface, nameof(SelectSurface));
             }
             else
             {

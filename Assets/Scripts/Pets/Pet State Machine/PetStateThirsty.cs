@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static PetBehaviorSystem;
 
 public class PetStateThirsty : PetBehaviorState
 {
@@ -10,6 +11,8 @@ public class PetStateThirsty : PetBehaviorState
 
     public override void Start()
     {
+        //call a method to drop anything thats in the pets mouth
+
         _petBehaviorSystem._petController.SetDestinationPosition(_petBehaviorSystem._petInteractionManager.Waterdish);
         Debug.Log("Entered Thirsty State");
     }
@@ -18,12 +21,26 @@ public class PetStateThirsty : PetBehaviorState
     {
         if (objectCollidedWith.tag == "WaterBowl")
         {
-            if (_petBehaviorSystem._currentState == PetBehaviorSystem.CurrentState.thirst)
-            {
-                Debug.Log("Collided With Water Bowl");
-                //Petcontroller.ChangeAnimationState()
-            }
+            //if ()
+            //{
+            //    Debug.Log("Collided With Water Bowl");
+            //    //Petcontroller.ChangeAnimationState()
+            //}
         }
     }
 
+    public void Updatelogic()
+    {
+
+        if (_petBehaviorSystem._thirst < 1f)
+        {
+            _petBehaviorSystem.IncreaseStatusBarValue(StatusBar.thirsty);
+        }
+        else
+        {
+            Debug.Log("entering idle");
+            _petBehaviorSystem.SetState(_petBehaviorSystem.PetBehaviorStates[(int)CurrentState.idle]);
+            _petBehaviorSystem.IsInterruptibleState = true;
+        }
+    }
 }

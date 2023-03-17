@@ -1,0 +1,56 @@
+{
+    "name": "VR Controlls",
+    "maps": [
+        {
+            "name": "VoiceActivation",
+            "id": "eaadf604-ee35-4b25-9f8b-204559dbda4c",
+            "actions": [
+                {
+                    "name": "triggerPressed",
+                    "type": "Button",
+                    "id": "8cf2b63b-9489-4d4a-b09e-38198156adf7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "fce0d5a9-1844-479a-8a54-86ad8f3fa420",
+                    "path": "<OculusTouchController>{LeftHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "triggerPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f3bb51b2-c562-4995-b984-2299105194f7",
+                    "path": "<OculusTouchController>{RightHand}/triggerPressed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "triggerPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "df0d962b-aece-45ba-98ae-f7f1f97520db",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "triggerPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
