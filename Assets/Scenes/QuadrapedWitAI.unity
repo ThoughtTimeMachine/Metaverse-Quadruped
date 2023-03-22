@@ -13901,7 +13901,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  _statusBars: 0
+  _statusBar: 0
+  IsInterruptibleState: 1
   Voice: {fileID: 0}
 --- !u!4 &640437176 stripped
 Transform:
@@ -38804,7 +38805,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1900547244}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d2d3ff93ff48bd40ab5bca3cf4e6d2c, type: 3}
   m_Name: 
@@ -38815,19 +38816,7 @@ MonoBehaviour:
   confidenceThreshold: 0.6
   onIntentTriggered:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3524200338982013698}
-        m_TargetAssemblyTypeName: PetController, Assembly-CSharp
-        m_MethodName: ChangeAnimationState
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: sit
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   allowConfidenceOverlap: 0
   confidenceRanges: []
 --- !u!114 &1900547248
@@ -45462,6 +45451,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &248617251989321793
 GameObject:
   m_ObjectHideFlags: 0
@@ -46797,6 +46787,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!137 &744680850721836236
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -47217,6 +47208,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!23 &783261516694119001
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -48212,6 +48204,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2008312359620984429
 GameObject:
   m_ObjectHideFlags: 0
@@ -48716,6 +48709,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!137 &2246213442617510926
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -48857,6 +48851,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &2336276888496075360
 Transform:
   m_ObjectHideFlags: 0
@@ -49530,6 +49525,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!137 &3172723573823416873
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -51589,7 +51585,8 @@ MonoBehaviour:
   - {fileID: 3524200338932656573}
   - {fileID: 3524200337763038277}
   - {fileID: 3524200338951268138}
-  _statusBars: 0
+  _statusBar: 0
+  IsInterruptibleState: 1
   Voice: {fileID: 0}
 --- !u!114 &3524200338982013700
 MonoBehaviour:
@@ -53364,6 +53361,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!137 &5039361466102642464
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -54206,6 +54204,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5629897448086111345
 GameObject:
   m_ObjectHideFlags: 0
@@ -55242,6 +55241,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6462678275769566061
 GameObject:
   m_ObjectHideFlags: 0
@@ -55635,6 +55635,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!137 &6712659860621116122
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -56635,6 +56636,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!137 &7417485678202151207
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -57691,6 +57693,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &7764894899566289003
 MonoBehaviour:
   m_ObjectHideFlags: 0

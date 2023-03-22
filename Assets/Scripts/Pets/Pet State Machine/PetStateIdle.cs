@@ -13,16 +13,12 @@ public class PetStateIdle : PetBehaviorState
     {      
         RandomIdleDestination();// Invoke reapeating with ability to stop. What determins the length of time when reaching the random destination and actions performed like sniff?
         //start idle and casually walk around the environment checking things out untill PetCarBars deplete or increase changing the state
+        _petBehaviorSystem._petController.ChangeAnimationState("Movement", 0);
     }
 
     private void RandomIdleDestination()
     {
         Debug.Log("Entered Idle State");
-        _petBehaviorSystem._petController.StartRandomDestinations();        
-    }
-
-    public void Updatelogic()
-    {
-
+        _petBehaviorSystem._petController.StartRandomDestinations();       
     }
 }

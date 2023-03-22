@@ -19,7 +19,7 @@ public class PetStateTired : PetBehaviorState
 
     }
     // Update is called once per frame
-    public void Updatelogic()
+    public override void  Updatelogic()
     {
         if (_petBehaviorSystem._energy < 1f)
         {

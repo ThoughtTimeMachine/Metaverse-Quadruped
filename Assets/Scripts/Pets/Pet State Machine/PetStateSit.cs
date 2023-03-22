@@ -7,15 +7,11 @@ public class PetStateSit : PetBehaviorState
     public PetStateSit(PetBehaviorSystem petBehaviourSystem) : base(petBehaviourSystem)
     {
     }
-    void Start()
+    public override void Start()
     {
+        Debug.Log("Entered Sitting State");
         //enter sit antimation crossfade from controller or whatever
         _petBehaviorSystem._petController.ChangeAnimationState("sit", 0);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

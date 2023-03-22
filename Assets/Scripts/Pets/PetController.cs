@@ -1,3 +1,4 @@
+using Conduit.Generated;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Jobs;
@@ -11,6 +12,7 @@ using UnityEngine.Animations.Rigging;
 [RequireComponent(typeof(Animator))]
 public class PetController : Singleton<PetController>
 {
+    
     private int _random = 0;
     private float _speed;
     [SerializeField] private NavMeshAgent _pet;
@@ -30,7 +32,7 @@ public class PetController : Singleton<PetController>
     public Vector3 _petDestination = new Vector3();
 
     private IKFootBehavior _ikFootBehavior;
-    //subscribe StopRandomDestination to PetBehaviourSystem state changes with an observer pattern
+    private WaitForSeconds _WaitForDestinationChange = new WaitForSeconds(15f);
     [SerializeField]
     private PetInteractablesManager _petInteractionManager;
 
@@ -43,7 +45,7 @@ public class PetController : Singleton<PetController>
     private float _petsCurrentSpeed;
     //private float _movementWeight = .5f;
     private Vector3 lastPosition;
-
+    IEnumerator _RandomDestination = null;
 
     //PickUpSequence Constraints
     public MultiAimConstraint multiAimConstraintNeck;
@@ -70,6 +72,7 @@ public class PetController : Singleton<PetController>
     private void Start()
     {
         _speed = (float)_destinationAnim;
+        _RandomDestination = RandomDestination();
         //if (!_updateRotation)
         //{
         //    _pet.updateRotation = false;
@@ -101,43 +104,53 @@ public class PetController : Singleton<PetController>
     }
     private void OnEnable()
     {
-       // PetBehaviorSystem.StateChange += StopRandomDestination;
+        //whenever there is a state cahnge lets stop any potential roaming Random Destination coroutine state we might be in
+        PetBehaviorStateMachine.changedState += StopRandomDestination;
+        print("OnEnable Subscribed to StopRandomDestination");
     }
     private void OnDisable()
     {
-        //PetBehaviorSystem.StateChange -= StopRandomDestination;
+        PetBehaviorStateMachine.changedState -= StopRandomDestination;
     }
 
 
-    public void SetDestinationPosition(Transform destination)
+    public void SetDestination(Transform destination)
     {
         //recalculates the navmesh pet/agent path to a updated destination position but does not move the agent
         SetDestinationPathCalculation(destination);
 
         //does not move pet/agent, just sets the _petDestination variable we need our pet/agent to go to, before we call _pet.destination
         _petDestination = destination.position;
-
+        _pet.destination = _petDestination;
     }
     public void SetDestinationPathCalculation(Transform destination)
     {
+        //calculates a new path for the navMesh agent, I must look into when it is usefull to call this function
         _pet.SetDestination(destination.position);
     }
 
 
     public void StartRandomDestinations()
     {
-        InvokeRepeating("RandomDestination", 0f, 15f);
+        StartCoroutine(_RandomDestination);
     }
-    public void RandomDestination()
+    public IEnumerator RandomDestination()
     {
-        //sets _petDestination to a random position and moves the pet to a random destination
-        _petDestination = RandomDestinationPosition();
-        _pet.destination = _petDestination;
+        //sets _petDestination to a random position and moves the pet to a random destination   
+        while (true)
+        {
+            _petDestination = RandomDestinationPosition();
+            _pet.destination = _petDestination;
+            yield return _WaitForDestinationChange;
+            print("setting another random destination for quadruped");
+        }    
     }
     public void StopRandomDestination()
     {
         //if you whistle/ call the dogs name or other interuptable process
-        CancelInvoke("RandomDestination");
+        StopCoroutine(_RandomDestination);
+        _pet.destination = transform.position;
+        print("Cancelled going to random destination");
     }
     private Vector3 RandomDestinationPosition()
     {
@@ -151,22 +164,21 @@ public class PetController : Singleton<PetController>
         else return transform.position;
         Debug.Log("_petInteractionManager.StaticObjectsOfCuriosity.Count is null, retuning new vector3(0,0,0)");
     }
-
+     
     public void ChangeAnimationState(string animation, int layer=0)
     {
-        if (CurrentAnimationState != animation)
-        {
-            _animator.CrossFade(animation, .25f, layer);
-        }
+        _animator.Play(animation, 0, 0f);
+        //_animator.Update(0f);
+        _animator.CrossFade(animation, .15f, layer);
     }
     public void ChangeAnimationState(string animation)
     {
         //change the animation state of layer 1
         print("changing animation state to sit from wit voice command");
-        if (CurrentAnimationState != animation)
-        {
-            _animator.CrossFade(animation, .25f,0);
-        }
+
+        _animator.Play(animation, 0, 0f);
+        //_animator.Update(0f);
+        _animator.CrossFade(animation, .15f, 0);
     }
     public void FollowObject(Transform obj)
     {
@@ -228,7 +240,7 @@ public class PetController : Singleton<PetController>
 
     private void VelocityInfluenceOnMovementBlendtree(string animatorParameter)
     {
-        //the animation for idle, walk and run are blended based on a Movement Weight animation parameter thats set in update
+        //the animation for idle, walk and run are blended based on a Movement Weight animation parameter that is set in Update() loop
         float MovementBlendSpeed = Mathf.InverseLerp(0, 6, _petsCurrentSpeed);
        // print("MovementBlendSpeed: " + MovementBlendSpeed);
         _animator.SetFloat(animatorParameter, MovementBlendSpeed);

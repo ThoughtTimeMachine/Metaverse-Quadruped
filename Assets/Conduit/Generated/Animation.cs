@@ -16,7 +16,9 @@ namespace Conduit.Generated
     {
         [ConduitValue("lay")]
         laydown,
+        [ConduitValue("pa")]
         paw,
+        [ConduitValue("sat", "set")]
         sit,
     }
 }

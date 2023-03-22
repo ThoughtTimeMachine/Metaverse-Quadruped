@@ -13,7 +13,7 @@ public class PetStateThirsty : PetBehaviorState
     {
         //call a method to drop anything thats in the pets mouth
 
-        _petBehaviorSystem._petController.SetDestinationPosition(_petBehaviorSystem._petInteractionManager.Waterdish);
+        _petBehaviorSystem._petController.SetDestination(_petBehaviorSystem._petInteractionManager.Waterdish);
         Debug.Log("Entered Thirsty State");
     }
 
@@ -29,7 +29,7 @@ public class PetStateThirsty : PetBehaviorState
         }
     }
 
-    public void Updatelogic()
+    public override void Updatelogic()
     {
 
         if (_petBehaviorSystem._thirst < 1f)

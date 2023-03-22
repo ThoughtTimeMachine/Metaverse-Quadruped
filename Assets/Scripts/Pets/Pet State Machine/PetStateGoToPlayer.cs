@@ -4,18 +4,24 @@ using UnityEngine;
 
 public class PetStateGoToPlayer : PetBehaviorState
 {
+    private Transform _player;
     public PetStateGoToPlayer(PetBehaviorSystem petBehaviourSystem) : base(petBehaviourSystem)
     {
 
     }
-    void Start()
+    public override void Start()
     {
-        _petBehaviorSystem._petController.StartRandomDestinations();
+        if (_player == null)
+        {
+            _player = GameObject.FindGameObjectWithTag("Player").transform;
+            if (_player == null ) { return; }
+        }
+            GoToPlayer();
+            _petBehaviorSystem._petController.ChangeAnimationState("Movement", 0);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void GoToPlayer()
     {
-        
+        _petBehaviorSystem._petController.SetDestination(_player);
     }
 }

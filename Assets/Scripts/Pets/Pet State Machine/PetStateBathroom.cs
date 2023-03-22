@@ -21,7 +21,7 @@ public class PetStateBathroom : PetBehaviorState
         Debug.Log("Entered Bathroom State");
         //some animation for going pee or poop goes here, or VFX symbolising going to bathroom?
     }
-    public void Updatelogic()
+    public override void Updatelogic()
     {
 
         if (_petBehaviorSystem._bathroom < 1f)

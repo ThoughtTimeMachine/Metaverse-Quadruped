@@ -46,7 +46,7 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     public enum StatusBar { happiness, hunger, thirsty, boredom, bathroom, energy, cleanliness }
     public StatusBar _statusBar;
 
-    public enum CurrentState { idle, tired, hungry, thirst, sick, playfull, bathroom } // we can add more states to here
+    public enum CurrentState { idle, tired, hungry, thirst, sick, playfull, bathroom, sit, paw,laydown, gotoplayer } // we can add more states to here
     public CurrentState _currentState { get; private set; }
 
     public bool IsInterruptibleState = true;
@@ -121,12 +121,17 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
         PetStatusBarsValueMultiplier.Add(_energyMultiplier);
         PetStatusBarsValueMultiplier.Add(_cleanlinessMultiplier);
 
-        _petBehaviorStates.Add(0, new PetStateIdle(this));
-        _petBehaviorStates.Add(1, new PetStateTired(this));
-        _petBehaviorStates.Add(2, new PetStateHungry(this));
-        _petBehaviorStates.Add(3, new PetStateThirsty(this));
-        _petBehaviorStates.Add(4, new PetStatePlayfull(this));
-        _petBehaviorStates.Add(5, new PetStateBathroom(this));
+        _petBehaviorStates.Add((int)CurrentState.idle, new PetStateIdle(this));
+        _petBehaviorStates.Add((int)CurrentState.tired, new PetStateTired(this));
+        _petBehaviorStates.Add((int)CurrentState.hungry, new PetStateHungry(this));
+        _petBehaviorStates.Add((int)CurrentState.thirst, new PetStateThirsty(this));
+        _petBehaviorStates.Add((int)CurrentState.sick, new PetStateSick(this));
+        _petBehaviorStates.Add((int)CurrentState.playfull, new PetStatePlayfull(this));
+        _petBehaviorStates.Add((int)CurrentState.bathroom, new PetStateBathroom(this));
+        _petBehaviorStates.Add((int)CurrentState.sit, new PetStateSit(this));
+        _petBehaviorStates.Add((int)CurrentState.paw, new PetStatePaw(this));
+        _petBehaviorStates.Add((int)CurrentState.laydown, new PetStateLayDown(this));
+        _petBehaviorStates.Add((int)CurrentState.gotoplayer, new PetStateGoToPlayer(this));
     }
 
     public void BathroomTrainingLevelIncrease()
@@ -165,7 +170,7 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     public void IncreaseStatusBarValue( StatusBar statusBar)
     {
         //SetStatusBarValue can be called to increase a status bars value, just pass in the type of StatusBar you want to update.
-        //Examples would be treats, toys, bowl of food, water, sleep ect.
+        //Examples of interactions that increase status bar value could be: treats, toys, bowl of food, water, sleep ect.
         switch (statusBar)
         {
             case StatusBar.happiness:
@@ -255,6 +260,7 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     }
     protected void SetStatusBarMultiplierValue(float value, StatusBar statusBar)
     {
+        //use this to increase or decrese depletion of a Status Bar on the Quadruped
         switch (statusBar)
         {
             case StatusBar.happiness:
@@ -288,6 +294,7 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     }
     private string FirstWitEntityName(WitResponseNode response)
     {
+        //returns the First Entity Name from the WitResponseNode
         string jsonString = response.ToString();
         JObject responseObject = JObject.Parse(jsonString);
         JObject entitiesObject = (JObject)responseObject["entities"];
@@ -300,8 +307,9 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     }
     protected void VoiceInteraction(WitResponseNode response)
     {
-        //This subscribed event is ok if it changes the interaction a pet is doing, even if the DetermineState method is about to enter into a non interruptable state since the DetermineState will always
-        var entity = WitResultUtilities.GetFirstEntityValue(response, "animation:animation");
+        string name = FirstWitEntityName(response);
+        //This subscribed event is ok if it changes the interaction a pet is doing, even if the DetermineState method is about to enter into a non interruptable state since the DetermineState runs in the Update() loop
+        var entity = WitResultUtilities.GetFirstEntityValue(response, name+":"+name);
 
         print("FirstWitEntityName from response: " + FirstWitEntityName(response));
         //NEED TO EXTRACT THE VALUE OF WHATEVER THE ENTITY IS. POSSIBLY USE UNIVERSAL GET FIRST ENTITY VALUE IF ITS NOT A MULTI RESPONSE ISSUE/NEED
@@ -311,44 +319,43 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
         //animation
 
         if (IsInterruptibleState)
-        {
-            if (_currentState == CurrentState.playfull || _currentState == CurrentState.idle)
-            {     
-                    switch (entity)
+        {   
+                print("entity: "+ entity);
+                switch (entity)
                     {
                         case "sit":
                             print("Pet Should Sit Now");
-                           
-                            break;
+                            _currentState = CurrentState.sit;
+                            SetState(_petBehaviorStates[(int)_currentState]);
+                        break;
 
                         case "paw":
                             print("Pet Should Give paw Now");
-                           
-                            break;
+                            _currentState = CurrentState.paw;
+                            SetState(_petBehaviorStates[(int)_currentState]);
+                        break;
 
                         case "kevin":
-                        //_petController.SetDestinationPosition(_petController.SetDestinationPosition(player));
-                            break;
+                            print("Go To Player");
+                            _currentState = CurrentState.gotoplayer;
+                            SetState(_petBehaviorStates[(int)_currentState]);
+                    break;
 
                         case "drop it":
                             break;
 
                         case "get the ball":
-                            break;
+                            print("Pet Getting ball");
+                            _currentState = CurrentState.gotoplayer;
+                            SetState(_petBehaviorStates[(int)_currentState]);
+                    break;
 
-                        case "drop_object":
-                            break;
-
-                        case "go_to_player":
-                            break;
-
-                        case "pick_up":
-                            break;
-
-                        case "animation":
-                            break;
+                        case "lay down":
+                    print("Pet Should lay Down");
+                    _currentState = CurrentState.laydown;
+                    SetState(_petBehaviorStates[(int)_currentState]);
+                    break;
                     }     
-            }
         }
     }
     private void DeterminState()
@@ -381,19 +388,11 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
                 Debug.Log("_energy < .15f");
                 SetToPriorityState(_energy, .25f, CurrentState.tired);
             }
-            else
-            {
-                if (_currentState != CurrentState.idle)
-                {
-                    _currentState = CurrentState.idle;
-                    SetState(_petBehaviorStates[(int)_currentState]);
-                } 
-            }
         }     
     }
     private void SetToPriorityState(float statValue,float time, CurrentState currentState)
     {
-        //each priority state is able to enter back into the idle state after its reaches a maximum threshhold within that state class.
+        //each priority state autoimatically enters back into the idle state after its reaches a maximum threshhold within that state class.
         IsInterruptibleState = false;
         _currentState = currentState;
        // StateChange.Invoke();

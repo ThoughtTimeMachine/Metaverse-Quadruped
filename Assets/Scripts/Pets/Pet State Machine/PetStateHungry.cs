@@ -14,7 +14,7 @@ public class PetStateHungry : PetBehaviorState
     {
         //call a method to drop anything thats in the pets mouth
 
-        _petBehaviorSystem._petController.SetDestinationPosition(_petBehaviorSystem._petInteractionManager.FoodDish);
+        _petBehaviorSystem._petController.SetDestination(_petBehaviorSystem._petInteractionManager.FoodDish);
         Debug.Log("Entered Hungry State");
     }
 
@@ -30,7 +30,7 @@ public class PetStateHungry : PetBehaviorState
             //Petcontroller.ChangeAnimationState()
         }
     }
-    public void Updatelogic()
+    public override void Updatelogic()
     {
         if (_petBehaviorSystem._hunger < 1f)
         {

@@ -16,9 +16,6 @@ public class PetStateSick : PetBehaviorState
         //begin throwing up contents of food and trigger the vfx particle system
         Debug.Log("Entered Sick State");
     }
-    public void Updatelogic()
-    {
 
-    }
 }
 

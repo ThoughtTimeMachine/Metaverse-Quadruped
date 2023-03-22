@@ -51,9 +51,12 @@ MonoBehaviour:
         - lay down
       - keyword: paw
         synonyms:
+        - pa
         - paw
       - keyword: sit
         synonyms:
+        - sat
+        - set
         - sit
     - name: drop_object
       id: 798460695172099
