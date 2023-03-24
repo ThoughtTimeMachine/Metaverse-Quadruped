@@ -15,13 +15,15 @@ public class PetInteractablesManager : Singleton<PetInteractablesManager>
 
 
     public Transform Pet; // { get; private set; }
+
     public Transform Waterdish { get; private set; }
     public Transform FoodDish { get; private set; }
 
-    public int? ActiveToy;//unassign after exiting interaction with object
-    public int? ActiveFood;//unassign after exiting interaction with object
+    //an extra variable to hold the dictionary index of the active toy or food.
+    public int? ActiveToyIndex;//unassign after exiting interaction with object(SetTargetToNearestToy sets this to the nearest object when called)
+    public int? ActiveFoodIndex;//unassign after exiting interaction with object(SetTargetToNearestFood sets this to the nearest object when called)
 
-    //this is the current object of interest. Anytime the quadraped is going to interact with an interactable object in the scene, it should be set as the ActiveObjectOfInterest here
+    //this is the current object of interest. ANYTIME the quadraped is going to interact with an interactable object in the scene, it should be set as the ActiveObjectOfInterest here!!
     public static Transform ActiveObjectOfInterest { get; private set; }
 
     [SerializeField] private Transform _toyInstantiationPosition;
@@ -34,10 +36,12 @@ public class PetInteractablesManager : Singleton<PetInteractablesManager>
     }
     public void CreateToy(GameObject myPrefab)
     {
-        //instatiate a Toy object from our inventory and parent it to the InteractableObjectContainer in the scene, then add to Toys dictionary of currently active toys in scene
+        //instatiate a Toy object from our inventory and parent it to the InteractableObjectContainer in the scene
         GameObject petToy;
         petToy = Instantiate(myPrefab, _toyInstantiationParent);
         petToy.transform.localPosition = Vector3.zero;
+
+        //add to Toys dictionary of currently active toys in scene
         Toys.Add(myPrefab.name, petToy.transform);
 
         //set the ActiveObjectOfInterest to the new toy we initialized
@@ -85,7 +89,7 @@ public class PetInteractablesManager : Singleton<PetInteractablesManager>
             if (distance < shortestDistance)
             {
                 shortestDistance = distance;
-                ActiveFood = i;
+                ActiveFoodIndex = i;
                 ActiveObjectOfInterest = Foods[i];
             }
         }
@@ -102,7 +106,7 @@ public class PetInteractablesManager : Singleton<PetInteractablesManager>
                 if (distance < shortestDistance)
                 {
                     shortestDistance = distance;
-                    ActiveToy = i;
+                    ActiveToyIndex = i;
                     ActiveObjectOfInterest = Toys.ElementAt(i).Value;
                     print("Nearest Toy: " + Toys.ElementAt(i).Key);
                 }

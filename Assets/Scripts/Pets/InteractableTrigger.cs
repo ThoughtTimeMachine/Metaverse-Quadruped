@@ -13,7 +13,7 @@ public class InteractableTrigger : MonoBehaviour
     {
         if (objectCollidedWith.CompareTag(ObjectCollidedWithsTag))
         {
-            objectCollidedWith.transform.GetChild(0).GetComponent<IToy>().Carry();
+            objectCollidedWith.transform.GetChild(0).GetComponent<ICarryDropable>().Carry();
         }
     }
   

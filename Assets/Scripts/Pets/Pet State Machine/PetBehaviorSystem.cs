@@ -46,7 +46,7 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
     public enum StatusBar { happiness, hunger, thirsty, boredom, bathroom, energy, cleanliness }
     public StatusBar _statusBar;
 
-    public enum CurrentState { idle, tired, hungry, thirst, sick, playfull, bathroom, sit, paw,laydown, gotoplayer } // we can add more states to here
+    public enum CurrentState { idle, tired, hungry, thirst, sick, playfull, bathroom, sit, paw,laydown, gotoplayer, followandpickupobject } // we can add more states to here
     public CurrentState _currentState { get; private set; }
 
     public bool IsInterruptibleState = true;
@@ -70,6 +70,11 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
         get { return _currentState; }
         set { _currentState = value; }
     }
+    //IN THIS AREA OF CODE WE NEED TO CREATE A OBJECT LIKENESS SYSTEM FOR THE PET TO REMEMBER WHAT INTEREST IT AS AN OBJECT. THIS HELPS THE PET VISION CHANGE TO AN OBJECT OF INTEREST
+    //
+    //
+    //
+    //
     private void Awake()
     {
         _petController = gameObject.GetComponent<PetController>();
@@ -94,6 +99,7 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
 
     private void Update()
     {
+        base.Update();
         //DecreaseStatusBarsUI();
         //updateStatusBarValuesFromList();
 
@@ -132,6 +138,7 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
         _petBehaviorStates.Add((int)CurrentState.paw, new PetStatePaw(this));
         _petBehaviorStates.Add((int)CurrentState.laydown, new PetStateLayDown(this));
         _petBehaviorStates.Add((int)CurrentState.gotoplayer, new PetStateGoToPlayer(this));
+        _petBehaviorStates.Add((int)CurrentState.followandpickupobject, new PetStateFollowAndPickUpObject(this));
     }
 
     public void BathroomTrainingLevelIncrease()
@@ -318,6 +325,7 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
         //pick_up
         //animation
 
+        //turn the entire method below into a dictionary call that access the state with the entity value as the key
         if (IsInterruptibleState)
         {   
                 print("entity: "+ entity);
@@ -341,19 +349,20 @@ public class PetBehaviorSystem : PetBehaviorStateMachine, IDataPersistence
                             SetState(_petBehaviorStates[(int)_currentState]);
                     break;
 
-                        case "drop it":
-                            break;
-
-                        case "get the ball":
+                        case "drop":
+                            PetInteractablesManager.ActiveObjectOfInterest.GetComponent<ICarryDropable>().Drop();
+                    break;
+                            //could use a multi value event here for get the object, then decide what it is within the followandpickupobject state
+                        case "get":
                             print("Pet Getting ball");
-                            _currentState = CurrentState.gotoplayer;
+                            _currentState = CurrentState.followandpickupobject;
                             SetState(_petBehaviorStates[(int)_currentState]);
                     break;
 
                         case "lay down":
-                    print("Pet Should lay Down");
-                    _currentState = CurrentState.laydown;
-                    SetState(_petBehaviorStates[(int)_currentState]);
+                            print("Pet Should lay Down");
+                            _currentState = CurrentState.laydown;
+                            SetState(_petBehaviorStates[(int)_currentState]);
                     break;
                     }     
         }

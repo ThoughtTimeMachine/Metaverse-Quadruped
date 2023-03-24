@@ -39,7 +39,6 @@ MonoBehaviour:
     - name: animation
       id: 1369679943830243
       lookups:
-      - free-text
       - keywords
       roles:
       - name: animation
@@ -61,7 +60,6 @@ MonoBehaviour:
     - name: drop_object
       id: 798460695172099
       lookups:
-      - free-text
       - keywords
       roles:
       - name: drop_object
@@ -70,6 +68,9 @@ MonoBehaviour:
       - keyword: drop
         synonyms:
         - drop
+      - keyword: drop it
+        synonyms:
+        - drop it
     - name: go_to_player
       id: 586901133316816
       lookups:
@@ -85,7 +86,6 @@ MonoBehaviour:
     - name: pick_up
       id: 900980567789501
       lookups:
-      - free-text
       - keywords
       roles:
       - name: pick_up

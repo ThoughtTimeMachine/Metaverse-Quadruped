@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Animations.Rigging;
 
-public class PetToy : MonoBehaviour, IDataPersistence, IToy
+public class PetToy : MonoBehaviour, IDataPersistence, IToy, ICarryDropable
 {
     [SerializeField] private int _rarity;
     [SerializeField] private int _duribility;
@@ -12,6 +12,8 @@ public class PetToy : MonoBehaviour, IDataPersistence, IToy
 
 
     private Transform _QuadrapedJawboneParent;
+
+    //
     private void OnEnable()
     {
 
@@ -27,9 +29,11 @@ public class PetToy : MonoBehaviour, IDataPersistence, IToy
     }
     public void Drop()
     {   //unparent toy from jaw and re enable gravity
+        transform.parent.parent.parent.GetComponent<BoxCollider>().isTrigger = false;
         transform.parent.SetParent(null);
         transform.parent.GetComponent<Rigidbody>().useGravity = true;
-        transform.parent.GetComponent<Rigidbody>().isKinematic = false;
+        transform.parent.GetComponent<Rigidbody>().isKinematic = false;       
+        print("Dropping Toy now");
     }
     public void Chew()
     {
@@ -44,6 +48,8 @@ public class PetToy : MonoBehaviour, IDataPersistence, IToy
         transform.parent.SetParent(_QuadrapedJawboneParent);
         transform.parent.localPosition = Vector3.zero;
         transform.localPosition = Vector3.zero;
+
+        //stop following object and picking it up now that its in the pets jaw
         PetController.isOKToFollowObject = false;
         transform.GetComponentInParent<PetController>().isOKToPickUpObject = false;
         //could stop coroutine for pick up animations as soon as toy is in mouth, as to stop the continued downward or upward movement of the neck constraint

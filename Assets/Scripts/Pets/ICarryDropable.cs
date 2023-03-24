@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IToy
+public interface ICarryDropable 
 {
-    void Catch();
-    void Chew();
+    void Carry();
+    void Drop();
 }

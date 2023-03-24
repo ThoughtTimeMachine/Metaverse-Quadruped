@@ -28,7 +28,7 @@ public class PetController : Singleton<PetController>
     public enum HeadAnimation { sniff, sniffGround, affection, disobediant, shame, PetHead }
     public HeadAnimation _headAnimation;
 
-    private string CurrentAnimationState;
+    //private string CurrentAnimationState;
     public Vector3 _petDestination = new Vector3();
 
     private IKFootBehavior _ikFootBehavior;
@@ -56,9 +56,9 @@ public class PetController : Singleton<PetController>
     public Transform followObjectTest;
 
     //might be able to use scriptable object instead
-    private const string _walk = "walk", _walkLeft = "walk_left", _walkRight = "walk_right", _run = "run", _runLeft = "run_left", _runRight = "run_right", _sprint = "sprint", _sprintLeft = "sprint_left",
-        _sprintRight = "sprint_right", _tailWag = "tail_wag", _tailWagBroad = "tail_wag_broad", _tailWagFast = "tail_wag_fast", _tailSleep = "tail_sleep", _tailScared = "tail_scared", _chew = "chew",
-        _chewOnObject = "chew_on_object", _closeMouth = "close_mouth", _yawn = "yawn", _headSniff = "head_sniff", _headShame = "head_shame";
+    //private const string _walk = "walk", _walkLeft = "walk_left", _walkRight = "walk_right", _run = "run", _runLeft = "run_left", _runRight = "run_right", _sprint = "sprint", _sprintLeft = "sprint_left",
+    //    _sprintRight = "sprint_right", _tailWag = "tail_wag", _tailWagBroad = "tail_wag_broad", _tailWagFast = "tail_wag_fast", _tailSleep = "tail_sleep", _tailScared = "tail_scared", _chew = "chew",
+    //    _chewOnObject = "chew_on_object", _closeMouth = "close_mouth", _yawn = "yawn", _headSniff = "head_sniff", _headShame = "head_shame";
     private void Awake()
     {
         _pet = gameObject.GetComponentInParent<NavMeshAgent>();
@@ -197,14 +197,21 @@ public class PetController : Singleton<PetController>
     }
     public void PickupSequence(Transform target)
     {
-        float dist = Vector3.Distance(target.position, transform.position);
-        //print("Distance To Toy: "+ dist);
+  
 
         //instead of coroutine, have it be distance based value changing as aproaching
-        if (dist < 1.5f && isOKToPickUpObject)
+        if(isOKToPickUpObject)
         {
-            StartCoroutine(PickupSequenceLerp());
+            //If the object is within distance to pick up, then start the pickup sequence
+            //print("Distance To Toy: "+ dist);
+
+            float dist = Vector3.Distance(target.position, transform.position);
+            if (dist < 1.5f)
+            {
+                StartCoroutine(PickupSequenceLerp());
+            }
         }
+      
     }
 
     IEnumerator PickupSequenceLerp()
@@ -215,6 +222,7 @@ public class PetController : Singleton<PetController>
         float time = 0f;
         while (time < 1)
         {
+            //start neck lowering sequence
             neckValue = Mathf.Lerp(0, 1, time);
             crouchValue = Mathf.Lerp(crouchValueStart, -1, time);
             multiAimConstraintNeck.weight = neckValue;
@@ -227,11 +235,13 @@ public class PetController : Singleton<PetController>
         time = 0f;
         while (time < 1)
         {
+            //we now reverse the neck lowering sequence because we only played it to make contact with the jaw on the object to trigger a ICarryDropbable.Carry() 
             neckValue = Mathf.Lerp(1, 0, time);
             crouchValue = Mathf.Lerp(-1, 0, time);
             multiAimConstraintNeck.weight = neckValue;
             _animator.SetLayerWeight(1, neckValue);
 
+            //tied into the movement blendtree is a pickUpObject animation node for the Movement Weight variable in the animator which we reverse out of along with MultiAimConstraint on the neck.
             _animator.SetFloat("Movement Weight", crouchValue);
             time += Time.deltaTime * _pickupSequenceSpeed;
             yield return null;

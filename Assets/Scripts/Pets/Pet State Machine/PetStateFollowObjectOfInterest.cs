@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PetStateFollowObject : PetBehaviorState
+public class PetStateFollowObjectOfInterest : PetBehaviorState
 {
-    private Transform tranform;
-    public PetStateFollowObject(PetBehaviorSystem petBehaviourSystem) : base(petBehaviourSystem)
+    public PetStateFollowObjectOfInterest(PetBehaviorSystem petBehaviourSystem) : base(petBehaviourSystem)
     {
     }
 
@@ -16,9 +15,9 @@ public class PetStateFollowObject : PetBehaviorState
     }
 
     // Update is called once per frame
-    public void Updatelogic()
+    public override void Updatelogic()
     {
         _petBehaviorSystem._petController.FollowObject(PetInteractablesManager.ActiveObjectOfInterest);
-        //_petBehaviorSystem._petController.PickupSequence(PetInteractablesManager.ActiveObjectOfInterest);
+        
     }
 }

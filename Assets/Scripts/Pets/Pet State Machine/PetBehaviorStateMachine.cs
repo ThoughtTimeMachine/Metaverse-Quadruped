@@ -16,11 +16,10 @@ public abstract class PetBehaviorStateMachine : MonoBehaviour
         State = state;
         State.Start(); //calls start like petStateIdle.Start() since there is no monobehaviour, Starts not automatically called on instantiation of this class       
     }
-    private void Update()
+    public virtual void Update()
     {
         if (State != null)
         {
-            
             State.Updatelogic();
         }
     }
